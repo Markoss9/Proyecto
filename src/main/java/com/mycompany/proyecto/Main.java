@@ -33,9 +33,11 @@ public static void main(String[] args) {
     catch (Exception ex) {
         System.out.println(ex);
     }
+  
     
      Login login = new Login();
      login.setVisible(true);
      login.setLocationRelativeTo(null);
+     
   }
 }

@@ -15,12 +15,12 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtContrasenia = new javax.swing.JTextField();
         txtUsuario = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         btnCrearUsuario = new javax.swing.JToggleButton();
         btnIngresarSesion = new javax.swing.JToggleButton();
+        txtContrasenia = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,6 +49,12 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        txtContrasenia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtContraseniaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -60,8 +66,8 @@ public class Login extends javax.swing.JFrame {
                         .addComponent(jSeparator2))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(btnIngresarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addComponent(btnIngresarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                         .addComponent(btnCrearUsuario))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -133,6 +139,10 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnIngresarSesionActionPerformed
 
+    private void txtContraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseniaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtContraseniaActionPerformed
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -144,7 +154,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField txtContrasenia;
+    private javax.swing.JPasswordField txtContrasenia;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
