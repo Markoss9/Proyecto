@@ -6,28 +6,39 @@ package com.mycompany.proyecto;
 
 
 public class Notas {
-    
-  private int id;
-  private String titulo;
-  private String contenido;
-  private String fechacreacion;
-  private String fechamodificacion;
+    private Identificador identificador; // Composición
+    private String titulo;
+    private String contenido;
+    private String fechacreacion;
+    private String fechamodificacion;
 
-public Notas (int id, String titulo, String contenido, String fechacreacion, String fechamodificacion) {
-    this.id = id;
-    this.titulo = titulo;
-    this.fechacreacion = fechacreacion;
-    this.fechamodificacion = fechamodificacion;
-}  
+    // Constructor
+    public Notas(int id, String fecha, String titulo, String contenido, String fechacreacion, String fechamodificacion) {
+        this.identificador = new Identificador(id, fecha);
+        this.titulo = titulo;
+        this.contenido = contenido;
+        this.fechacreacion = fechacreacion;
+        this.fechamodificacion = fechamodificacion;
+    }
 
+    // Getters y Setters para los atributos compartidos
     public int getId() {
-        return id;
+        return identificador.getId();
     }
 
     public void setId(int id) {
-        this.id = id;
+        identificador.setId(id);
     }
 
+    public String getFecha() {
+        return identificador.getFecha();
+    }
+
+    public void setFecha(String fecha) {
+        identificador.setFecha(fecha);
+    }
+
+    // Getters y Setters para atributos específicos de Notas
     public String getTitulo() {
         return titulo;
     }
@@ -59,6 +70,4 @@ public Notas (int id, String titulo, String contenido, String fechacreacion, Str
     public void setFechamodificacion(String fechamodificacion) {
         this.fechamodificacion = fechamodificacion;
     }
-
-
 }

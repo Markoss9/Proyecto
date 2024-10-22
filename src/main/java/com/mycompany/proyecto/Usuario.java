@@ -6,24 +6,34 @@ package com.mycompany.proyecto;
 
 
 public class Usuario {
-    private String id;
+    private Identificador identificador; // Opcional
     private String nombre;
     private String correo;
     private String contraseña;
 
-public Usuario(String id, String nombre, String correo, String contraseña) {
-    this.id = id;
-    this.nombre = nombre;
-    this.correo = correo;
-    this.contraseña = contraseña;
+    // Constructor
+    public Usuario(int id, String fecha, String nombre, String correo, String contraseña) {
+        this.identificador = new Identificador(id, fecha); // Si decides incluirlo
+        this.nombre = nombre;
+        this.correo = correo;
+        this.contraseña = contraseña;
     }
 
-    public String getId() {
-        return id;
+    // Getters y Setters
+    public int getId() {
+        return identificador.getId();
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(int id) {
+        identificador.setId(id);
+    }
+
+    public String getFecha() {
+        return identificador.getFecha();
+    }
+
+    public void setFecha(String fecha) {
+        identificador.setFecha(fecha);
     }
 
     public String getNombre() {
@@ -49,7 +59,5 @@ public Usuario(String id, String nombre, String correo, String contraseña) {
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
-
 }
-
 

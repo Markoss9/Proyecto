@@ -6,31 +6,36 @@ package com.mycompany.proyecto;
 
 
 public class Mensajeria {
-    
-    private int id;
+    private Identificador identificador; // Composición
     private String contacto;
     private String mensaje;
-    private String fecha;
     private String hora;
     private String remitente;
- 
-public Mensajeria(int id, String contacto, String mensaje, String fecha, String hora, String remitente){
-    
-    this.id = id;
-    this.contacto=contacto;
-    this.mensaje=mensaje;
-    this.fecha=fecha;
-    this.hora=hora;
-    this.remitente = remitente;
-    
-}
 
+    // Constructor
+    public Mensajeria(int id, String fecha, String contacto, String mensaje, String hora, String remitente) {
+        this.identificador = new Identificador(id, fecha);
+        this.contacto = contacto;
+        this.mensaje = mensaje;
+        this.hora = hora;
+        this.remitente = remitente;
+    }
+
+    // Getters y Setters
     public int getId() {
-        return id;
+        return identificador.getId();
     }
 
     public void setId(int id) {
-        this.id = id;
+        identificador.setId(id);
+    }
+
+    public String getFecha() {
+        return identificador.getFecha();
+    }
+
+    public void setFecha(String fecha) {
+        identificador.setFecha(fecha);
     }
 
     public String getContacto() {
@@ -49,14 +54,6 @@ public Mensajeria(int id, String contacto, String mensaje, String fecha, String 
         this.mensaje = mensaje;
     }
 
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
     public String getHora() {
         return hora;
     }
@@ -72,7 +69,6 @@ public Mensajeria(int id, String contacto, String mensaje, String fecha, String 
     public void setRemitente(String remitente) {
         this.remitente = remitente;
     }
-
 }
 
 

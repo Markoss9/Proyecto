@@ -5,24 +5,34 @@
 package com.mycompany.proyecto;
 
 public class Tareas {
-    private int id;
+    private Identificador identificador; // Composición
     private String descripcion;
     private boolean completada;
     private String fechalimite;
 
-    public Tareas(int id, String descripcion, boolean completada, String fechalimite) {
-        this.id = id;
+    // Constructor
+    public Tareas(int id, String fecha, String descripcion, boolean completada, String fechalimite) {
+        this.identificador = new Identificador(id, fecha);
         this.descripcion = descripcion;
         this.completada = completada;
         this.fechalimite = fechalimite;
     }
 
+    // Getters y Setters
     public int getId() {
-        return id;
+        return identificador.getId();
     }
 
     public void setId(int id) {
-        this.id = id;
+        identificador.setId(id);
+    }
+
+    public String getFecha() {
+        return identificador.getFecha();
+    }
+
+    public void setFecha(String fecha) {
+        identificador.setFecha(fecha);
     }
 
     public String getDescripcion() {
@@ -48,6 +58,5 @@ public class Tareas {
     public void setFechalimite(String fechalimite) {
         this.fechalimite = fechalimite;
     }
-    
- 
 }
+
