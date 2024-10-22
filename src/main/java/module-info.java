@@ -4,4 +4,7 @@ module com.mycompany.proyecto {
 
     opens com.mycompany.proyecto to javafx.fxml;
     exports com.mycompany.proyecto;
+    requires java.sql;
+    requires java.desktop;
+    requires java.logging;
 }
