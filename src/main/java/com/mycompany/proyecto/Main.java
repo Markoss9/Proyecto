@@ -5,6 +5,8 @@
 package com.mycompany.proyecto;
 
 import java.sql.*;
+import igu.Pg1;
+
 public class Main {
 
 public static void main(String[] args) {
@@ -15,9 +17,9 @@ public static void main(String[] args) {
 	conn = DriverManager.getConnection("jdbc:sqlite:test01.sqlite");
 
 	if (conn != null)
-		System.out.println("Conexión a base de datos ... Ok");
+		System.out.println("Conexion a base de datos ... Ok");
         else
-                System.out.println("Conexión a base de datos: problemas!");
+                System.out.println("Conexion a base de datos: problemas!");
 
       conn.close();        //cerrar la BD
 
@@ -31,5 +33,11 @@ public static void main(String[] args) {
     catch (Exception ex) {
         System.out.println(ex);
     }
+    
+    Pg1 pantalla = new Pg1();
+    pantalla.setVisible(true);
+    pantalla.setLocationRelativeTo(null);
+    
+    
   }
 }
