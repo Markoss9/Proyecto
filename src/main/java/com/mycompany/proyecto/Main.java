@@ -5,7 +5,7 @@
 package com.mycompany.proyecto;
 
 import java.sql.*;
-import igu.Pg1;
+import igu.*;
 
 public class Main {
 
@@ -34,10 +34,8 @@ public static void main(String[] args) {
         System.out.println(ex);
     }
     
-    Pg1 pantalla = new Pg1();
-    pantalla.setVisible(true);
-    pantalla.setLocationRelativeTo(null);
-    
-    
+     Login login = new Login();
+     login.setVisible(true);
+     login.setLocationRelativeTo(null);
   }
 }
