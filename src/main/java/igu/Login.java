@@ -132,7 +132,15 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed
-        // TODO add your handling code here:
+        // Crear una instancia del formulario CrearUsuario
+        CrearUsuario crearUsuario = new CrearUsuario();
+        // Hacer visible el formulario CrearUsuario
+        crearUsuario.setVisible(true);
+        // Opcional: Cerrar o esconder el formulario actual (Login)
+        this.dispose(); // Esto cierra el formulario actual
+        // Centrar la interfaz
+        crearUsuario.setLocationRelativeTo(null);
+        
     }//GEN-LAST:event_btnCrearUsuarioActionPerformed
 
     private void btnIngresarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarSesionActionPerformed
@@ -145,6 +153,11 @@ public class Login extends javax.swing.JFrame {
 
    
 
+    
+    
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnCrearUsuario;
     private javax.swing.JToggleButton btnIngresarSesion;

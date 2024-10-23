@@ -10,13 +10,16 @@ import igu.*;
 public class Main {
 
 public static void main(String[] args) {
+    // Crear conexion a base de datos
     Conexion conexion = new Conexion();
-    conexion.conectar();
     
     
-     Login login = new Login();
-     login.setVisible(true);
-     login.setLocationRelativeTo(null);
+    // Crear la interfaz Login
+    Login login = new Login();
+    login.setVisible(true);
+    login.setLocationRelativeTo(null);
+    
+    
      
   }
 }

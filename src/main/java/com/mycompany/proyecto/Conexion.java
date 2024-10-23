@@ -1,33 +1,30 @@
 
 package com.mycompany.proyecto;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Conexion { 
-    public void conectar(){
-        
-    Connection conn = null;
-    try {
-	//cargar el driver
-        Class.forName("org.sqlite.JDBC");
-	conn = DriverManager.getConnection("jdbc:sqlite:test01.sqlite");
+    // Método que retorna la conexión
+    public static Connection getConnection() {
+        Connection conn = null;
+        try {
+            // Cargar el driver
+            Class.forName("org.sqlite.JDBC");
+            // Establecer la conexión
+            conn = DriverManager.getConnection("jdbc:sqlite:test01.sqlite");
 
-	if (conn != null)
-		System.out.println("Conexion a base de datos ... Ok");
-        else
-                System.out.println("Conexion a base de datos: problemas!");
-        
-      conn.close();        //cerrar la BD
-
-   }
-    catch (SQLException a) {
-       System.out.println(a);
-    }
-    catch (ClassNotFoundException ex) {
-       System.out.println(ex);
-    }
-    catch (Exception ex) {
-        System.out.println(ex);
-    }
+            if (conn != null) {
+                System.out.println("Conexión a base de datos ... Ok");
+            }
+        } catch (SQLException a) {
+            System.out.println("Error SQL: " + a.getMessage());
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Error: Clase no encontrada " + ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+        return conn; // Retornar la conexión
     }
 }
