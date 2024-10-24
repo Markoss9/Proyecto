@@ -75,25 +75,36 @@ public class Notas {
         this.fechaModificacion = fechaModificacion;
     }
 
+
     // Método para crear una nueva nota
-    public void crearNota(String titulo, String contenido) {
+    public void crearNota(String titulo, String contenido, Connection conexion) throws SQLException {
         this.titulo = titulo;
         this.contenido = contenido;
         this.fechaCreacion = LocalDate.now();  // Captura la fecha actual de creación
+        this.fechaModificacion = null; // Puedes inicializarla a null o dejarla como está
+
+        // Guardar la nota en la base de datos
+        guardarEnBaseDatos(conexion);
     }
 
     // Método para editar una nota existente
-    public void editarNota(String nuevoContenido) {
+    public void editarNota(String nuevoContenido, Connection conexion) throws SQLException {
         this.contenido = nuevoContenido;
         this.fechaModificacion = LocalDate.now();  // Actualiza la fecha de modificación
+
+        // Actualizar la nota en la base de datos
+        actualizarEnBaseDatos(conexion);
     }
 
-    // Método para eliminar el contenido de una nota en la memoria (nivel de aplicación)
-    public void eliminarNota() {
+    // Método para eliminar el contenido de una nota en la memoria 
+    public void eliminarNota(Connection conexion) throws SQLException {
         this.titulo = null;
         this.contenido = null;
         this.fechaCreacion = null;
         this.fechaModificacion = null;
+           
+    // Eliminar la nota de la base de datos
+     eliminarDeBaseDatos(conexion);
     }
 
     // Método para mostrar la información de la nota
@@ -103,7 +114,7 @@ public class Notas {
                (this.fechaModificacion != null ? "\nFecha de modificación: " + this.fechaModificacion : "");
     }
 
-    // Método para buscar una nota por su título (útil a nivel de aplicación)
+    // Método para buscar una nota por su título 
     public boolean buscarNota(String tituloBuscado) {
         return this.titulo != null && this.titulo.equalsIgnoreCase(tituloBuscado);
     }

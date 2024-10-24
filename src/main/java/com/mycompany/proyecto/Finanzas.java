@@ -11,7 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Finanzas {
-    private int id; 
+
+    private int id;
     private float ingreso;
     private float gastos;
     private float saldo;
@@ -77,10 +78,10 @@ public class Finanzas {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return new Finanzas(
-                    rs.getInt("id"),
-                    rs.getFloat("ingreso"),
-                    rs.getFloat("gastos"),
-                    rs.getFloat("saldo")
+                        rs.getInt("id"),
+                        rs.getFloat("ingreso"),
+                        rs.getFloat("gastos"),
+                        rs.getFloat("saldo")
                 );
             }
         }
@@ -112,30 +113,79 @@ public class Finanzas {
     public static ArrayList<Finanzas> listarFinanzas(Connection connection) throws SQLException {
         ArrayList<Finanzas> listaFinanzas = new ArrayList<>(); // Definimos un ArrayList directamente
         String sql = "SELECT * FROM finanzas";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery()) {
+        try (PreparedStatement pstmt = connection.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
                 Finanzas finanzas = new Finanzas(
-                    rs.getInt("id"),
-                    rs.getFloat("ingreso"),
-                    rs.getFloat("gastos"),
-                    rs.getFloat("saldo")
+                        rs.getInt("id"),
+                        rs.getFloat("ingreso"),
+                        rs.getFloat("gastos"),
+                        rs.getFloat("saldo")
                 );
                 listaFinanzas.add(finanzas); // Añadimos el objeto Finanzas al ArrayList
             }
         }
         return listaFinanzas; // Retornamos el ArrayList
-}
+    }
 
-
-    // Puedes añadir un método toString() para facilitar la impresión
+    // Metodo to string para facilitar la impresion
     @Override
     public String toString() {
-        return "Finanzas{" +
-                "id=" + id +
-                ", ingreso=" + ingreso +
-                ", gastos=" + gastos +
-                ", saldo=" + saldo +
-                '}';
+        return "Finanzas{"
+                + "id=" + id
+                + ", ingreso=" + ingreso
+                + ", gastos=" + gastos
+                + ", saldo=" + saldo
+                + '}';
     }
+
+    // Método para agregar ingreso
+    public void agregarIngreso(float nuevoIngreso, Connection connection) throws SQLException {
+        this.ingreso += nuevoIngreso;
+        this.saldo += nuevoIngreso; // Actualizamos el saldo
+        actualizarFinanzas(connection); // Guardamos los cambios en la base de datos
+    }
+
+    // Método para agregar gasto
+    public void agregarGasto(float nuevoGasto, Connection connection) throws SQLException {
+        this.gastos += nuevoGasto;
+        this.saldo -= nuevoGasto; // Actualizamos el saldo
+        actualizarFinanzas(connection); // Guardamos los cambios en la base de datos
+    }
+
+    // Método para el balance financiero
+    public float obtenerBalance() {
+        return this.ingreso - this.gastos; // También puedes usar saldo directamente
+    }
+    
+    // Método para obtener el total de ingresos
+    public static float obtenerTotalIngresos(Connection connection) throws SQLException {
+        float total = 0;
+        String sql = "SELECT SUM(ingreso) AS totalIngresos FROM finanzas";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                total = rs.getFloat("totalIngresos");
+            }
+        }
+        return total;
+    }
+    // Método para obtener el total de gastos
+    public static float obtenerTotalGastos(Connection connection) throws SQLException {
+        float total = 0;
+        String sql = "SELECT SUM(gastos) AS totalGastos FROM finanzas";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                total = rs.getFloat("totalGastos");
+            }
+        }
+        return total;
+    }
+    
+    // Método para resetear los valores financieros
+    public void resetearFinanzas(Connection connection) throws SQLException {
+    this.ingreso = 0;
+    this.gastos = 0;
+    this.saldo = 0;
+    actualizarFinanzas(connection); // Guardamos los cambios en la base de datos
+}
+
 }
