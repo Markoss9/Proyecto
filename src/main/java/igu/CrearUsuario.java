@@ -142,10 +142,12 @@ public class CrearUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+     
       // Obtener los valores ingresados en los campos de texto
       String nombreDeUsuario = txtNombreDeUsuario.getText(); 
       String correoElectronico = txtCorreoElectronico.getText(); 
       String contrasena = new String(txtContraseña.getPassword()); 
+      
       // Validar que los campos no estén vacíos
       if(nombreDeUsuario.isEmpty() || correoElectronico.isEmpty() || contrasena.isEmpty()) {
           JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios.");
@@ -176,6 +178,11 @@ public class CrearUsuario extends javax.swing.JFrame {
         
         if (rowsInserted > 0) {
             JOptionPane.showMessageDialog(this, "Usuario registrado exitosamente.");
+            // Redirigir al formulario Login
+            Login loginForm = new Login(); // Instancia del formulario de Login
+            loginForm.setVisible(true);    // Mostrar el formulario de Login
+            loginForm.setLocationRelativeTo(null);
+            dispose();                     // Cerrar el formulario actual (CrearUsuario)
         }
         
       } catch (SQLException e) {
