@@ -1,5 +1,5 @@
 
-package igu;
+package Paneles;
 
 import com.mycompany.proyecto.Notas; // Se importa la clase notas
 import java.time.LocalDate;
