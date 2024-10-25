@@ -112,7 +112,7 @@ public class DatosPersonales extends javax.swing.JFrame {
                 .addComponent(btnCorreoElectronico)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -130,7 +130,15 @@ public class DatosPersonales extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocumentoActionPerformed
-        // TODO add your handling code here:
+        // Crear una instancia del panel Documento
+        Documento documento = new Documento();
+    
+        // Centrar la ventana en la pantalla
+        documento.setLocationRelativeTo(null);
+    
+        // Mostrar el panel
+        documento.setVisible(true);
+        
     }//GEN-LAST:event_btnDocumentoActionPerformed
 
     private void btnTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTelefonoActionPerformed
