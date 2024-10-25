@@ -1,40 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.mycompany.proyecto;
+
+import static com.mycompany.proyecto.Conexion.getConnection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class Usuario {
-    private Identificador identificador; // Opcional
     private String nombre;
     private String correo;
     private String contraseña;
 
     // Constructor
-    public Usuario(int id, String fecha, String nombre, String correo, String contraseña) {
-        this.identificador = new Identificador(id, fecha); // Si decides incluirlo
+    public Usuario(String nombre, String correo, String contraseña) {
         this.nombre = nombre;
         this.correo = correo;
         this.contraseña = contraseña;
     }
 
     // Getters y Setters
-    public int getId() {
-        return identificador.getId();
-    }
-
-    public void setId(int id) {
-        identificador.setId(id);
-    }
-
-    public String getFecha() {
-        return identificador.getFecha();
-    }
-
-    public void setFecha(String fecha) {
-        identificador.setFecha(fecha);
-    }
 
     public String getNombre() {
         return nombre;
@@ -59,5 +44,22 @@ public class Usuario {
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
     }
+    //-------------------------------------------------------------------------
+    public void CrearUsuario(){
+  
+    }
+    //-------------------------------------------------------------------------
+    public static boolean validarUsuario(String nombre, String contrasena) {
+        String sql = "SELECT * FROM usuarios WHERE nombre = ? AND contrasena = ?";
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setString(1, nombre);
+            stmt.setString(2, contrasena);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next(); // Retorna true si encuentra al usuario
+        } catch (SQLException e) {
+            System.out.println("Error al validar usuario: " + e.getMessage());
+            return false;
+        }
+    }     
 }
 

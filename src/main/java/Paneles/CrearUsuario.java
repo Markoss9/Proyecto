@@ -1,5 +1,5 @@
 
-package igu;
+package Paneles;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import com.mycompany.proyecto.Conexion;
@@ -142,7 +142,8 @@ public class CrearUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-     
+
+      
       // Obtener los valores ingresados en los campos de texto
       String nombreDeUsuario = txtNombreDeUsuario.getText(); 
       String correoElectronico = txtCorreoElectronico.getText(); 

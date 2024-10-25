@@ -1,8 +1,9 @@
 
-package igu;
+package Paneles;
 
 import com.mycompany.proyecto.Conexion;
-import igu.CrearUsuario;
+import com.mycompany.proyecto.Usuario;
+import Paneles.CrearUsuario;
 
 public class Login extends javax.swing.JFrame {
     
@@ -14,6 +15,7 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -24,6 +26,8 @@ public class Login extends javax.swing.JFrame {
         btnCrearUsuario = new javax.swing.JToggleButton();
         btnIngresarSesion = new javax.swing.JToggleButton();
         txtContrasenia = new javax.swing.JPasswordField();
+
+        jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -149,7 +153,7 @@ public class Login extends javax.swing.JFrame {
     private void btnIngresarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarSesionActionPerformed
         String nombre = txtUsuario.getText();
         String contrasena = new String(txtContrasenia.getPassword());
-        if (Conexion.validarUsuario(nombre, contrasena)) {
+        if (Usuario.validarUsuario(nombre, contrasena)) {
         // Usuario válido, abrir el panel Principal
             Principal principal = new Principal();
             principal.setVisible(true);
@@ -176,6 +180,7 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnCrearUsuario;
     private javax.swing.JToggleButton btnIngresarSesion;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
