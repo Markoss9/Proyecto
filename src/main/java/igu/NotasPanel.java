@@ -5,34 +5,16 @@ import com.mycompany.proyecto.Notas; // Se importa la clase notas
 import java.time.LocalDate;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class NotasPanel extends javax.swing.JPanel {
 
-    private Notas notasUsuario; // Intanciamos para poder manejar las notas
-    private Connection conexion; // La conexion a la base de datos 
+    private Notas notasUsuario; // Instanciamos para poder manejar las notas
+    private Connection conexion; // La conexión a la base de datos 
 
-    public NotasPanel() {
+    public NotasPanel(Connection conexion) { // Recibimos la conexion en el constructor 
         initComponents();
-        this.conexion = conexion; // Iniciamos la conexion
+        this.conexion = conexion; // Asignamos la conexión existente
     }
-
-    // Método para verificar la conexión a la base de datos
-    public boolean verificarConexion() {
-        try {
-            if (conexion != null && !conexion.isClosed()) {
-                System.out.println("Conexión a la base de datos exitosa.");
-                return true;
-            } else {
-                System.out.println("Conexión a la base de datos fallida.");
-                return false;
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al verificar la conexión: " + e.getMessage());
-            return false;
-        }
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -114,20 +96,16 @@ public class NotasPanel extends javax.swing.JPanel {
     // Método para crear una nota
     private void btnCrearNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearNotaActionPerformed
 
-        if (verificarConexion()) {
-            // Lógica para crear una nota
-            String titulo = "Mi Nota";  // Esto podría venir de un campo de texto en la interfaz
-            String contenido = "Este es el contenido de mi nota";
-            notasUsuario = new Notas(1, "fechaActual", titulo, contenido, LocalDate.now(), null);
+        // Lógica para crear una nota
+        String titulo = "Mi Nota";  // Esto podría venir de un campo de texto en la interfaz
+        String contenido = "Este es el contenido de mi nota";
+        notasUsuario = new Notas(1, "fechaActual", titulo, contenido, LocalDate.now(), null);
 
-            try {
-                notasUsuario.crearNota(titulo, contenido, conexion);  // Crear la nota en la base de datos
-                System.out.println("Nota creada: " + notasUsuario.mostrarNota());
-            } catch (SQLException e) {
-                System.out.println("Error al crear la nota: " + e.getMessage());
-            }
-        } else {
-            System.out.println("No se pudo establecer conexión con la base de datos.");
+        try {
+            notasUsuario.crearNota(titulo, contenido, conexion);  // Crear la nota en la base de datos
+            System.out.println("Nota creada: " + notasUsuario.mostrarNota());
+        } catch (SQLException e) {
+            System.out.println("Error al crear la nota: " + e.getMessage());
         }
 
         // Mostrar mensaje o feedback
@@ -137,45 +115,36 @@ public class NotasPanel extends javax.swing.JPanel {
     // Método para ver la nota deseada
     private void btnVerNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerNotaActionPerformed
         
-        if (verificarConexion()) {
         if (notasUsuario != null) {
             System.out.println("Ver Nota: " + notasUsuario.mostrarNota());
         } else {
             System.out.println("No hay nota creada.");
         }
-    } else {
-        System.out.println("No se pudo establecer conexión con la base de datos.");
-    }
     }//GEN-LAST:event_btnVerNotaActionPerformed
 
     // Método para editar alguna nota existente
     private void btnEditarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarNotaActionPerformed
         
-        if (verificarConexion()) {
-            if (notasUsuario != null) {
-                if (notasUsuario.getTitulo() != null && notasUsuario.getContenido() != null) {
-                    String nuevoContenido = "Nuevo contenido de la nota";  // Este debe ser un String válido
-                    try {
-                        notasUsuario.editarNota(nuevoContenido, conexion);  // Editar la nota en la base de datos
-                        System.out.println("Nota editada: " + notasUsuario.mostrarNota());
-                    } catch (SQLException e) {
-                        System.out.println("Error al editar la nota: " + e.getMessage());
-                    }
-                } else {
-                    System.out.println("La nota no tiene un título o contenido válido.");
+         if (notasUsuario != null) {
+            if (notasUsuario.getTitulo() != null && notasUsuario.getContenido() != null) {
+                String nuevoContenido = "Nuevo contenido de la nota";  // Este debe ser un String válido
+                try {
+                    notasUsuario.editarNota(nuevoContenido, conexion);  // Editar la nota en la base de datos
+                    System.out.println("Nota editada: " + notasUsuario.mostrarNota());
+                } catch (SQLException e) {
+                    System.out.println("Error al editar la nota: " + e.getMessage());
                 }
             } else {
-                System.out.println("No hay nota creada para editar.");
+                System.out.println("La nota no tiene un título o contenido válido.");
             }
         } else {
-            System.out.println("No se pudo establecer conexión con la base de datos.");
+            System.out.println("No hay nota creada para editar.");
         }
     }//GEN-LAST:event_btnEditarNotaActionPerformed
 
     // Método para eliminar una nota
     private void btnEliminarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarNotaActionPerformed
         
-        if (verificarConexion()) {
         if (notasUsuario != null) {
             try {
                 notasUsuario.eliminarNota(conexion);  // Elimina el contenido a nivel de aplicación
@@ -187,9 +156,6 @@ public class NotasPanel extends javax.swing.JPanel {
         } else {
             System.out.println("No hay nota para eliminar.");
         }
-    } else {
-        System.out.println("No se pudo establecer conexión con la base de datos.");
-    }
     }//GEN-LAST:event_btnEliminarNotaActionPerformed
 
 
