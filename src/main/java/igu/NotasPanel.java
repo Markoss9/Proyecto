@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 public class NotasPanel extends javax.swing.JPanel {
 
-    private Notas notaActual; // Intanciamos para poder manejar las notas
+    private Notas notasUsuario; // Intanciamos para poder manejar las notas
     private Connection conexion; // La conexion a la base de datos 
 
     public NotasPanel() {
@@ -43,7 +43,7 @@ public class NotasPanel extends javax.swing.JPanel {
         btnEliminarNota = new javax.swing.JButton();
         btnVerNota = new javax.swing.JButton();
 
-        jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("NOTAS");
         jLabel1.setToolTipText("");
@@ -118,11 +118,11 @@ public class NotasPanel extends javax.swing.JPanel {
             // Lógica para crear una nota
             String titulo = "Mi Nota";  // Esto podría venir de un campo de texto en la interfaz
             String contenido = "Este es el contenido de mi nota";
-            notaActual = new Notas(1, "fechaActual", titulo, contenido, LocalDate.now(), null);
+            notasUsuario = new Notas(1, "fechaActual", titulo, contenido, LocalDate.now(), null);
 
             try {
-                notaActual.crearNota(titulo, contenido, conexion);  // Crear la nota en la base de datos
-                System.out.println("Nota creada: " + notaActual.mostrarNota());
+                notasUsuario.crearNota(titulo, contenido, conexion);  // Crear la nota en la base de datos
+                System.out.println("Nota creada: " + notasUsuario.mostrarNota());
             } catch (SQLException e) {
                 System.out.println("Error al crear la nota: " + e.getMessage());
             }
@@ -131,14 +131,15 @@ public class NotasPanel extends javax.swing.JPanel {
         }
 
         // Mostrar mensaje o feedback
-        System.out.println("Nota creada: " + notaActual.mostrarNota());
+        System.out.println("Nota creada: " + notasUsuario.mostrarNota());
     }//GEN-LAST:event_btnCrearNotaActionPerformed
 
     // Método para ver la nota deseada
     private void btnVerNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerNotaActionPerformed
+        
         if (verificarConexion()) {
-        if (notaActual != null) {
-            System.out.println("Ver Nota: " + notaActual.mostrarNota());
+        if (notasUsuario != null) {
+            System.out.println("Ver Nota: " + notasUsuario.mostrarNota());
         } else {
             System.out.println("No hay nota creada.");
         }
@@ -149,13 +150,14 @@ public class NotasPanel extends javax.swing.JPanel {
 
     // Método para editar alguna nota existente
     private void btnEditarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarNotaActionPerformed
+        
         if (verificarConexion()) {
-            if (notaActual != null) {
-                if (notaActual.getTitulo() != null && notaActual.getContenido() != null) {
+            if (notasUsuario != null) {
+                if (notasUsuario.getTitulo() != null && notasUsuario.getContenido() != null) {
                     String nuevoContenido = "Nuevo contenido de la nota";  // Este debe ser un String válido
                     try {
-                        notaActual.editarNota(nuevoContenido, conexion);  // Editar la nota en la base de datos
-                        System.out.println("Nota editada: " + notaActual.mostrarNota());
+                        notasUsuario.editarNota(nuevoContenido, conexion);  // Editar la nota en la base de datos
+                        System.out.println("Nota editada: " + notasUsuario.mostrarNota());
                     } catch (SQLException e) {
                         System.out.println("Error al editar la nota: " + e.getMessage());
                     }
@@ -172,12 +174,13 @@ public class NotasPanel extends javax.swing.JPanel {
 
     // Método para eliminar una nota
     private void btnEliminarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarNotaActionPerformed
+        
         if (verificarConexion()) {
-        if (notaActual != null) {
+        if (notasUsuario != null) {
             try {
-                notaActual.eliminarNota(conexion);  // Elimina el contenido a nivel de aplicación
+                notasUsuario.eliminarNota(conexion);  // Elimina el contenido a nivel de aplicación
                 System.out.println("Nota eliminada.");
-                notaActual = null;  // Para limpiar la instancia actual y evitar errores posteriores
+                notasUsuario = null;  // Para limpiar la instancia actual y evitar errores posteriores
             } catch (SQLException e) {
                 System.out.println("Error al eliminar la nota: " + e.getMessage());
             }

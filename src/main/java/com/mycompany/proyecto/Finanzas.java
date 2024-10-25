@@ -17,7 +17,15 @@ public class Finanzas {
     private float gastos;
     private float saldo;
 
-    // Constructor
+    // Constructor sin parámetros
+    public Finanzas() {
+        this.id = 0; // O cualquier valor por defecto que desees
+        this.ingreso = 0.0f;
+        this.gastos = 0.0f;
+        this.saldo = 0.0f;
+    }
+    
+    // Constructor con parámetros
     public Finanzas(int id, float ingreso, float gastos, float saldo) {
         this.id = id;
         this.ingreso = ingreso;
@@ -57,6 +65,20 @@ public class Finanzas {
     public void setSaldo(float saldo) {
         this.saldo = saldo;
     }
+    
+        // Método para agregar ingreso
+    public void agregarIngreso(float nuevoIngreso, Connection connection) throws SQLException {
+        this.ingreso += nuevoIngreso;
+        this.saldo += nuevoIngreso; // Actualizamos el saldo
+        actualizarFinanzas(connection); // Guardamos los cambios en la base de datos
+    }
+
+    // Método para agregar gasto
+    public void agregarGasto(float nuevoGasto, Connection connection) throws SQLException {
+        this.gastos += nuevoGasto;
+        this.saldo -= nuevoGasto; // Actualizamos el saldo
+        actualizarFinanzas(connection); // Guardamos los cambios en la base de datos
+    }
 
     // Método para guardar los datos de Finanzas en la base de datos
     public void guardarFinanzas(Connection connection) throws SQLException {
@@ -69,7 +91,7 @@ public class Finanzas {
             pstmt.executeUpdate();
         }
     }
-
+    
     // Método para obtener los datos de Finanzas desde la base de datos
     public static Finanzas obtenerFinanzas(Connection connection, int id) throws SQLException {
         String sql = "SELECT * FROM finanzas WHERE id = ?";
@@ -138,25 +160,15 @@ public class Finanzas {
                 + '}';
     }
 
-    // Método para agregar ingreso
-    public void agregarIngreso(float nuevoIngreso, Connection connection) throws SQLException {
-        this.ingreso += nuevoIngreso;
-        this.saldo += nuevoIngreso; // Actualizamos el saldo
-        actualizarFinanzas(connection); // Guardamos los cambios en la base de datos
-    }
-
-    // Método para agregar gasto
-    public void agregarGasto(float nuevoGasto, Connection connection) throws SQLException {
-        this.gastos += nuevoGasto;
-        this.saldo -= nuevoGasto; // Actualizamos el saldo
-        actualizarFinanzas(connection); // Guardamos los cambios en la base de datos
-    }
-
     // Método para el balance financiero
     public float obtenerBalance() {
-        return this.ingreso - this.gastos; // También puedes usar saldo directamente
+        float balance;
+        balance = this.ingreso - this.gastos;
+        System.out.println("Balance financiero: " + balance);
+        return balance;
+
     }
-    
+
     // Método para obtener el total de ingresos
     public static float obtenerTotalIngresos(Connection connection) throws SQLException {
         float total = 0;
@@ -168,6 +180,7 @@ public class Finanzas {
         }
         return total;
     }
+
     // Método para obtener el total de gastos
     public static float obtenerTotalGastos(Connection connection) throws SQLException {
         float total = 0;
@@ -179,13 +192,13 @@ public class Finanzas {
         }
         return total;
     }
-    
+
     // Método para resetear los valores financieros
     public void resetearFinanzas(Connection connection) throws SQLException {
-    this.ingreso = 0;
-    this.gastos = 0;
-    this.saldo = 0;
-    actualizarFinanzas(connection); // Guardamos los cambios en la base de datos
-}
+        this.ingreso = 0;
+        this.gastos = 0;
+        this.saldo = 0;
+        actualizarFinanzas(connection); // Guardamos los cambios en la base de datos
+    }
 
 }
