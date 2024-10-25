@@ -17,15 +17,15 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="69" max="32767" attributes="0"/>
+              <EmptySpace pref="55" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnEliminarNota" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnEditarNota" min="-2" pref="128" max="-2" attributes="0"/>
-                  <Component id="btnCrearNota" min="-2" pref="128" max="-2" attributes="0"/>
-                  <Component id="jLabel1" min="-2" pref="128" max="-2" attributes="0"/>
-                  <Component id="btnVerNota" min="-2" pref="128" max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" pref="150" max="-2" attributes="0"/>
+                  <Component id="btnEliminarNota" min="-2" pref="150" max="-2" attributes="0"/>
+                  <Component id="btnEditarNota" min="-2" pref="150" max="-2" attributes="0"/>
+                  <Component id="btnCrearNota" min="-2" pref="150" max="-2" attributes="0"/>
+                  <Component id="btnVerNota" min="-2" pref="150" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -42,7 +42,7 @@
               <Component id="btnEliminarNota" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnVerNota" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="50" max="32767" attributes="0"/>
+              <EmptySpace pref="30" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -51,7 +51,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Arial" size="18" style="3"/>
+          <Font name="Arial Black" size="18" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="NOTAS"/>
@@ -61,7 +61,7 @@
     <Component class="javax.swing.JButton" name="btnCrearNota">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Arial" size="14" style="1"/>
+          <Font name="Arial Black" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Crear Nota"/>
       </Properties>
@@ -72,7 +72,7 @@
     <Component class="javax.swing.JButton" name="btnEditarNota">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Arial" size="14" style="1"/>
+          <Font name="Arial Black" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Editar Nota"/>
       </Properties>
@@ -83,7 +83,7 @@
     <Component class="javax.swing.JButton" name="btnEliminarNota">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Arial" size="14" style="1"/>
+          <Font name="Arial Black" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Eliminar Nota"/>
       </Properties>
@@ -94,7 +94,7 @@
     <Component class="javax.swing.JButton" name="btnVerNota">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Arial" size="14" style="1"/>
+          <Font name="Arial Black" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Ver Nota"/>
       </Properties>

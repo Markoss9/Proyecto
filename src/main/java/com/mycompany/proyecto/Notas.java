@@ -78,7 +78,7 @@ public class Notas {
         this.titulo = titulo;
         this.contenido = contenido;
         this.fechaCreacion = LocalDate.now();  // Captura la fecha actual de creación
-        this.fechaModificacion = null; // Puedes inicializarla a null o dejarla como está
+        this.fechaModificacion = null; 
 
         // Guardar la nota en la base de datos
         guardarEnBaseDatos(conexion);

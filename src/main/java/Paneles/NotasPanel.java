@@ -25,12 +25,12 @@ public class NotasPanel extends javax.swing.JPanel {
         btnEliminarNota = new javax.swing.JButton();
         btnVerNota = new javax.swing.JButton();
 
-        jLabel1.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("NOTAS");
         jLabel1.setToolTipText("");
 
-        btnCrearNota.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnCrearNota.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         btnCrearNota.setText("Crear Nota");
         btnCrearNota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -38,7 +38,7 @@ public class NotasPanel extends javax.swing.JPanel {
             }
         });
 
-        btnEditarNota.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnEditarNota.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         btnEditarNota.setText("Editar Nota");
         btnEditarNota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -46,7 +46,7 @@ public class NotasPanel extends javax.swing.JPanel {
             }
         });
 
-        btnEliminarNota.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnEliminarNota.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         btnEliminarNota.setText("Eliminar Nota");
         btnEliminarNota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -54,7 +54,7 @@ public class NotasPanel extends javax.swing.JPanel {
             }
         });
 
-        btnVerNota.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnVerNota.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         btnVerNota.setText("Ver Nota");
         btnVerNota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -67,14 +67,14 @@ public class NotasPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(69, Short.MAX_VALUE)
+                .addContainerGap(55, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEliminarNota)
-                    .addComponent(btnEditarNota, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCrearNota, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVerNota, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(58, 58, 58))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminarNota, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditarNota, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCrearNota, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVerNota, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(55, 55, 55))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,7 +89,7 @@ public class NotasPanel extends javax.swing.JPanel {
                 .addComponent(btnEliminarNota)
                 .addGap(18, 18, 18)
                 .addComponent(btnVerNota)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
