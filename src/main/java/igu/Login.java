@@ -1,6 +1,7 @@
 
 package igu;
 
+import com.mycompany.proyecto.Conexion;
 import igu.CrearUsuario;
 
 public class Login extends javax.swing.JFrame {
@@ -146,7 +147,19 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrearUsuarioActionPerformed
 
     private void btnIngresarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarSesionActionPerformed
-        // TODO add your handling code here:
+        String nombre = txtUsuario.getText();
+        String contrasena = new String(txtContrasenia.getPassword());
+        if (Conexion.validarUsuario(nombre, contrasena)) {
+        // Usuario válido, abrir el panel Principal
+            Principal principal = new Principal();
+            principal.setVisible(true);
+            principal.setLocationRelativeTo(null);
+            this.dispose(); // Cierra la ventana Login        
+        } else {
+            // Mostrar un mensaje de error si el usuario no es válido
+            javax.swing.JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", 
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnIngresarSesionActionPerformed
 
     private void txtContraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseniaActionPerformed

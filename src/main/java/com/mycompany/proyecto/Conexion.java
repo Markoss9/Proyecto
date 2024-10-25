@@ -3,6 +3,8 @@ package com.mycompany.proyecto;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Conexion { 
@@ -27,4 +29,17 @@ public class Conexion {
         }
         return conn; // Retornar la conexión
     }
+    
+    public static boolean validarUsuario(String nombre, String contrasena) {
+        String sql = "SELECT * FROM usuarios WHERE nombre = ? AND contrasena = ?";
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
+            stmt.setString(1, nombre);
+            stmt.setString(2, contrasena);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next(); // Retorna true si encuentra al usuario
+        } catch (SQLException e) {
+            System.out.println("Error al validar usuario: " + e.getMessage());
+            return false;
+        }
+    }        
 }
