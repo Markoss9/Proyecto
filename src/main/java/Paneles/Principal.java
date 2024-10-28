@@ -1,6 +1,11 @@
 
 package Paneles;
 
+//import javax.swing.JFrame;
+
+import com.mycompany.proyecto.Salud;
+
+
 
 public class Principal extends javax.swing.JFrame {
 
@@ -213,7 +218,22 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRecordatorioActionPerformed
 
     private void btnSaludActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaludActionPerformed
-        // TODO add your handling code here:
+        //instancioamos salud
+        Salud salud = new Salud();
+        SaludPanel saludPanel = new SaludPanel(salud);
+        
+        //titulo de la ventana
+        //salud.setTitle("SaludPanel");
+        //con esto no se cierran todas las ventanas cuando cerramos una
+        //salud.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        //esto se puede dejar aca o agregar en cada panel de jform
+        //pero hace falta import javax.swing.JFrame;
+        
+        //centramos la ventana
+        saludPanel.setLocationRelativeTo(null);
+        
+        //mostramos la ventana salud
+        saludPanel.setVisible(true);
     }//GEN-LAST:event_btnSaludActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
