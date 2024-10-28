@@ -18,7 +18,7 @@ public class Conexion {
             conn = DriverManager.getConnection("jdbc:sqlite:test01.sqlite");
 
             if (conn != null) {
-                System.out.println("Conexión a base de datos ... Ok");
+                System.out.println("Conexion a base de datos ... Ok");
             }
         } catch (SQLException a) {
             System.out.println("Error SQL: " + a.getMessage());
