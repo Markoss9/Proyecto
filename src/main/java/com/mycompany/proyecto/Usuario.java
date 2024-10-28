@@ -49,17 +49,23 @@ public class Usuario {
   
     }
     //-------------------------------------------------------------------------
-    public static boolean validarUsuario(String nombre, String contrasena) {
-        String sql = "SELECT * FROM usuarios WHERE nombre = ? AND contrasena = ?";
+    public static boolean validarUsuario(String dni, String contrasena) {
+        String sql = "SELECT * FROM usuarios WHERE dni = ? AND contrasena = ?";
         try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
-            stmt.setString(1, nombre);
-            stmt.setString(2, contrasena);
+            stmt.setString(1, dni.trim());
+            stmt.setString(2, contrasena.trim());
             ResultSet rs = stmt.executeQuery();
-            return rs.next(); // Retorna true si encuentra al usuario
+            if (rs.next()) {
+                System.out.println("Usuario encontrado: " + rs.getString("dni"));
+                return true; // Usuario encontrado
+            } else {
+                System.out.println("Usuario no encontrado o datos incorrectos.");
+                return false; // No se encontró al usuario
+            }
         } catch (SQLException e) {
             System.out.println("Error al validar usuario: " + e.getMessage());
             return false;
         }
-    }     
+    }
 }
 
