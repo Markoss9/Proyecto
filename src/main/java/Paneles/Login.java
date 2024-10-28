@@ -20,7 +20,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtUsuario = new javax.swing.JTextField();
+        txtDni = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         btnCrearUsuario = new javax.swing.JToggleButton();
@@ -32,7 +32,7 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel2.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-        jLabel2.setText("USUARIO:");
+        jLabel2.setText("DNI:");
 
         jLabel3.setFont(new java.awt.Font("Arial Black", 2, 36)); // NOI18N
         jLabel3.setText("LOGIN");
@@ -86,7 +86,7 @@ public class Login extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addGap(40, 40, 40)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtUsuario)
+                                    .addComponent(txtDni)
                                     .addComponent(txtContrasenia))))))
                 .addGap(27, 27, 27))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -104,7 +104,7 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -151,19 +151,35 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrearUsuarioActionPerformed
 
     private void btnIngresarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarSesionActionPerformed
-        String nombre = txtUsuario.getText();
-        String contrasena = new String(txtContrasenia.getPassword());
-        if (Usuario.validarUsuario(nombre, contrasena)) {
-        // Usuario válido, abrir el panel Principal
-            Principal principal = new Principal();
-            principal.setVisible(true);
-            principal.setLocationRelativeTo(null);
-            this.dispose(); // Cierra la ventana Login        
-        } else {
-            // Mostrar un mensaje de error si el usuario no es válido
-            javax.swing.JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos", "Error", 
-            javax.swing.JOptionPane.ERROR_MESSAGE);
+        // Obtener el DNI y la contraseña ingresados
+        String dni = txtDni.getText().trim();
+        String contrasena = new String(txtContrasenia.getPassword()).trim();
+
+       // Validar que los campos no estén vacíos
+        if (dni.isEmpty() || contrasena.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Por favor, ingrese su DNI y contraseña.", 
+                "Campos Vacíos", javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
         }
+        
+        // Validar usuario usando el DNI
+        boolean esValido = Usuario.validarUsuario(dni, contrasena);
+        
+        if (esValido) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Bienvenido al sistema.", "Login Exitoso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        
+        // Usuario válido, abrir el panel Principal
+        Principal principal = new Principal();
+        principal.setVisible(true);
+        principal.setLocationRelativeTo(null);
+        this.dispose(); // Cerrar la ventana de Login
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "DNI o contraseña incorrectos.", "Error de Autenticación", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+
     }//GEN-LAST:event_btnIngresarSesionActionPerformed
 
     private void txtContraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseniaActionPerformed
@@ -188,6 +204,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPasswordField txtContrasenia;
-    private javax.swing.JTextField txtUsuario;
+    private javax.swing.JTextField txtDni;
     // End of variables declaration//GEN-END:variables
 }
