@@ -5,13 +5,17 @@ package Paneles;
 
 import com.mycompany.proyecto.Salud;
 
+import java.sql.Connection;
 
 
 public class Principal extends javax.swing.JFrame {
 
+
+    private NotasPanel panelNotas;
     
     public Principal() {
         initComponents();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -201,12 +205,14 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+       
     private void btnMetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMetasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnMetasActionPerformed
 
     private void btnNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotasActionPerformed
-        // TODO add your handling code here:
+        
+       
     }//GEN-LAST:event_btnNotasActionPerformed
 
     private void btnTareasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTareasActionPerformed
