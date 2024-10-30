@@ -1,21 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.proyecto;
 
 
 public class Salud {
     private float peso;
     private float altura;
-    private String caloriasconsumidas;
-    private String caloriasquemadas;
+    private float caloriasconsumidas;
+    private float caloriasquemadas;
+
+    public Salud() {
+    }
     
-public Salud (float peso, float altura, String caloriasconsumidas, String caloriasquemadas){
+    
+public Salud (float peso, float altura){
     this.peso = peso;
     this.altura = altura;
-    this.caloriasconsumidas = caloriasconsumidas;
-    this.caloriasquemadas = caloriasquemadas;
+    this.caloriasconsumidas = 0;
+    this.caloriasquemadas = 0;
 }
 
     public float getPeso() {
@@ -34,21 +34,45 @@ public Salud (float peso, float altura, String caloriasconsumidas, String calori
         this.altura = altura;
     }
 
-    public String getCaloriasconsumidas() {
+    public float getCaloriasconsumidas() {
         return caloriasconsumidas;
     }
 
-    public void setCaloriasconsumidas(String caloriasconsumidas) {
+    public void setCaloriasconsumidas(float caloriasconsumidas) {
         this.caloriasconsumidas = caloriasconsumidas;
     }
 
-    public String getCaloriasquemadas() {
+    public float getCaloriasquemadas() {
         return caloriasquemadas;
     }
 
-    public void setCaloriasquemadas(String caloriasquemadas) {
+    public void setCaloriasquemadas(float caloriasquemadas) {
         this.caloriasquemadas = caloriasquemadas;
     }
 
-
+    public void agregarCalorias(float calorias){
+        this.caloriasconsumidas = this.caloriasconsumidas + calorias;
+    }
+    
+    public float calcularIMC(){
+        float imc = this.peso / (this.altura*this.altura);
+        return imc;
+    }
+    
+    public String evaluarIMC(){
+        
+        float imc = calcularIMC();
+        
+        if (imc<=18.5){
+            return ("Peso bajo");
+        }else if (imc>18.5 & imc<=24.9){
+            return ("Peso normal");
+        }else if (imc>24.9 & imc<=29.9){
+            return ("Sobrepeso");
+        }else {
+            return ("Obesidad");
+        }
+    }
+    
+    
 }

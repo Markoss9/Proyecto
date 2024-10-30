@@ -1,12 +1,21 @@
 
 package Paneles;
 
+//import javax.swing.JFrame;
+
+import com.mycompany.proyecto.Salud;
+
+import java.sql.Connection;
+
 
 public class Principal extends javax.swing.JFrame {
 
+
+    private NotasPanel panelNotas;
     
     public Principal() {
         initComponents();
+
     }
 
     @SuppressWarnings("unchecked")
@@ -196,12 +205,14 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+       
     private void btnMetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMetasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnMetasActionPerformed
 
     private void btnNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotasActionPerformed
-        // TODO add your handling code here:
+        
+       
     }//GEN-LAST:event_btnNotasActionPerformed
 
     private void btnTareasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTareasActionPerformed
@@ -213,7 +224,22 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRecordatorioActionPerformed
 
     private void btnSaludActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaludActionPerformed
-        // TODO add your handling code here:
+        //instancioamos salud
+        Salud salud = new Salud();
+        SaludPanel saludPanel = new SaludPanel(salud);
+        
+        //titulo de la ventana
+        //salud.setTitle("SaludPanel");
+        //con esto no se cierran todas las ventanas cuando cerramos una
+        //salud.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        //esto se puede dejar aca o agregar en cada panel de jform
+        //pero hace falta import javax.swing.JFrame;
+        
+        //centramos la ventana
+        saludPanel.setLocationRelativeTo(null);
+        
+        //mostramos la ventana salud
+        saludPanel.setVisible(true);
     }//GEN-LAST:event_btnSaludActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
