@@ -1,4 +1,3 @@
-
 package Paneles;
 
 import com.mycompany.proyecto.Notas; // Se importa la clase notas
@@ -6,19 +5,16 @@ import java.time.LocalDate;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-
 public class NotasPanel extends javax.swing.JFrame {
 
     private Notas notasUsuario; // Instanciamos para poder manejar las notas
     private Connection conexion; // La conexión a la base de datos 
- 
-    
-    public NotasPanel() {
-        
-        
+
+    public NotasPanel(Connection conexion) {
+
         initComponents();
         this.conexion = conexion; // Asignamos la conexión existente
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -126,25 +122,16 @@ public class NotasPanel extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
 // Boton para crear una nota
     private void btnCrearNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearNotaActionPerformed
-               // Lógica para crear una nota
-        String titulo = "Mi Nota";  // Esto podría venir de un campo de texto en la interfaz
-        String contenido = "Este es el contenido de mi nota";
-        notasUsuario = new Notas(1, "fechaActual", titulo, contenido, LocalDate.now(), null);
-
-        try {
-            notasUsuario.crearNota(titulo, contenido, conexion);  // Crear la nota en la base de datos
-            System.out.println("Nota creada: " + notasUsuario.mostrarNota());
-        } catch (SQLException e) {
-            System.out.println("Error al crear la nota: " + e.getMessage());
-        }
-
-        // Mostrar mensaje o feedback
-        System.out.println("Nota creada: " + notasUsuario.mostrarNota());
+        // Pasar la conexión existente a la nueva ventana
+    CrearNota crearNota = new CrearNota(conexion);
+    crearNota.setLocationRelativeTo(this); // Centra la ventana respecto a NotasPanel
+    crearNota.setVisible(true);
+    this.dispose(); // Opcional: Cierra NotasPanel si quieres que solo esté abierta la ventana CrearNota
     }//GEN-LAST:event_btnCrearNotaActionPerformed
-    
+
     // Boton para editar una nota
     private void bntEditarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEditarNotaActionPerformed
         if (notasUsuario != null) {
@@ -163,7 +150,7 @@ public class NotasPanel extends javax.swing.JFrame {
             System.out.println("No hay nota creada para editar.");
         }
     }//GEN-LAST:event_bntEditarNotaActionPerformed
-    
+
     //Boton para Ver una nota
     private void btnVerNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerNotaActionPerformed
         if (notasUsuario != null) {
@@ -172,7 +159,7 @@ public class NotasPanel extends javax.swing.JFrame {
             System.out.println("No hay nota creada.");
         }
     }//GEN-LAST:event_btnVerNotaActionPerformed
-    
+
     // Boton para eliminar una nota
     private void btnEliminarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarNotaActionPerformed
         if (notasUsuario != null) {
@@ -187,10 +174,17 @@ public class NotasPanel extends javax.swing.JFrame {
             System.out.println("No hay nota para eliminar.");
         }
     }//GEN-LAST:event_btnEliminarNotaActionPerformed
-    
+
     // Boton para volver al panel principal
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        
+        // Instanciamos el panel Principal
+        Principal volverPrincipal = new Principal();
+        // Mostramos el panel principal
+        volverPrincipal.setVisible(true);
+        // Centrar la ventana en la pantalla
+        volverPrincipal.setLocationRelativeTo(null);
+        // Cerramos el panel Notas 
+        this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

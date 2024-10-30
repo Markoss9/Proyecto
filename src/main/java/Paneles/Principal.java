@@ -1,18 +1,13 @@
-
 package Paneles;
 
 //import javax.swing.JFrame;
-
+import com.mycompany.proyecto.Conexion;
 import com.mycompany.proyecto.Salud;
 
 import java.sql.Connection;
 
-
 public class Principal extends javax.swing.JFrame {
 
-
-    private NotasPanel panelNotas;
-    
     public Principal() {
         initComponents();
 
@@ -205,14 +200,31 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-       
+
     private void btnMetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMetasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnMetasActionPerformed
 
     private void btnNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotasActionPerformed
-        
-       
+        // Establece la conexión
+        Connection conexion = Conexion.getConnection();
+
+        // Verifica que la conexión no sea null antes de abrir NotasPanel
+        if (conexion != null) {
+            // Instancia el panel Notas con la conexión
+            NotasPanel irNotas = new NotasPanel(conexion);
+
+            // Centra la ventana en la pantalla
+            irNotas.setLocationRelativeTo(null);
+
+            // Mostrar el panel Notas
+            irNotas.setVisible(true);
+
+            // Cierra la ventana actual (panel Principal)
+            this.dispose();
+        } else {
+            System.out.println("No se pudo establecer la conexión a la base de datos.");
+        }
     }//GEN-LAST:event_btnNotasActionPerformed
 
     private void btnTareasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTareasActionPerformed
@@ -227,17 +239,16 @@ public class Principal extends javax.swing.JFrame {
         //instancioamos salud
         Salud salud = new Salud();
         SaludPanel saludPanel = new SaludPanel(salud);
-        
+
         //titulo de la ventana
         //salud.setTitle("SaludPanel");
         //con esto no se cierran todas las ventanas cuando cerramos una
         //salud.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //esto se puede dejar aca o agregar en cada panel de jform
         //pero hace falta import javax.swing.JFrame;
-        
         //centramos la ventana
         saludPanel.setLocationRelativeTo(null);
-        
+
         //mostramos la ventana salud
         saludPanel.setVisible(true);
     }//GEN-LAST:event_btnSaludActionPerformed
@@ -261,15 +272,14 @@ public class Principal extends javax.swing.JFrame {
     private void btnDatosPersonalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatosPersonalesActionPerformed
         // Crear una instancia del panel DatosPersonales
         DatosPersonales datosPersonales = new DatosPersonales();
-    
+
         // Centrar la ventana en la pantalla
         datosPersonales.setLocationRelativeTo(null);
-    
+
         // Mostrar el panel
         datosPersonales.setVisible(true);
     }//GEN-LAST:event_btnDatosPersonalesActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCalendario;
