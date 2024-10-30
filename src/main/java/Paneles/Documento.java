@@ -68,6 +68,7 @@ public class Documento extends javax.swing.JFrame {
 
     public Documento() {
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         cargarDatos(); // Llama al método para cargar datos
     }
 
@@ -282,11 +283,7 @@ public class Documento extends javax.swing.JFrame {
         String nombreCompleto = txtDni1.getText(); // Campo correcto para el nombre completo
         String dni = txtDni.getText(); // Campo correcto para el DNI
 
-        // Verifica si se ha seleccionado una imagen
-        if (imagenBytes == null) {
-            JOptionPane.showMessageDialog(this, "Por favor, agrega una foto antes de guardar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+       
 
         Connection con = null;
         PreparedStatement pst = null;

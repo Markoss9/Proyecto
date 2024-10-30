@@ -8,6 +8,7 @@ public class CrearUsuario extends javax.swing.JFrame {
 
     public CrearUsuario() {
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
     
   // Método para crear la tabla si no existe

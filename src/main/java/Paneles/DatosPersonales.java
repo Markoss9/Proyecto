@@ -7,6 +7,7 @@ public class DatosPersonales extends javax.swing.JFrame {
     
     public DatosPersonales() {
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     @SuppressWarnings("unchecked")
@@ -142,11 +143,25 @@ public class DatosPersonales extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDocumentoActionPerformed
 
     private void btnTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTelefonoActionPerformed
-        // TODO add your handling code here:
+        // Crear una instancia del panel Telefono
+        Telefono telefono = new Telefono();
+    
+        // Centrar la ventana en la pantalla
+        telefono.setLocationRelativeTo(null);
+    
+        // Mostrar el panel
+        telefono.setVisible(true);
     }//GEN-LAST:event_btnTelefonoActionPerformed
 
     private void btnLicenciaDeConducirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLicenciaDeConducirActionPerformed
-        // TODO add your handling code here:
+        // Crear una instancia del panel LicenciaDeConducir
+        LicenciaDeConducir licencia = new LicenciaDeConducir();
+    
+        // Centrar la ventana en la pantalla
+        licencia.setLocationRelativeTo(null);
+    
+        // Mostrar el panel
+        licencia.setVisible(true);
     }//GEN-LAST:event_btnLicenciaDeConducirActionPerformed
 
     private void btnContactosDeEmergenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContactosDeEmergenciaActionPerformed
