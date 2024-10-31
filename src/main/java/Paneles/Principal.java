@@ -1,6 +1,7 @@
 package Paneles;
 
 //import javax.swing.JFrame;
+import com.mycompany.proyecto.CalendarioConNotas;
 import com.mycompany.proyecto.Conexion;
 import com.mycompany.proyecto.Salud;
 
@@ -254,7 +255,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaludActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
-        // TODO add your handling code here:
+           CalendarioConNotas calendarioConNotas = new CalendarioConNotas();
+    calendarioConNotas.setVisible(true); // Mostrar el calendario// TODO add your handling code here:
     }//GEN-LAST:event_btnCalendarioActionPerformed
 
     private void btnFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanzasActionPerformed

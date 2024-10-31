@@ -1,6 +1,6 @@
 
 package com.mycompany.proyecto;
-
+import javax.swing.SwingUtilities;
 import Paneles.Login;
 import java.sql.*;
 
@@ -16,8 +16,6 @@ public static void main(String[] args) {
     login.setVisible(true);
     login.setLocationRelativeTo(null);
     
-    
-    
-    
+ 
   }
 }
