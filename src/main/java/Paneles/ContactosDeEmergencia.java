@@ -5,6 +5,7 @@ public class ContactosDeEmergencia extends javax.swing.JFrame {
 
     public ContactosDeEmergencia() {
         initComponents();
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
     
     @SuppressWarnings("unchecked")

@@ -165,7 +165,14 @@ public class DatosPersonales extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLicenciaDeConducirActionPerformed
 
     private void btnContactosDeEmergenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContactosDeEmergenciaActionPerformed
-        // TODO add your handling code here:
+        // Crear una instancia del panel Documento
+        ContactosDeEmergencia contactos = new ContactosDeEmergencia();
+    
+        // Centrar la ventana en la pantalla
+        contactos.setLocationRelativeTo(null);
+    
+        // Mostrar el panel
+        contactos.setVisible(true);
     }//GEN-LAST:event_btnContactosDeEmergenciaActionPerformed
 
     private void btnCorreoElectronicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCorreoElectronicoActionPerformed
