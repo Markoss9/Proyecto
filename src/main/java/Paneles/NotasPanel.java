@@ -31,7 +31,7 @@ public class NotasPanel extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial Black", 3, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("NOTAS");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -126,10 +126,10 @@ public class NotasPanel extends javax.swing.JFrame {
 // Boton para crear una nota
     private void btnCrearNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearNotaActionPerformed
         // Pasar la conexión existente a la nueva ventana
-    CrearNota crearNota = new CrearNota(conexion);
-    crearNota.setLocationRelativeTo(this); // Centra la ventana respecto a NotasPanel
-    crearNota.setVisible(true);
-    this.dispose(); // Opcional: Cierra NotasPanel si quieres que solo esté abierta la ventana CrearNota
+        CrearNota crearNota = new CrearNota(conexion);
+        crearNota.setLocationRelativeTo(this); // Centra la ventana respecto a NotasPanel
+        crearNota.setVisible(true);
+        this.dispose(); // Opcional: Cierra NotasPanel si quieres que solo esté abierta la ventana CrearNota
     }//GEN-LAST:event_btnCrearNotaActionPerformed
 
     // Boton para editar una nota

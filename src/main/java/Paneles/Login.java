@@ -40,6 +40,12 @@ public class Login extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         jLabel4.setText("CONTRASEÑA:");
 
+        txtDni.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDniActionPerformed(evt);
+            }
+        });
+
         btnCrearUsuario.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         btnCrearUsuario.setText("CREAR USUARIO");
         btnCrearUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -185,6 +191,10 @@ public class Login extends javax.swing.JFrame {
     private void txtContraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseniaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtContraseniaActionPerformed
+
+    private void txtDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDniActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDniActionPerformed
 
    
 

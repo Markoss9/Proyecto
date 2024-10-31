@@ -258,7 +258,25 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCalendarioActionPerformed
 
     private void btnFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanzasActionPerformed
-        // TODO add your handling code here:
+        // Establece la conexión
+        Connection conexion = Conexion.getConnection();
+
+        // Verifica que la conexión no sea null antes de abrir FinanzaasPanel
+        if (conexion != null) {
+            // Instancia el panel Notas con la conexión
+            FinanzasPanel irFinanzas = new FinanzasPanel(conexion);
+
+            // Centra la ventana en la pantalla
+            irFinanzas.setLocationRelativeTo(null);
+
+            // Mostrar el panel Notas
+            irFinanzas.setVisible(true);
+
+            // Cierra la ventana actual (panel Principal)
+            this.dispose();
+        } else {
+            System.out.println("No se pudo establecer la conexión a la base de datos.");
+        }
     }//GEN-LAST:event_btnFinanzasActionPerformed
 
     private void btnContactosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContactosActionPerformed

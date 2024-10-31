@@ -1,20 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
 package Paneles;
 
-
+import java.sql.Connection;
+import java.sql.SQLException;
+import com.mycompany.proyecto.Finanzas; // Se importa la clase notas
 
 public class FinanzasPanel extends javax.swing.JFrame {
 
+    private Finanzas finanzas; // Instanciamos para poder manejar las notas
+    private Connection conexion; // La conexión a la base de datos 
 
-    public FinanzasPanel() {
+    public FinanzasPanel(Connection conexion) {
         initComponents();
+        this.conexion = conexion; // Asignamos la conexión existente
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -24,10 +23,11 @@ public class FinanzasPanel extends javax.swing.JFrame {
         btnAgregarFinanzas = new javax.swing.JButton();
         btnEditarFinanzas = new javax.swing.JButton();
         btnResetearFinanzas = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial Black", 3, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("FINANZAS");
 
@@ -55,6 +55,14 @@ public class FinanzasPanel extends javax.swing.JFrame {
             }
         });
 
+        btnVolver.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -62,6 +70,7 @@ public class FinanzasPanel extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(80, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnResetearFinanzas, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditarFinanzas, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarFinanzas, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -75,11 +84,13 @@ public class FinanzasPanel extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(btnAgregarFinanzas)
-                .addGap(35, 35, 35)
+                .addGap(30, 30, 30)
                 .addComponent(btnEditarFinanzas)
-                .addGap(35, 35, 35)
+                .addGap(30, 30, 30)
                 .addComponent(btnResetearFinanzas)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(btnVolver)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -97,7 +108,12 @@ public class FinanzasPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFinanzasActionPerformed
-        // TODO add your handling code here:
+        // Pasar la conexión existente a la nueva ventana
+        AgregarFinanzasPanel agregarFinanza = new AgregarFinanzasPanel(conexion);
+        agregarFinanza.setLocationRelativeTo(this); // Centra la ventana respecto a FinanzasPanel
+        agregarFinanza.setVisible(true);
+        this.dispose(); // Opcional: Cierra NotasPanel si quieres que solo esté abierta la ventana CrearNota
+
     }//GEN-LAST:event_btnAgregarFinanzasActionPerformed
 
     private void btnEditarFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarFinanzasActionPerformed
@@ -108,11 +124,23 @@ public class FinanzasPanel extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnResetearFinanzasActionPerformed
 
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        // Instanciamos el panel Principal
+        Principal volverPrincipal = new Principal();
+        // Mostramos el panel principal
+        volverPrincipal.setVisible(true);
+        // Centrar la ventana en la pantalla
+        volverPrincipal.setLocationRelativeTo(null);
+        // Cerramos el panel Notas 
+        this.dispose();
+    }//GEN-LAST:event_btnVolverActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarFinanzas;
     private javax.swing.JButton btnEditarFinanzas;
     private javax.swing.JButton btnResetearFinanzas;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
