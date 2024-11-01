@@ -3,6 +3,8 @@ package Paneles;
 import java.sql.Connection;
 import java.sql.SQLException;
 import com.mycompany.proyecto.Finanzas; // Se importa la clase notas
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class FinanzasPanel extends javax.swing.JFrame {
 
@@ -21,7 +23,7 @@ public class FinanzasPanel extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnAgregarFinanzas = new javax.swing.JButton();
-        btnEditarFinanzas = new javax.swing.JButton();
+        btnVerFinanzas = new javax.swing.JButton();
         btnResetearFinanzas = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
@@ -39,11 +41,11 @@ public class FinanzasPanel extends javax.swing.JFrame {
             }
         });
 
-        btnEditarFinanzas.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-        btnEditarFinanzas.setText("Editar Finanzas");
-        btnEditarFinanzas.addActionListener(new java.awt.event.ActionListener() {
+        btnVerFinanzas.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        btnVerFinanzas.setText("Ver finanzas");
+        btnVerFinanzas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarFinanzasActionPerformed(evt);
+                btnVerFinanzasActionPerformed(evt);
             }
         });
 
@@ -72,7 +74,7 @@ public class FinanzasPanel extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnResetearFinanzas, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditarFinanzas, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVerFinanzas, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarFinanzas, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(80, 80, 80))
@@ -85,7 +87,7 @@ public class FinanzasPanel extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnAgregarFinanzas)
                 .addGap(30, 30, 30)
-                .addComponent(btnEditarFinanzas)
+                .addComponent(btnVerFinanzas)
                 .addGap(30, 30, 30)
                 .addComponent(btnResetearFinanzas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
@@ -116,12 +118,49 @@ public class FinanzasPanel extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnAgregarFinanzasActionPerformed
 
-    private void btnEditarFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarFinanzasActionPerformed
+    private void btnVerFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerFinanzasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarFinanzasActionPerformed
+    }//GEN-LAST:event_btnVerFinanzasActionPerformed
 
     private void btnResetearFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetearFinanzasActionPerformed
-        // TODO add your handling code here:
+        // Pedir el DNI al usuario
+        String dniInput = JOptionPane.showInputDialog(this, "Ingrese su DNI:");
+
+        // Validar la entrada
+        if (dniInput == null || dniInput.isEmpty()) {
+            return; // El usuario canceló o no ingresó nada
+        }
+
+        try {
+            int dni = Integer.parseInt(dniInput); // Convertir el DNI a un entero
+
+            // Obtener la lista de finanzas
+            ArrayList<Finanzas> listaFinanzas = Finanzas.listarFinanzas(conexion);
+
+            // Buscar el objeto Finanzas correspondiente al DNI
+            Finanzas finanzas = null;
+            for (Finanzas f : listaFinanzas) {
+                if (f.getDni() == dni) { // Asegúrate de tener un método getDni() en tu clase Finanzas
+                    finanzas = f;
+                    break; // Salir del bucle si se encuentra el objeto
+                }
+            }
+
+            // Validar que se haya encontrado finanzas
+            if (finanzas == null) {
+                JOptionPane.showMessageDialog(this, "No se encontraron finanzas para el DNI ingresado.");
+                return; // Salir del método
+            }
+
+            // Resetear las finanzas
+            finanzas.resetearFinanzas(conexion);
+            JOptionPane.showMessageDialog(this, "Finanzas reseteadas correctamente.");
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese un DNI válido.");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al acceder a la base de datos: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnResetearFinanzasActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -131,15 +170,15 @@ public class FinanzasPanel extends javax.swing.JFrame {
         volverPrincipal.setVisible(true);
         // Centrar la ventana en la pantalla
         volverPrincipal.setLocationRelativeTo(null);
-        // Cerramos el panel Notas 
+        // Cerramos el panel Finanzas 
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarFinanzas;
-    private javax.swing.JButton btnEditarFinanzas;
     private javax.swing.JButton btnResetearFinanzas;
+    private javax.swing.JButton btnVerFinanzas;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
