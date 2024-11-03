@@ -40,12 +40,12 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="80" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnVolver" min="-2" pref="190" max="-2" attributes="0"/>
-                      <Component id="btnResetearFinanzas" min="-2" pref="190" max="-2" attributes="0"/>
-                      <Component id="btnVerFinanzas" min="-2" pref="190" max="-2" attributes="0"/>
-                      <Component id="btnAgregarFinanzas" min="-2" pref="190" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" pref="190" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jLabel1" pref="200" max="32767" attributes="0"/>
+                      <Component id="btnAgregarFinanzas" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnActualizarFinanzas" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnResetearFinanzas" alignment="0" max="32767" attributes="0"/>
+                      <Component id="btnVolver" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
               </Group>
@@ -59,7 +59,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnAgregarFinanzas" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="btnVerFinanzas" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnActualizarFinanzas" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="btnResetearFinanzas" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="30" max="32767" attributes="0"/>
@@ -90,15 +90,15 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarFinanzasActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnVerFinanzas">
+        <Component class="javax.swing.JButton" name="btnActualizarFinanzas">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial Black" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Ver finanzas"/>
+            <Property name="text" type="java.lang.String" value="Actualizar Finanzas"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVerFinanzasActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnActualizarFinanzasActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnResetearFinanzas">

@@ -177,14 +177,13 @@ public class AgregarFinanzasPanel extends javax.swing.JFrame {
             float ingreso = Float.parseFloat(txtIngreso.getText());
             float gastos = Float.parseFloat(txtGasto.getText());
 
-            // Asegúrate de usar la conexión ya existente y no crear una nueva
             if (conexion == null || conexion.isClosed()) {
                 JOptionPane.showMessageDialog(this, "Error: No hay conexión a la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             // Crea una instancia de Finanzas con los datos ingresados
-            Finanzas finanza = new Finanzas(dni, ingreso, gastos, conexion); // Usa 'conexion' aquí
+            Finanzas finanza = new Finanzas(dni, ingreso, gastos); // Usa solo los datos
 
             // Guarda en la base de datos
             finanza.guardarFinanzas(conexion);
@@ -213,23 +212,28 @@ public class AgregarFinanzasPanel extends javax.swing.JFrame {
 
     private void btnVerBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerBalanceActionPerformed
         try {
-            // Captura el DNI ingresado por el usuario
-            int dni = Integer.parseInt(txtDni.getText()); // Asegúrate de tener un campo de texto para el DNI
+            // Captura el valor de DNI y verifica si es válido
+            int dni = Integer.parseInt(txtDni.getText());
+            float ingreso = Float.parseFloat(txtIngreso.getText());
+            float gastos = Float.parseFloat(txtGasto.getText());
 
-            // Llama al método para obtener el balance usando el DNI
-            float balance = Finanzas.obtenerBalancePorDNI(conexion, dni);
-
-            if (balance != 0) { // Se asume que un balance de 0 indica que no se encontraron finanzas
-                // Muestra el balance en un mensaje
-                JOptionPane.showMessageDialog(this, "Balance: " + balance);
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encontraron registros para el DNI ingresado", "Error", JOptionPane.WARNING_MESSAGE);
+            // Asegúrate de usar la conexión ya existente y no crear una nueva
+            if (conexion == null || conexion.isClosed()) {
+                JOptionPane.showMessageDialog(this, "Error: No hay conexión a la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
 
+            // Crea una instancia de Finanzas con los datos ingresados
+            Finanzas finanza = new Finanzas(dni, ingreso, gastos); // Usa solo los datos
+
+            // Guarda en la base de datos
+            finanza.guardarFinanzas(conexion); // Solo guarda, sin preguntar
+            JOptionPane.showMessageDialog(this, "Finanza guardada exitosamente");
+
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Por favor ingresa un DNI válido", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Por favor ingresa valores numéricos válidos", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error al obtener el balance: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al guardar en la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnVerBalanceActionPerformed
 
@@ -241,7 +245,7 @@ public class AgregarFinanzasPanel extends javax.swing.JFrame {
         volverFinanzas.setLocationRelativeTo(null);
         // Cerramos el panel Finanzas 
         this.dispose();
-        
+
     }//GEN-LAST:event_btnVolverActionPerformed
 
 
