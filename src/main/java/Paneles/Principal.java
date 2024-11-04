@@ -238,19 +238,14 @@ public class Principal extends javax.swing.JFrame {
     private void btnSaludActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaludActionPerformed
         //instancioamos salud
         Salud salud = new Salud();
+        
         SaludPanel saludPanel = new SaludPanel(salud);
 
-        //titulo de la ventana
-        //salud.setTitle("SaludPanel");
-        //con esto no se cierran todas las ventanas cuando cerramos una
-        //salud.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        //esto se puede dejar aca o agregar en cada panel de jform
-        //pero hace falta import javax.swing.JFrame;
-        //centramos la ventana
         saludPanel.setLocationRelativeTo(null);
 
-        //mostramos la ventana salud
         saludPanel.setVisible(true);
+        
+        this.dispose();
     }//GEN-LAST:event_btnSaludActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
@@ -280,7 +275,10 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFinanzasActionPerformed
 
     private void btnContactosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContactosActionPerformed
-        // TODO add your handling code here:
+        ContactosPanel panelContacto = new ContactosPanel();
+        panelContacto.setLocationRelativeTo(null);
+        panelContacto.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnContactosActionPerformed
 
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
