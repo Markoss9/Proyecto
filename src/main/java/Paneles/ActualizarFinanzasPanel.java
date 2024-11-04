@@ -1,18 +1,23 @@
 package Paneles;
 
+import Paneles.EditarFinanzasDialog;
+import com.mycompany.proyecto.Finanzas;
 import java.sql.Connection;
-
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class ActualizarFinanzasPanel extends javax.swing.JFrame {
-    
+
     private Connection conexion;
-  
+
     public ActualizarFinanzasPanel(Connection conexion) {
         initComponents();
         this.conexion = conexion;
+        cargarTablaFinanzas();
     }
 
-  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -91,7 +96,7 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVovlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVovlerActionPerformed
-       // Instanciamos el panel Finanzas
+        // Instanciamos el panel Finanzas
         FinanzasPanel volverFinanzas = new FinanzasPanel(conexion);
         // Mostramos el panel de Finanzas
         volverFinanzas.setVisible(true);
@@ -102,8 +107,50 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVovlerActionPerformed
 
     private void btnEditarFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarFinanzasActionPerformed
-        // TODO add your handling code here:
+        try {
+            // Solicitar al usuario que ingrese el ID de la finanza
+            String inputId = JOptionPane.showInputDialog(this, "Ingrese el ID de la finanza a editar:");
+            int id = Integer.parseInt(inputId);
+
+            // Buscar la finanza con el ID proporcionado
+            Finanzas finanza = Finanzas.buscarFinanzaPorId(conexion, id);
+
+            if (finanza != null) {
+                // Abrir el diálogo de edición con los datos de la finanza
+                EditarFinanzasDialog editarDialog = new EditarFinanzasDialog(this, finanza.getDni(), conexion, finanza.getIngreso(), finanza.getGastos());
+                editarDialog.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró ninguna finanza con el ID proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese un ID válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al buscar la finanza: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnEditarFinanzasActionPerformed
+
+    // Método para cargar datos en la tabla jTable1
+    private void cargarTablaFinanzas() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Limpia la tabla antes de cargar nuevos datos
+
+        try {
+            // Llama al método listarFinanzas y carga los datos en la tabla
+            ArrayList<Finanzas> listaFinanzas = Finanzas.listarFinanzas(conexion);
+            for (Finanzas finanza : listaFinanzas) {
+                model.addRow(new Object[]{
+                    finanza.getIdentificador().getId(), // id de la finanza desde Identificador
+                    finanza.getDni(), // dni del usuario
+                    finanza.getIngreso(), // ingresos
+                    finanza.getGastos(), // gastos
+                    finanza.getSaldo() // saldo calculado
+                });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al cargar las finanzas: " + e.getMessage());
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditarFinanzas;

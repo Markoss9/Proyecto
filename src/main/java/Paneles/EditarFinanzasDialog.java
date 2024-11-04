@@ -1,83 +1,105 @@
-package paneles;
+package Paneles;
 
 import com.mycompany.proyecto.Finanzas;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 public class EditarFinanzasDialog extends JDialog {
 
-    private JTextField txtIngresos;
+    private final Connection connection;
+    private final int id;
+    private JTextField txtIngreso;
     private JTextField txtGastos;
-    private Connection conexion;
-    private int dni;
+    private JButton btnGuardar;
+    private JButton btnCancelar;
 
-    private JFrame parent;
-    // Atributos para almacenar ingresos y gastos
-    private float ingresos;
-    private float gastos;
-
-    public EditarFinanzasDialog(JFrame parent, int dni, Connection conexion, float ingresos, float gastos) {
+    public EditarFinanzasDialog(java.awt.Frame parent, int id, Connection connection, float ingreso, float gastos) {
         super(parent, "Editar Finanzas", true);
-        this.parent = parent; // Guarda el JFrame padre
-        this.dni = dni;
-        this.conexion = conexion;
-        this.ingresos = ingresos; // Almacena los ingresos
-        this.gastos = gastos;     // Almacena los gastos
-        inicializarComponentes();  // Inicializa los componentes
+        this.connection = connection;
+        // Método que obtiene el ID de la finanza a partir del DNI
+        this.id = id;
+        initComponents(ingreso, gastos);
     }
 
-    private void inicializarComponentes() {
-        setLayout(new GridLayout(3, 2));
+    private void initComponents(float ingreso, float gastos) {
+        // Configuración del diálogo
+        setLayout(null);
+        setSize(300, 200);
+        setLocationRelativeTo(null);
 
-        // Crear y agregar campos de texto
-        JLabel lblIngresos = new JLabel("Ingresos:");
-        txtIngresos = new JTextField(String.valueOf(ingresos)); // Muestra el ingreso actual
+        // Labels y TextFields para ingreso y gastos
+        JLabel lblIngreso = new JLabel("Ingreso:");
+        lblIngreso.setBounds(20, 20, 100, 25);
+        add(lblIngreso);
+
+        txtIngreso = new JTextField(String.valueOf(ingreso));
+        txtIngreso.setBounds(120, 20, 150, 25);
+        add(txtIngreso);
+
         JLabel lblGastos = new JLabel("Gastos:");
-        txtGastos = new JTextField(String.valueOf(gastos)); // Muestra el gasto actual
-
-        JButton btnGuardar = new JButton("Guardar");
-        btnGuardar.addActionListener(e -> {
-            // Lógica para guardar los cambios en la base de datos
-            guardarFinanza();
-        });
-
-        add(lblIngresos);
-        add(txtIngresos);
+        lblGastos.setBounds(20, 60, 100, 25);
         add(lblGastos);
+
+        txtGastos = new JTextField(String.valueOf(gastos));
+        txtGastos.setBounds(120, 60, 150, 25);
         add(txtGastos);
+
+        // Botones de Guardar y Cancelar
+        btnGuardar = new JButton("Guardar");
+        btnGuardar.setBounds(40, 120, 100, 30);
         add(btnGuardar);
 
-        pack(); // Ajusta el tamaño del diálogo
-        setLocationRelativeTo(parent); // Centra el diálogo respecto al padre
+        btnCancelar = new JButton("Cancelar");
+        btnCancelar.setBounds(160, 120, 100, 30);
+        add(btnCancelar);
+
+        // Acción del botón Guardar
+        btnGuardar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                guardarCambios();
+            }
+        });
+
+        // Acción del botón Cancelar
+        btnCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Cierra el diálogo sin guardar
+            }
+        });
     }
 
-    private void guardarFinanza() {
+    // Método para guardar los cambios en la base de datos
+    private void guardarCambios() {
         try {
-            // Obtener los nuevos ingresos y gastos desde los campos de texto
-            float nuevosIngresos = Float.parseFloat(txtIngresos.getText());
-            float nuevosGastos = Float.parseFloat(txtGastos.getText());
+            float nuevoIngreso = Float.parseFloat(txtIngreso.getText());
+            float nuevoGastos = Float.parseFloat(txtGastos.getText());
 
-            // Crear una nueva instancia de Finanzas
-            Finanzas finanzas = new Finanzas();
-
-            // Establecer los nuevos valores de ingreso y gasto
-            finanzas.setIngreso(nuevosIngresos, conexion);
-            finanzas.setGastos(nuevosGastos,conexion);
-            finanzas.setDni(dni); // Establecer el DNI del registro que se está editando
-
-            // Actualizar las finanzas en la base de datos
-            finanzas.actualizarFinanzas(conexion); // Llama al método que actualiza los datos en la base de datos
-
-            // Cerrar el diálogo después de actualizar
-            dispose();
-        } catch (NumberFormatException e) {
-            // Manejar la excepción si la entrada no es válida
-            JOptionPane.showMessageDialog(this, "Por favor, ingresa valores válidos para ingresos y gastos.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
-        } catch (SQLException e) {
-            // Manejar la excepción en caso de error al actualizar en la base de datos
-            JOptionPane.showMessageDialog(this, "Error al actualizar finanzas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            // Intentar buscar la finanza por ID
+            System.out.println("ID que se busca: " + id); // Para ver el ID que se está utilizando
+            Finanzas finanza = Finanzas.buscarFinanzaPorId(connection, id);
+            if (finanza != null) {
+                // Si se encuentra, establecer los nuevos valores, pasando la conexión
+                finanza.setIngreso(nuevoIngreso, connection);
+                finanza.setGastos(nuevoGastos, connection);
+                dispose(); // Cerrar el diálogo
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró la finanza para actualizar.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese valores numéricos válidos.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al actualizar las finanzas: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
