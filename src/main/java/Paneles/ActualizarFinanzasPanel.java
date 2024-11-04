@@ -29,6 +29,7 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         btnEditarFinanzas = new javax.swing.JButton();
         btnVovler = new javax.swing.JButton();
+        btnEliminarFinanzas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,17 +72,27 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
             }
         });
 
+        btnEliminarFinanzas.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        btnEliminarFinanzas.setText("EliminarFinanza");
+        btnEliminarFinanzas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarFinanzasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnEditarFinanzas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnVovler, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEditarFinanzas, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(btnEliminarFinanzas, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(btnVovler, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,7 +101,8 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditarFinanzas)
-                    .addComponent(btnVovler))
+                    .addComponent(btnVovler)
+                    .addComponent(btnEliminarFinanzas))
                 .addContainerGap())
         );
 
@@ -99,7 +111,7 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
 
     private void btnVovlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVovlerActionPerformed
         // Instanciamos el panel Finanzas
-        FinanzasPanel volverFinanzas = new FinanzasPanel(conexion,dniUsuario);
+        FinanzasPanel volverFinanzas = new FinanzasPanel(conexion, dniUsuario);
         // Mostramos el panel de Finanzas
         volverFinanzas.setVisible(true);
         // Centrar la ventana en la pantalla
@@ -131,6 +143,42 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditarFinanzasActionPerformed
 
+    private void btnEliminarFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarFinanzasActionPerformed
+        try {
+            // Pedir al usuario que ingrese el ID de la finanza que desea eliminar
+            String inputId = JOptionPane.showInputDialog(this, "Ingrese el ID de la finanza a eliminar:");
+
+            if (inputId != null && !inputId.trim().isEmpty()) {
+                int id = Integer.parseInt(inputId);
+
+                // Verificar si la finanza pertenece al usuario actual
+                Finanzas finanza = Finanzas.buscarFinanzaPorId(conexion, id, dniUsuario);
+
+                if (finanza != null) {
+                    // Confirmar la eliminación
+                    int confirmacion = JOptionPane.showConfirmDialog(this,
+                            "¿Está seguro que desea eliminar la finanza con ID " + id + "?",
+                            "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        // Eliminar la finanza de la base de datos
+                        Finanzas.eliminarFinanza(conexion, id, dniUsuario); // Usamos el método estático en la clase Finanzas
+                        JOptionPane.showMessageDialog(this, "Finanza eliminada exitosamente.");
+                        cargarTablaFinanzas();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "La finanza no pertenece a su usuario o no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor ingrese un ID válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Por favor ingrese un ID válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar la finanza: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarFinanzasActionPerformed
+
     // Método para cargar datos en la tabla jTable1
     public void cargarTablaFinanzas() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
@@ -156,6 +204,7 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditarFinanzas;
+    private javax.swing.JButton btnEliminarFinanzas;
     private javax.swing.JButton btnVovler;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

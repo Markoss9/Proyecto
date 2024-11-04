@@ -1,14 +1,12 @@
 package Paneles;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import com.mycompany.proyecto.Finanzas; // Se importa la clase notas
-import java.util.ArrayList;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class FinanzasPanel extends javax.swing.JFrame {
 
-    private Finanzas finanzas; // Instanciamos para poder manejar las notas
     private Connection conexion; // La conexión a la base de datos 
     private final int dniUsuario;
 
@@ -129,7 +127,22 @@ public class FinanzasPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnActualizarFinanzasActionPerformed
 
     private void btnResetearFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetearFinanzasActionPerformed
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro de que desea resetear todas sus finanzas?",
+                "Confirmar reseteo",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
 
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+                Finanzas.resetearFinanzas(conexion, dniUsuario);
+                JOptionPane.showMessageDialog(this, "Finanzas reseteadas exitosamente.");
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, "Error al resetear finanzas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Operación cancelada.");
+        }
     }//GEN-LAST:event_btnResetearFinanzasActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed

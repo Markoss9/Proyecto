@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -123,12 +121,18 @@ public class Finanzas {
         }
     }
 
-    // Método para eliminar los datos de Finanzas de la base de datos
-    public static void eliminarFinanza(Connection connection, int dni) throws SQLException {
-        String sql = "DELETE FROM finanzas WHERE dni = ?";
+    // Método para eliminar una finanza específica de la base de datos según el ID y el DNI del usuario
+    public static void eliminarFinanza(Connection connection, int id, int dniUsuario) throws SQLException {
+        String sql = "DELETE FROM finanzas WHERE id = ? AND dni = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, dni);
-            pstmt.executeUpdate();
+            pstmt.setInt(1, id);          // Usar id de la finanza
+            pstmt.setInt(2, dniUsuario);   // Usar dni del usuario actual
+            int filasEliminadas = pstmt.executeUpdate();
+
+            // Verificar si se eliminó una fila para informar si la operación fue exitosa
+            if (filasEliminadas == 0) {
+                throw new SQLException("No se encontró ninguna finanza para eliminar con el ID proporcionado y el DNI del usuario.");
+            }
         }
     }
 
@@ -156,20 +160,6 @@ public class Finanzas {
         return listaFinanzas;
     }
 
-    // Método para obtener el balance del usuario por su DNI
-    public static float obtenerBalancePorDNI(Connection connection, int dni) throws SQLException {
-        String sql = "SELECT (SUM(ingreso) - SUM(gastos)) AS saldo FROM finanzas WHERE dni = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, dni);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getFloat("saldo");
-                }
-            }
-        }
-        return 0; // Retorna 0 si no se encuentra saldo
-    }
-
     // Método para actualizar finanzas en la base de datos
     public void actualizarFinanza(Connection connection) throws SQLException {
         String sql = "UPDATE finanzas SET ingreso = ?, gastos = ? WHERE id = ?";
@@ -188,7 +178,7 @@ public class Finanzas {
         }
     }
 
-    // Método en la clase Finanzas para buscar la finanza solo si el ID y el DNI coinciden
+    // Método para buscar la finanza solo si el ID y el DNI coinciden
     public static Finanzas buscarFinanzaPorId(Connection connection, int id, int dniUsuario) throws SQLException {
         String sql = "SELECT id, dni, ingreso, gastos, saldo FROM finanzas WHERE id = ? AND dni = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -206,6 +196,16 @@ public class Finanzas {
             }
         }
         return null; // Retorna null si no se encuentra ninguna finanza
+    }
+
+    // Metodo para resetear las finanzas del Usuario Correspondiente 
+    public static void resetearFinanzas(Connection conexion, int dniUsuario) throws SQLException {
+        String sql = "UPDATE finanzas SET ingreso = 0, gastos = 0 WHERE dni = ?";
+        try (PreparedStatement pstmt = conexion.prepareStatement(sql)) {
+            pstmt.setInt(1, dniUsuario);
+            int filasAfectadas = pstmt.executeUpdate();
+            System.out.println("Se han reseteado " + filasAfectadas + " registros de finanzas para el usuario con DNI: " + dniUsuario);
+        }
     }
 
 }
