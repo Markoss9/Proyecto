@@ -117,7 +117,7 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
 
             if (finanza != null) {
                 // Abrir el diálogo de edición con los datos de la finanza
-                EditarFinanzasDialog editarDialog = new EditarFinanzasDialog(this, finanza.getDni(), conexion, finanza.getIngreso(), finanza.getGastos());
+                EditarFinanzasDialog editarDialog = new EditarFinanzasDialog(this, id, conexion, finanza.getIngreso(), finanza.getGastos());
                 editarDialog.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró ninguna finanza con el ID proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -130,7 +130,7 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarFinanzasActionPerformed
 
     // Método para cargar datos en la tabla jTable1
-    private void cargarTablaFinanzas() {
+    public void cargarTablaFinanzas() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0); // Limpia la tabla antes de cargar nuevos datos
 

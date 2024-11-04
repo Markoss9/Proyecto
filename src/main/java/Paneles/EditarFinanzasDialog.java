@@ -21,13 +21,15 @@ public class EditarFinanzasDialog extends JDialog {
     private JTextField txtGastos;
     private JButton btnGuardar;
     private JButton btnCancelar;
+    private ActualizarFinanzasPanel parentPanel;
 
-    public EditarFinanzasDialog(java.awt.Frame parent, int id, Connection connection, float ingreso, float gastos) {
+    public EditarFinanzasDialog(ActualizarFinanzasPanel parent, int id, Connection connection, float ingreso, float gastos) {
         super(parent, "Editar Finanzas", true);
         this.connection = connection;
         // Método que obtiene el ID de la finanza a partir del DNI
         this.id = id;
         initComponents(ingreso, gastos);
+        this.parentPanel = parent;
     }
 
     private void initComponents(float ingreso, float gastos) {
@@ -92,10 +94,11 @@ public class EditarFinanzasDialog extends JDialog {
                 // Si se encuentra, establecer los nuevos valores, pasando la conexión
                 finanza.setIngreso(nuevoIngreso, connection);
                 finanza.setGastos(nuevoGastos, connection);
+                parentPanel.cargarTablaFinanzas(); // Llama al método para actualizar la tabla
                 dispose(); // Cerrar el diálogo
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró la finanza para actualizar.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            }   
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Por favor ingrese valores numéricos válidos.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
         } catch (SQLException ex) {

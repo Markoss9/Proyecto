@@ -24,11 +24,17 @@ public class Finanzas {
         this.gastos = 0.0f;
         this.saldo = 0.0f;
     }
-
-    // Constructor que acepta solo dni, ingreso y gastos
-    public Finanzas(int dni, float ingreso, float gastos) {
+    // Constructor que acepta solo dni, ingreso, gastos
+    public Finanzas(int dni, float ingreso, float gastos){
         this.dni = dni;
-        this.identificador = new Identificador(0, ""); // O establecer valores predeterminados
+        this.ingreso = ingreso;
+        this.gastos = gastos;
+    }
+
+    // Constructor que acepta solo dni, id, ingreso y gastos
+    public Finanzas(int dni, int id, float ingreso, float gastos) {
+        this.dni = dni;
+        this.identificador = new Identificador(id, ""); // O establecer valores predeterminados
         this.ingreso = ingreso;
         this.gastos = gastos;
         this.saldo = saldo;
@@ -164,6 +170,7 @@ public class Finanzas {
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setFloat(1, this.ingreso); // Asignamos el nuevo ingreso
             pstmt.setFloat(2, this.gastos);   // Asignamos los nuevos gastos
+            System.out.println("Actualizando finanza con ID: " + this.identificador.getId());
             pstmt.setInt(3, this.identificador.getId()); // Usamos el id para buscar la fila
 
             int rowsAffected = pstmt.executeUpdate();
@@ -177,6 +184,7 @@ public class Finanzas {
 
     // Método para buscar una finanza específica por su ID
     public static Finanzas buscarFinanzaPorId(Connection connection, int id) throws SQLException {
+        System.out.println("Buscando finanza con ID: " + id);
         String sql = "SELECT * FROM finanzas WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
@@ -185,30 +193,12 @@ public class Finanzas {
                     int dni = rs.getInt("dni");
                     float ingreso = rs.getFloat("ingreso");
                     float gastos = rs.getFloat("gastos");
-                    Finanzas finanza = new Finanzas(dni, ingreso, gastos);
+                    Finanzas finanza = new Finanzas(dni, id, ingreso, gastos);
                     finanza.saldo = rs.getFloat("saldo"); // Cargar el saldo directamente si está en la tabla
                     return finanza; // Retorna la finanza encontrada
                 }
             }
         }
         return null; // Retorna null si no se encuentra una finanza con el id dado
-    }
-    //Metodo para buscar el id de la finanza con el dni correspondiente al usuario 
-    public static int obtenerIdFinanzaPorDni(Connection connection, int dni) {
-        int idFinanza = -1; // Valor predeterminado si no se encuentra
-
-        String sql = "SELECT id FROM Finanzas WHERE dni = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, dni);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                idFinanza = rs.getInt("id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return idFinanza;
     }
 }
