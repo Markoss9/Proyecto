@@ -7,6 +7,8 @@ import Paneles.CrearUsuario;
 
 public class Login extends javax.swing.JFrame {
     
+
+    
     public Login() {
         initComponents();
     }
@@ -174,9 +176,11 @@ public class Login extends javax.swing.JFrame {
         
         if (esValido) {
             javax.swing.JOptionPane.showMessageDialog(this, "Bienvenido al sistema.", "Login Exitoso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-        
+            // Almacenar el DNI del usuario que ha iniciado sesión
+            int dniUsuario = Integer.parseInt(dni); 
+            System.out.println("Dni obtenido: " + dniUsuario);
         // Usuario válido, abrir el panel Principal
-        Principal principal = new Principal();
+        Principal principal = new Principal(dniUsuario);
         principal.setVisible(true);
         principal.setLocationRelativeTo(null);
         this.dispose(); // Cerrar la ventana de Login

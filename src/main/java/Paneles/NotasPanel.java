@@ -9,12 +9,13 @@ public class NotasPanel extends javax.swing.JFrame {
 
     private Notas notasUsuario; // Instanciamos para poder manejar las notas
     private Connection conexion; // La conexión a la base de datos 
-
-    public NotasPanel(Connection conexion) {
+    private final int dniUsuario;
+    
+    public NotasPanel(Connection conexion, int dniUsuario) {
 
         initComponents();
         this.conexion = conexion; // Asignamos la conexión existente
-
+        this.dniUsuario = dniUsuario;
     }
 
     @SuppressWarnings("unchecked")
@@ -178,7 +179,7 @@ public class NotasPanel extends javax.swing.JFrame {
     // Boton para volver al panel principal
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // Instanciamos el panel Principal
-        Principal volverPrincipal = new Principal();
+        Principal volverPrincipal = new Principal(dniUsuario);
         // Mostramos el panel principal
         volverPrincipal.setVisible(true);
         // Centrar la ventana en la pantalla

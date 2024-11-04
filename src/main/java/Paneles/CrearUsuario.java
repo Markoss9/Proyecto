@@ -5,10 +5,13 @@ import javax.swing.JOptionPane;
 import com.mycompany.proyecto.Conexion;
 
 public class CrearUsuario extends javax.swing.JFrame {
-
+    
+//    private final int dniUsuario;
+    
     public CrearUsuario() {
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+//        this.dniUsuario = dniUsuario;
     }
     
   // Método para crear la tabla si no existe

@@ -7,18 +7,16 @@ package Paneles;
 
 import com.mycompany.proyecto.Salud;
 import javax.swing.JFrame;
-/**
- *
- * @author lauti
- */
+
 public class SaludPanel extends javax.swing.JFrame {
     
     private Salud salud;
+    private final int dniUsuario;
     
-    /** Creates new form Salud */
-    public SaludPanel(Salud salud) {
+    public SaludPanel(Salud salud, int dniUsuario) {
         initComponents();
         this.salud = salud;
+        this.dniUsuario = dniUsuario;
         setTitle("Salud");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
@@ -336,7 +334,7 @@ public class SaludPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        Principal volverPrincipal = new Principal();
+        Principal volverPrincipal = new Principal(dniUsuario);
         
         volverPrincipal.setVisible(true);
         

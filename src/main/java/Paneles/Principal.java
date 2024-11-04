@@ -7,10 +7,12 @@ import com.mycompany.proyecto.Salud;
 import java.sql.Connection;
 
 public class Principal extends javax.swing.JFrame {
-
-    public Principal() {
+        
+    private final int dniUsuario; // Variable para almacenar el DNI del usuario
+    
+    public Principal(int dniUsuario) {
         initComponents();
-
+        this.dniUsuario = dniUsuario; // Almacenar el DNI
     }
 
     @SuppressWarnings("unchecked")
@@ -212,7 +214,7 @@ public class Principal extends javax.swing.JFrame {
         // Verifica que la conexión no sea null antes de abrir NotasPanel
         if (conexion != null) {
             // Instancia el panel Notas con la conexión
-            NotasPanel irNotas = new NotasPanel(conexion);
+            NotasPanel irNotas = new NotasPanel(conexion, dniUsuario);
 
             // Centra la ventana en la pantalla
             irNotas.setLocationRelativeTo(null);
@@ -239,7 +241,7 @@ public class Principal extends javax.swing.JFrame {
         //instancioamos salud
         Salud salud = new Salud();
         
-        SaludPanel saludPanel = new SaludPanel(salud);
+        SaludPanel saludPanel = new SaludPanel(salud, dniUsuario);
 
         saludPanel.setLocationRelativeTo(null);
 
@@ -259,7 +261,7 @@ public class Principal extends javax.swing.JFrame {
         // Verifica que la conexión no sea null antes de abrir FinanzaasPanel
         if (conexion != null) {
             // Instancia el panel Notas con la conexión
-            FinanzasPanel irFinanzas = new FinanzasPanel(conexion);
+            FinanzasPanel irFinanzas = new FinanzasPanel(conexion, dniUsuario);
 
             // Centra la ventana en la pantalla
             irFinanzas.setLocationRelativeTo(null);
@@ -275,7 +277,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFinanzasActionPerformed
 
     private void btnContactosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContactosActionPerformed
-        ContactosPanel panelContacto = new ContactosPanel();
+        ContactosPanel panelContacto = new ContactosPanel(dniUsuario);
         panelContacto.setLocationRelativeTo(null);
         panelContacto.setVisible(true);
         this.dispose();

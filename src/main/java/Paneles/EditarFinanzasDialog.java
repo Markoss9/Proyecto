@@ -17,17 +17,19 @@ public class EditarFinanzasDialog extends JDialog {
 
     private final Connection connection;
     private final int id;
+    private final int dniUsuario;
     private JTextField txtIngreso;
     private JTextField txtGastos;
     private JButton btnGuardar;
     private JButton btnCancelar;
     private ActualizarFinanzasPanel parentPanel;
 
-    public EditarFinanzasDialog(ActualizarFinanzasPanel parent, int id, Connection connection, float ingreso, float gastos) {
+    public EditarFinanzasDialog(ActualizarFinanzasPanel parent, int id, int dniUsuario, Connection connection, float ingreso, float gastos) {
         super(parent, "Editar Finanzas", true);
         this.connection = connection;
         // Método que obtiene el ID de la finanza a partir del DNI
         this.id = id;
+        this.dniUsuario = dniUsuario;
         initComponents(ingreso, gastos);
         this.parentPanel = parent;
     }
@@ -89,7 +91,7 @@ public class EditarFinanzasDialog extends JDialog {
 
             // Intentar buscar la finanza por ID
             System.out.println("ID que se busca: " + id); // Para ver el ID que se está utilizando
-            Finanzas finanza = Finanzas.buscarFinanzaPorId(connection, id);
+            Finanzas finanza = Finanzas.buscarFinanzaPorId(connection, id, dniUsuario);
             if (finanza != null) {
                 // Si se encuentra, establecer los nuevos valores, pasando la conexión
                 finanza.setIngreso(nuevoIngreso, connection);

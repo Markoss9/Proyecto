@@ -8,10 +8,12 @@ import javax.swing.JOptionPane;
 public class AgregarFinanzasPanel extends javax.swing.JFrame {
 
     private Connection conexion;
+    private final int dniUsuario;
 
-    public AgregarFinanzasPanel(Connection conexion) {
+    public AgregarFinanzasPanel(Connection conexion, int dniUsuario) {
         initComponents();
         this.conexion = conexion;
+        this.dniUsuario = dniUsuario;
     }
 
     @SuppressWarnings("unchecked")
@@ -25,8 +27,6 @@ public class AgregarFinanzasPanel extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JButton();
         txtGasto = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        txtDni = new javax.swing.JTextField();
         btnVerBalance = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
@@ -64,16 +64,6 @@ public class AgregarFinanzasPanel extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("DNI");
-
-        txtDni.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDniActionPerformed(evt);
-            }
-        });
-
         btnVerBalance.setFont(new java.awt.Font("Arial Black", 1, 10)); // NOI18N
         btnVerBalance.setText("Ver Balance");
         btnVerBalance.addActionListener(new java.awt.event.ActionListener() {
@@ -100,20 +90,13 @@ public class AgregarFinanzasPanel extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -144,14 +127,10 @@ public class AgregarFinanzasPanel extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtGasto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addComponent(btnAgregar)
                 .addGap(18, 18, 18)
                 .addComponent(btnVerBalance)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(btnVolver)
                 .addContainerGap())
         );
@@ -172,8 +151,6 @@ public class AgregarFinanzasPanel extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         try {
-            // Captura el valor de DNI y verifica si es válido
-            int dni = Integer.parseInt(txtDni.getText());
             float ingreso = Float.parseFloat(txtIngreso.getText());
             float gastos = Float.parseFloat(txtGasto.getText());
 
@@ -183,7 +160,7 @@ public class AgregarFinanzasPanel extends javax.swing.JFrame {
             }
 
             // Crea una instancia de Finanzas con los datos ingresados
-            Finanzas finanza = new Finanzas(dni, ingreso, gastos); // Usa solo los datos
+            Finanzas finanza = new Finanzas(dniUsuario, ingreso, gastos); // Usa solo los datos
 
             // Guarda en la base de datos
             finanza.guardarFinanzas(conexion);
@@ -202,18 +179,12 @@ public class AgregarFinanzasPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIngresoActionPerformed
 
     private void txtGastoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGastoActionPerformed
-        // Cambiar el enfoque al siguiente campo
-        txtDni.requestFocus();
+        
     }//GEN-LAST:event_txtGastoActionPerformed
-
-    private void txtDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDniActionPerformed
-        // Este método está vacío porque no se requiere lógica al presionar Enter en el campo
-    }//GEN-LAST:event_txtDniActionPerformed
 
     private void btnVerBalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerBalanceActionPerformed
         try {
-            // Captura el valor de DNI y verifica si es válido
-            int dni = Integer.parseInt(txtDni.getText());
+          
             float ingreso = Float.parseFloat(txtIngreso.getText());
             float gastos = Float.parseFloat(txtGasto.getText());
 
@@ -224,7 +195,7 @@ public class AgregarFinanzasPanel extends javax.swing.JFrame {
             }
 
             // Crea una instancia de Finanzas con los datos ingresados
-            Finanzas finanza = new Finanzas(dni, ingreso, gastos); // Usa solo los datos
+            Finanzas finanza = new Finanzas(dniUsuario, ingreso, gastos); // Usa solo los datos
 
             // Guarda en la base de datos
             finanza.guardarFinanzas(conexion); // Solo guarda, sin preguntar
@@ -238,7 +209,7 @@ public class AgregarFinanzasPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVerBalanceActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        FinanzasPanel volverFinanzas = new FinanzasPanel(conexion);
+        FinanzasPanel volverFinanzas = new FinanzasPanel(conexion, dniUsuario);
         // Mostramos el panel principal
         volverFinanzas.setVisible(true);
         // Centrar la ventana en la pantalla
@@ -256,9 +227,7 @@ public class AgregarFinanzasPanel extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtDni;
     private javax.swing.JTextField txtGasto;
     private javax.swing.JTextField txtIngreso;
     // End of variables declaration//GEN-END:variables

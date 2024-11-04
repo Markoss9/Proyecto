@@ -24,8 +24,9 @@ public class Finanzas {
         this.gastos = 0.0f;
         this.saldo = 0.0f;
     }
+
     // Constructor que acepta solo dni, ingreso, gastos
-    public Finanzas(int dni, float ingreso, float gastos){
+    public Finanzas(int dni, float ingreso, float gastos) {
         this.dni = dni;
         this.ingreso = ingreso;
         this.gastos = gastos;
@@ -131,11 +132,15 @@ public class Finanzas {
         }
     }
 
-    // Metodo para listar las finanzas
-    public static ArrayList<Finanzas> listarFinanzas(Connection connection) throws SQLException {
+    // Metodo para listar las finanzas del usuario que ha iniciado sesión
+    public static ArrayList<Finanzas> listarFinanzas(Connection connection, int dniUsuario) throws SQLException {
         ArrayList<Finanzas> listaFinanzas = new ArrayList<>();
-        String sql = "SELECT id, dni, ingreso, gastos, saldo FROM finanzas"; // Asegúrate de incluir la columna de saldo
-        try (PreparedStatement pstmt = connection.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+        String sql = "SELECT id, dni, ingreso, gastos, saldo FROM finanzas WHERE dni = ?"; // Filtrar por dni
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, dniUsuario); // Pasar el dni del usuario
+            ResultSet rs = pstmt.executeQuery();
+
             while (rs.next()) {
                 int id = rs.getInt("id");
                 int dni = rs.getInt("dni");
@@ -143,10 +148,11 @@ public class Finanzas {
                 float gastos = rs.getFloat("gastos");
                 float saldo = rs.getFloat("saldo"); // Obtener saldo directamente de la base de datos
 
-                Finanzas finanzas = new Finanzas(dni, id, ingreso, gastos, saldo); // Asegúrate de tener un constructor que acepte el saldo
-                listaFinanzas.add(finanzas);
+                Finanzas finanza = new Finanzas(dni, id, ingreso, gastos, saldo); // Usar constructor con saldo
+                listaFinanzas.add(finanza);
             }
         }
+
         return listaFinanzas;
     }
 
@@ -182,23 +188,24 @@ public class Finanzas {
         }
     }
 
-    // Método para buscar una finanza específica por su ID
-    public static Finanzas buscarFinanzaPorId(Connection connection, int id) throws SQLException {
-        System.out.println("Buscando finanza con ID: " + id);
-        String sql = "SELECT * FROM finanzas WHERE id = ?";
+    // Método en la clase Finanzas para buscar la finanza solo si el ID y el DNI coinciden
+    public static Finanzas buscarFinanzaPorId(Connection connection, int id, int dniUsuario) throws SQLException {
+        String sql = "SELECT id, dni, ingreso, gastos, saldo FROM finanzas WHERE id = ? AND dni = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    int dni = rs.getInt("dni");
-                    float ingreso = rs.getFloat("ingreso");
-                    float gastos = rs.getFloat("gastos");
-                    Finanzas finanza = new Finanzas(dni, id, ingreso, gastos);
-                    finanza.saldo = rs.getFloat("saldo"); // Cargar el saldo directamente si está en la tabla
-                    return finanza; // Retorna la finanza encontrada
-                }
+            pstmt.setInt(2, dniUsuario); // Solo permite buscar la finanza si el DNI coincide
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                int dni = rs.getInt("dni");
+                float ingreso = rs.getFloat("ingreso");
+                float gastos = rs.getFloat("gastos");
+                float saldo = rs.getFloat("saldo");
+
+                return new Finanzas(dni, id, ingreso, gastos, saldo); // Constructor de finanza
             }
         }
-        return null; // Retorna null si no se encuentra una finanza con el id dado
+        return null; // Retorna null si no se encuentra ninguna finanza
     }
+
 }

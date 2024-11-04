@@ -5,7 +5,7 @@ import Paneles.Login;
 import java.sql.*;
 
 public class Main {
-
+    
 public static void main(String[] args) {
     // Crear conexion a base de datos
     Conexion conexion = new Conexion();

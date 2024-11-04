@@ -11,10 +11,12 @@ import javax.swing.table.DefaultTableModel;
 public class ActualizarFinanzasPanel extends javax.swing.JFrame {
 
     private Connection conexion;
+    private final int dniUsuario;
 
-    public ActualizarFinanzasPanel(Connection conexion) {
+    public ActualizarFinanzasPanel(Connection conexion, int dniUsuario) {
         initComponents();
         this.conexion = conexion;
+        this.dniUsuario = dniUsuario;
         cargarTablaFinanzas();
     }
 
@@ -97,7 +99,7 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
 
     private void btnVovlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVovlerActionPerformed
         // Instanciamos el panel Finanzas
-        FinanzasPanel volverFinanzas = new FinanzasPanel(conexion);
+        FinanzasPanel volverFinanzas = new FinanzasPanel(conexion,dniUsuario);
         // Mostramos el panel de Finanzas
         volverFinanzas.setVisible(true);
         // Centrar la ventana en la pantalla
@@ -111,13 +113,13 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
             // Solicitar al usuario que ingrese el ID de la finanza
             String inputId = JOptionPane.showInputDialog(this, "Ingrese el ID de la finanza a editar:");
             int id = Integer.parseInt(inputId);
-
+            int dniUsuario = this.dniUsuario; // Obtén el DNI del usuario autenticado
             // Buscar la finanza con el ID proporcionado
-            Finanzas finanza = Finanzas.buscarFinanzaPorId(conexion, id);
+            Finanzas finanza = Finanzas.buscarFinanzaPorId(conexion, id, dniUsuario);
 
             if (finanza != null) {
                 // Abrir el diálogo de edición con los datos de la finanza
-                EditarFinanzasDialog editarDialog = new EditarFinanzasDialog(this, id, conexion, finanza.getIngreso(), finanza.getGastos());
+                EditarFinanzasDialog editarDialog = new EditarFinanzasDialog(this, id, dniUsuario, conexion, finanza.getIngreso(), finanza.getGastos());
                 editarDialog.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró ninguna finanza con el ID proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -136,7 +138,7 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
 
         try {
             // Llama al método listarFinanzas y carga los datos en la tabla
-            ArrayList<Finanzas> listaFinanzas = Finanzas.listarFinanzas(conexion);
+            ArrayList<Finanzas> listaFinanzas = Finanzas.listarFinanzas(conexion, dniUsuario);
             for (Finanzas finanza : listaFinanzas) {
                 model.addRow(new Object[]{
                     finanza.getIdentificador().getId(), // id de la finanza desde Identificador

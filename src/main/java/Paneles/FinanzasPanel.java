@@ -10,10 +10,12 @@ public class FinanzasPanel extends javax.swing.JFrame {
 
     private Finanzas finanzas; // Instanciamos para poder manejar las notas
     private Connection conexion; // La conexión a la base de datos 
+    private final int dniUsuario;
 
-    public FinanzasPanel(Connection conexion) {
+    public FinanzasPanel(Connection conexion, int dniUsuario) {
         initComponents();
         this.conexion = conexion; // Asignamos la conexión existente
+        this.dniUsuario = dniUsuario;
     }
 
     @SuppressWarnings("unchecked")
@@ -111,7 +113,7 @@ public class FinanzasPanel extends javax.swing.JFrame {
 
     private void btnAgregarFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFinanzasActionPerformed
         // Pasar la conexión existente a la nueva ventana
-        AgregarFinanzasPanel agregarFinanza = new AgregarFinanzasPanel(conexion);
+        AgregarFinanzasPanel agregarFinanza = new AgregarFinanzasPanel(conexion, dniUsuario);
         agregarFinanza.setLocationRelativeTo(this); // Centra la ventana respecto a FinanzasPanel
         agregarFinanza.setVisible(true);
         this.dispose(); // Cierra FinanzasPanel
@@ -120,56 +122,19 @@ public class FinanzasPanel extends javax.swing.JFrame {
 
     private void btnActualizarFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarFinanzasActionPerformed
         // Pasar la conexión existente a la nueva ventana
-        ActualizarFinanzasPanel irActualizarFinanzas = new ActualizarFinanzasPanel(conexion);
+        ActualizarFinanzasPanel irActualizarFinanzas = new ActualizarFinanzasPanel(conexion, dniUsuario);
         irActualizarFinanzas.setLocationRelativeTo(this); // Centra la ventana respecto a FinanzasPanel
         irActualizarFinanzas.setVisible(true);
         this.dispose(); // Cierra FinanzasPanel
     }//GEN-LAST:event_btnActualizarFinanzasActionPerformed
 
     private void btnResetearFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetearFinanzasActionPerformed
-//        // Pedir el DNI al usuario
-//        String dniInput = JOptionPane.showInputDialog(this, "Ingrese su DNI:");
-//
-//        // Validar la entrada
-//        if (dniInput == null || dniInput.isEmpty()) {
-//            return; // El usuario canceló o no ingresó nada
-//        }
-//
-//        try {
-//            int dni = Integer.parseInt(dniInput); // Convertir el DNI a un entero
-//
-//            // Obtener la lista de finanzas
-//            ArrayList<Finanzas> listaFinanzas = Finanzas.listarFinanzas(conexion);
-//
-//            // Buscar el objeto Finanzas correspondiente al DNI
-//            Finanzas finanzas = null;
-//            for (Finanzas f : listaFinanzas) {
-//                if (f.getDni() == dni) { // Asegúrate de tener un método getDni() en tu clase Finanzas
-//                    finanzas = f;
-//                    break; // Salir del bucle si se encuentra el objeto
-//                }
-//            }
-//
-//            // Validar que se haya encontrado finanzas
-//            if (finanzas == null) {
-//                JOptionPane.showMessageDialog(this, "No se encontraron finanzas para el DNI ingresado.");
-//                return; // Salir del método
-//            }
-//
-//            // Resetear las finanzas
-//            finanzas.resetearFinanzas(conexion);
-//            JOptionPane.showMessageDialog(this, "Finanzas reseteadas correctamente.");
-//
-//        } catch (NumberFormatException e) {
-//            JOptionPane.showMessageDialog(this, "Por favor, ingrese un DNI válido.");
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(this, "Error al acceder a la base de datos: " + e.getMessage());
-//        }
+
     }//GEN-LAST:event_btnResetearFinanzasActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // Instanciamos el panel Principal
-        Principal volverPrincipal = new Principal();
+        Principal volverPrincipal = new Principal(dniUsuario);
         // Mostramos el panel principal
         volverPrincipal.setVisible(true);
         // Centrar la ventana en la pantalla
