@@ -1,42 +1,52 @@
-
 package com.mycompany.proyecto;
 
 import java.time.LocalDate;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 
 public class Notas {
-    private Identificador identificador; // Composición
+
+    private Identificador identificador;
+    private final int dniUsuario;
     private String titulo;
     private String contenido;
-    private LocalDate fechaCreacion;
-    private LocalDate fechaModificacion;
+    private LocalDate fechaCreacionModificacion;
 
-    // Constructor
-    public Notas(int id, String fecha, String titulo, String contenido, LocalDate fechaCreacion, LocalDate fechaModificacion) {
-        this.identificador = new Identificador(id, fecha);
+    // Constructor con dni del Usuario, Titulo y contenido solamente
+    public Notas(int dniUsuario, String titulo, String contenido) {
+        this.dniUsuario = dniUsuario;
         this.titulo = titulo;
         this.contenido = contenido;
-        this.fechaCreacion = fechaCreacion;
-        this.fechaModificacion = fechaModificacion;
+        this.fechaCreacionModificacion = LocalDate.now(); // Inicializa con la fecha actual
     }
 
-    // Getters y Setters para los atributos compartidos
+    // Constructor sin id
+    public Notas(int dniUsuario, String titulo, String contenido, LocalDate fechaCreacionModificacion) {
+        this.dniUsuario = dniUsuario;
+        this.titulo = titulo;
+        this.contenido = contenido;
+        this.fechaCreacionModificacion = LocalDate.now(); // Guarda la fecha actual
+    }
+
+    // Constructor completo
+    public Notas(int id, int dniUsuario, String titulo, String contenido, LocalDate fechaCreacionModificacion) {
+        this.identificador = new Identificador(id);
+        this.dniUsuario = dniUsuario;
+        this.titulo = titulo;
+        this.contenido = contenido;
+        this.fechaCreacionModificacion = LocalDate.now(); // Guarda la fecha actual
+    }
+
+    // Getters y setters para el atributo compartido
     public int getId() {
         return identificador.getId();
     }
 
     public void setId(int id) {
         identificador.setId(id);
-    }
-
-    public String getFecha() {
-        return identificador.getFecha();
-    }
-
-    public void setFecha(String fecha) {
-        identificador.setFecha(fecha);
     }
 
     // Getters y Setters para atributos específicos de Notas
@@ -56,73 +66,23 @@ public class Notas {
         this.contenido = contenido;
     }
 
-    public LocalDate getFechaCreacion() {
-        return fechaCreacion;
+    public LocalDate getFechaCreacionModificacion() {
+        return fechaCreacionModificacion;
     }
 
-    public void setFechaCreacion(LocalDate fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+    public void setFechaCreacionModificacion(LocalDate fechaCreacionModificacion) {
+        this.fechaCreacionModificacion = fechaCreacionModificacion;
     }
 
-    public LocalDate getFechaModificacion() {
-        return fechaModificacion;
-    }
+    // Método para guardar la nota en la base de datoS
+    public void guardarNota(Connection conexion) throws SQLException {
+        String sql = "INSERT INTO notas (dni, titulo, contenido, fecha_creacion_modificacion) VALUES (?, ?, ?, ?)";
 
-    public void setFechaModificacion(LocalDate fechaModificacion) {
-        this.fechaModificacion = fechaModificacion;
-    }
-
-
-    // Método para crear una nueva nota
-    public void crearNota(String titulo, String contenido, Connection conexion) throws SQLException {
-        this.titulo = titulo;
-        this.contenido = contenido;
-        this.fechaCreacion = LocalDate.now();  // Captura la fecha actual de creación
-        this.fechaModificacion = null; 
-
-        // Guardar la nota en la base de datos
-        guardarEnBaseDatos(conexion);
-    }
-
-    // Método para editar una nota existente
-    public void editarNota(String nuevoContenido, Connection conexion) throws SQLException {
-        this.contenido = nuevoContenido;
-        this.fechaModificacion = LocalDate.now();  // Actualiza la fecha de modificación
-
-        // Actualizar la nota en la base de datos
-        actualizarEnBaseDatos(conexion);
-    }
-
-    // Método para eliminar el contenido de una nota en la memoria 
-    public void eliminarNota(Connection conexion) throws SQLException {
-        this.titulo = null;
-        this.contenido = null;
-        this.fechaCreacion = null;
-        this.fechaModificacion = null;
-           
-    // Eliminar la nota de la base de datos
-     eliminarDeBaseDatos(conexion);
-    }
-
-    // Método para mostrar la información de la nota
-    public String mostrarNota() {
-        return "Título: " + this.titulo + "\nContenido: " + this.contenido + 
-               "\nFecha de creación: " + this.fechaCreacion + 
-               (this.fechaModificacion != null ? "\nFecha de modificación: " + this.fechaModificacion : "");
-    }
-
-    // Método para buscar una nota por su título 
-    public boolean buscarNota(String tituloBuscado) {
-        return this.titulo != null && this.titulo.equalsIgnoreCase(tituloBuscado);
-    }
-
-    // Método para guardar la nota en la base de datos
-    public void guardarEnBaseDatos(Connection conexion) throws SQLException {
-        String query = "INSERT INTO notas (titulo, contenido, fechaCreacion) VALUES (?, ?, ?)";
-        try (PreparedStatement pstmt = conexion.prepareStatement(query)) {
-            pstmt.setString(1, this.titulo);
-            pstmt.setString(2, this.contenido);
-            pstmt.setDate(3, java.sql.Date.valueOf(this.fechaCreacion)); // Convierte LocalDate a Date para SQL
+        try (PreparedStatement pstmt = conexion.prepareStatement(sql)) {
+            pstmt.setInt(1, dniUsuario);
+            pstmt.setString(2, titulo);
+            pstmt.setString(3, contenido);
+            pstmt.setString(4, fechaCreacionModificacion.toString()); // Asigna la fecha en formato de texto
             pstmt.executeUpdate();
         }
     }
@@ -132,19 +92,32 @@ public class Notas {
         String query = "UPDATE notas SET contenido = ?, fechaModificacion = ? WHERE titulo = ?";
         try (PreparedStatement pstmt = conexion.prepareStatement(query)) {
             pstmt.setString(1, this.contenido);
-            pstmt.setDate(2, java.sql.Date.valueOf(this.fechaModificacion)); // Convierte LocalDate a Date para SQL
+            pstmt.setDate(2, java.sql.Date.valueOf(this.fechaCreacionModificacion)); // Convierte LocalDate a Date para SQL
             pstmt.setString(3, this.titulo);
             pstmt.executeUpdate();
         }
     }
 
-    // Método para eliminar una nota de la base de datos
-    public void eliminarDeBaseDatos(Connection conexion) throws SQLException {
-        String query = "DELETE FROM notas WHERE titulo = ?";
-        try (PreparedStatement pstmt = conexion.prepareStatement(query)) {
-            pstmt.setString(1, this.titulo);
-            pstmt.executeUpdate();
-        }
-    }
-}
+    public static ArrayList<Notas> listarNotas(Connection conexion, int dniUsuario) throws SQLException {
+        ArrayList<Notas> listaNotas = new ArrayList<>();
+        String sql = "SELECT id, titulo, fecha_creacion_modificacion FROM notas WHERE dni = ?";
 
+        try (PreparedStatement pstmt = conexion.prepareStatement(sql)) {
+            pstmt.setInt(1, dniUsuario);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String titulo = rs.getString("titulo");
+                LocalDate fechaCreacionModificacion = LocalDate.parse(rs.getString("fecha_creacion_modificacion"));
+
+                // Agregar la nota a la lista
+                Notas nota = new Notas(id, dniUsuario, titulo, null, fechaCreacionModificacion);
+                listaNotas.add(nota);
+            }
+        }
+
+        return listaNotas;
+    }
+
+}

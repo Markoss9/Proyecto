@@ -33,7 +33,7 @@ public class Finanzas {
     // Constructor que acepta solo dni, id, ingreso y gastos
     public Finanzas(int dni, int id, float ingreso, float gastos) {
         this.dni = dni;
-        this.identificador = new Identificador(id, ""); // O establecer valores predeterminados
+        this.identificador = new Identificador(id); // O establecer valores predeterminados
         this.ingreso = ingreso;
         this.gastos = gastos;
         this.saldo = saldo;
@@ -42,7 +42,7 @@ public class Finanzas {
     // Constructor que acepta solo dni, id, ingreso, gastos, saldo
     public Finanzas(int dni, int id, float ingreso, float gastos, float saldo) {
         this.dni = dni;
-        this.identificador = new Identificador(id, ""); // Establecer valores predeterminados
+        this.identificador = new Identificador(id); // Establecer valores predeterminados
         this.ingreso = ingreso;
         this.gastos = gastos;
         this.saldo = saldo;
@@ -51,7 +51,7 @@ public class Finanzas {
     // Constructor completo
     public Finanzas(int dni, int id, String fecha, float ingreso, float gastos) {
         this.dni = dni;
-        this.identificador = new Identificador(id, fecha);
+        this.identificador = new Identificador(id);
         this.ingreso = ingreso;
         this.gastos = gastos;
         this.saldo = saldo;
@@ -72,14 +72,6 @@ public class Finanzas {
 
     public void setId(int id) {
         identificador.setId(id);
-    }
-
-    public String getFecha() {
-        return identificador.getFecha();
-    }
-
-    public void setFecha(String fecha) {
-        identificador.setFecha(fecha);
     }
 
     // Método getter para el identificador
