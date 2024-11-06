@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.*;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class Notas {
@@ -87,17 +90,29 @@ public class Notas {
         }
     }
 
-    // Método para actualizar una nota en la base de datos
-    public void actualizarEnBaseDatos(Connection conexion) throws SQLException {
-        String query = "UPDATE notas SET contenido = ?, fechaModificacion = ? WHERE titulo = ?";
-        try (PreparedStatement pstmt = conexion.prepareStatement(query)) {
-            pstmt.setString(1, this.contenido);
-            pstmt.setDate(2, java.sql.Date.valueOf(this.fechaCreacionModificacion)); // Convierte LocalDate a Date para SQL
-            pstmt.setString(3, this.titulo);
-            pstmt.executeUpdate();
+    // Metodo para actualizar las notas
+    public static void actualizarNota(Connection conexion, int dniUsuario, int idNota, String nuevoTitulo, String nuevoContenido) throws SQLException {
+        String sql = "UPDATE notas SET titulo = ?, contenido = ?, fecha_creacion_modificacion = ? WHERE id = ? AND dni = ?";
+
+        try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
+            stmt.setString(1, nuevoTitulo);
+            stmt.setString(2, nuevoContenido);
+            // Usamos java.sql.Date para asegurar que la fecha sea guardada como DATE
+            LocalDate fechaActual = LocalDate.now();
+            System.out.println("Fecha que se va a guardar: " + fechaActual);  // Mensaje de depuración
+            stmt.setDate(3, java.sql.Date.valueOf(fechaActual));
+
+            stmt.setInt(4, idNota);
+            stmt.setInt(5, dniUsuario);
+
+            int filasActualizadas = stmt.executeUpdate();
+            if (filasActualizadas == 0) {
+                throw new SQLException("No se encontró la nota o no pertenece al usuario actual.");
+            }
         }
     }
 
+    // Metodo para obtener las notas desde la base de datos 
     public static ArrayList<Notas> listarNotas(Connection conexion, int dniUsuario) throws SQLException {
         ArrayList<Notas> listaNotas = new ArrayList<>();
         String sql = "SELECT id, titulo, fecha_creacion_modificacion FROM notas WHERE dni = ?";
@@ -118,6 +133,38 @@ public class Notas {
         }
 
         return listaNotas;
+    }
+
+    // Metodo para buscar una nota por su id correspondiente 
+    public static Notas buscarNotaPorId(Connection conexion, int dniUsuario, int id) throws SQLException {
+        String sql = "SELECT id, titulo, contenido, fecha_creacion_modificacion FROM notas WHERE dni = ? AND id = ?";
+
+        try (PreparedStatement pstmt = conexion.prepareStatement(sql)) {
+            pstmt.setInt(1, dniUsuario);
+            pstmt.setInt(2, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Obtener la fecha como long (timestamp en milisegundos)
+                long fechaMillis = rs.getLong("fecha_creacion_modificacion");
+
+                // Convertir el timestamp a LocalDate
+                LocalDate fechaCreacionModificacion = Instant.ofEpochMilli(fechaMillis)
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate();
+
+                // Crear y devolver una instancia de Notas con los datos obtenidos
+                return new Notas(
+                        rs.getInt("id"),
+                        rs.getString("titulo"),
+                        rs.getString("contenido"),
+                        fechaCreacionModificacion
+                );
+            } else {
+                // No se encontró la nota
+                return null;
+            }
+        }
     }
 
 }

@@ -4,6 +4,7 @@ import com.mycompany.proyecto.Notas;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -11,6 +12,7 @@ public class VerNotasPanel extends javax.swing.JFrame {
 
     private Connection conexion;
     private final int dniUsuario;
+    public JFrame parent;
 
     public VerNotasPanel(Connection conexion, int dniUsuario) {
         initComponents();
@@ -26,7 +28,7 @@ public class VerNotasPanel extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        btnVerNota = new javax.swing.JButton();
+        btnVerContenidoNota = new javax.swing.JButton();
         btnEliminrNota = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
@@ -56,11 +58,11 @@ public class VerNotasPanel extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jScrollPane2);
 
-        btnVerNota.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-        btnVerNota.setText("Ver Nota");
-        btnVerNota.addActionListener(new java.awt.event.ActionListener() {
+        btnVerContenidoNota.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        btnVerContenidoNota.setText("Ver Contenido");
+        btnVerContenidoNota.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerNotaActionPerformed(evt);
+                btnVerContenidoNotaActionPerformed(evt);
             }
         });
 
@@ -87,11 +89,11 @@ public class VerNotasPanel extends javax.swing.JFrame {
             .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnVerNota, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(114, 114, 114)
-                .addComponent(btnEliminrNota, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
-                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnVerContenidoNota, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
+                .addComponent(btnEliminrNota, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -100,7 +102,7 @@ public class VerNotasPanel extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnVerNota)
+                    .addComponent(btnVerContenidoNota)
                     .addComponent(btnEliminrNota)
                     .addComponent(btnVolver))
                 .addContainerGap())
@@ -109,9 +111,33 @@ public class VerNotasPanel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnVerNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerNotaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVerNotaActionPerformed
+    private void btnVerContenidoNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerContenidoNotaActionPerformed
+        // Solicitar ID al usuario
+        String idString = JOptionPane.showInputDialog(this, "Ingrese el ID de la nota que desea ver:", "Ver Nota", JOptionPane.PLAIN_MESSAGE);
+
+        // Verificar que el ID ingresado sea válido
+        if (idString != null && !idString.trim().isEmpty()) {
+            try {
+                int idNota = Integer.parseInt(idString.trim());
+
+                // Intentar buscar la nota en la base de datos
+                Notas nota = Notas.buscarNotaPorId(conexion, dniUsuario, idNota); // Método de búsqueda en la clase Notas
+
+                if (nota != null) {
+                    // Si se encuentra la nota, abrir el diálogo VerNotaDialog con la información de la nota
+                    VerNotaDialog verNotaDialog = new VerNotaDialog(this, conexion, dniUsuario, idNota, nota.getTitulo(), nota.getContenido());
+                    verNotaDialog.setVisible(true); // Mostrar el diálogo VerNotaDialog
+                } else {
+                    // Si no se encuentra, mostrar mensaje de error
+                    JOptionPane.showMessageDialog(this, "No se encontró una nota con el ID especificado.", "Nota no encontrada", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Por favor ingrese un ID válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Error al buscar la nota: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnVerContenidoNotaActionPerformed
 
     private void btnEliminrNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminrNotaActionPerformed
         // TODO add your handling code here:
@@ -152,7 +178,7 @@ public class VerNotasPanel extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminrNota;
-    private javax.swing.JButton btnVerNota;
+    private javax.swing.JButton btnVerContenidoNota;
     private javax.swing.JButton btnVolver;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
