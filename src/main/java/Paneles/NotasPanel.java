@@ -25,9 +25,7 @@ public class NotasPanel extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnCrearNota = new javax.swing.JButton();
-        bntEditarNota = new javax.swing.JButton();
-        btnVerNota = new javax.swing.JButton();
-        btnEliminarNota = new javax.swing.JButton();
+        btnVerNotas = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -45,27 +43,11 @@ public class NotasPanel extends javax.swing.JFrame {
             }
         });
 
-        bntEditarNota.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-        bntEditarNota.setText("Editar Nota");
-        bntEditarNota.addActionListener(new java.awt.event.ActionListener() {
+        btnVerNotas.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        btnVerNotas.setText("Ver Notas");
+        btnVerNotas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntEditarNotaActionPerformed(evt);
-            }
-        });
-
-        btnVerNota.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-        btnVerNota.setText("Ver Nota");
-        btnVerNota.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerNotaActionPerformed(evt);
-            }
-        });
-
-        btnEliminarNota.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-        btnEliminarNota.setText("Eliminar Nota");
-        btnEliminarNota.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarNotaActionPerformed(evt);
+                btnVerNotasActionPerformed(evt);
             }
         });
 
@@ -81,40 +63,34 @@ public class NotasPanel extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(73, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminarNota, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVerNota, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bntEditarNota, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVerNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCrearNota, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addGap(75, 75, 75))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnCrearNota)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bntEditarNota)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnVerNota)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEliminarNota)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(24, 24, 24)
+                .addComponent(btnVerNotas)
+                .addGap(18, 18, 18)
                 .addComponent(btnVolver)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,54 +103,23 @@ public class NotasPanel extends javax.swing.JFrame {
 // Boton para crear una nota
     private void btnCrearNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearNotaActionPerformed
         // Pasar la conexión existente a la nueva ventana
-        CrearNota crearNota = new CrearNota(conexion);
+        CrearNota crearNota = new CrearNota(conexion,dniUsuario);
         crearNota.setLocationRelativeTo(this); // Centra la ventana respecto a NotasPanel
         crearNota.setVisible(true);
-        this.dispose(); // Opcional: Cierra NotasPanel si quieres que solo esté abierta la ventana CrearNota
+        this.dispose(); //  Cierra NotasPanel 
     }//GEN-LAST:event_btnCrearNotaActionPerformed
 
-    // Boton para editar una nota
-    private void bntEditarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntEditarNotaActionPerformed
-        if (notasUsuario != null) {
-            if (notasUsuario.getTitulo() != null && notasUsuario.getContenido() != null) {
-                String nuevoContenido = "Nuevo contenido de la nota";  // Este debe ser un String válido
-                try {
-                    notasUsuario.editarNota(nuevoContenido, conexion);  // Editar la nota en la base de datos
-                    System.out.println("Nota editada: " + notasUsuario.mostrarNota());
-                } catch (SQLException e) {
-                    System.out.println("Error al editar la nota: " + e.getMessage());
-                }
-            } else {
-                System.out.println("La nota no tiene un título o contenido válido.");
-            }
-        } else {
-            System.out.println("No hay nota creada para editar.");
-        }
-    }//GEN-LAST:event_bntEditarNotaActionPerformed
-
-    //Boton para Ver una nota
-    private void btnVerNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerNotaActionPerformed
-        if (notasUsuario != null) {
-            System.out.println("Ver Nota: " + notasUsuario.mostrarNota());
-        } else {
-            System.out.println("No hay nota creada.");
-        }
-    }//GEN-LAST:event_btnVerNotaActionPerformed
-
-    // Boton para eliminar una nota
-    private void btnEliminarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarNotaActionPerformed
-        if (notasUsuario != null) {
-            try {
-                notasUsuario.eliminarNota(conexion);  // Elimina el contenido a nivel de aplicación
-                System.out.println("Nota eliminada.");
-                notasUsuario = null;  // Para limpiar la instancia actual y evitar errores posteriores
-            } catch (SQLException e) {
-                System.out.println("Error al eliminar la nota: " + e.getMessage());
-            }
-        } else {
-            System.out.println("No hay nota para eliminar.");
-        }
-    }//GEN-LAST:event_btnEliminarNotaActionPerformed
+    //Boton para abrir el jtable que contiene las notas
+    private void btnVerNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerNotasActionPerformed
+        // Instanciamos el panel Principal
+        VerNotasPanel irVerNotas = new VerNotasPanel(conexion, dniUsuario);
+        // Mostramos el panel principal
+        irVerNotas.setVisible(true);
+        // Centrar la ventana en la pantalla
+        irVerNotas.setLocationRelativeTo(null);
+        // Cerramos el panel Notas 
+        this.dispose();
+    }//GEN-LAST:event_btnVerNotasActionPerformed
 
     // Boton para volver al panel principal
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -189,10 +134,8 @@ public class NotasPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntEditarNota;
     private javax.swing.JButton btnCrearNota;
-    private javax.swing.JButton btnEliminarNota;
-    private javax.swing.JButton btnVerNota;
+    private javax.swing.JButton btnVerNotas;
     private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

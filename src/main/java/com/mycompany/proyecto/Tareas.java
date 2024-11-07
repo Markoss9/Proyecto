@@ -11,8 +11,8 @@ public class Tareas {
     private String fechalimite;
 
     // Constructor
-    public Tareas(int id, String fecha, String descripcion, boolean completada, String fechalimite) {
-        this.identificador = new Identificador(id, fecha);
+    public Tareas(int id, String descripcion, boolean completada, String fechalimite) {
+        this.identificador = new Identificador(id);
         this.descripcion = descripcion;
         this.completada = completada;
         this.fechalimite = fechalimite;
@@ -25,14 +25,6 @@ public class Tareas {
 
     public void setId(int id) {
         identificador.setId(id);
-    }
-
-    public String getFecha() {
-        return identificador.getFecha();
-    }
-
-    public void setFecha(String fecha) {
-        identificador.setFecha(fecha);
     }
 
     public String getDescripcion() {

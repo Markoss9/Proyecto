@@ -41,7 +41,7 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "id", "dni", "ingresos", "gastos", "saldo"
+                "ID", "DNI", "INGRESOS", "GASTOS", "SALDO"
             }
         ) {
             Class[] types = new Class [] {

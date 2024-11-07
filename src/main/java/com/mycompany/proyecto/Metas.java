@@ -12,8 +12,8 @@ public class Metas {
     private float progreso;
 
     // Constructor
-    public Metas(int id, String fecha, String descripcion, String fechalimite, float progreso) {
-        this.identificador = new Identificador(id, fecha);
+    public Metas(int id, String descripcion, String fechalimite, float progreso) {
+        this.identificador = new Identificador(id);
         this.descripcion = descripcion;
         this.fechalimite = fechalimite;
         this.progreso = progreso;
@@ -26,14 +26,6 @@ public class Metas {
 
     public void setId(int id) {
         identificador.setId(id);
-    }
-
-    public String getFecha() {
-        return identificador.getFecha();
-    }
-
-    public void setFecha(String fecha) {
-        identificador.setFecha(fecha);
     }
 
     public String getDescripcion() {
