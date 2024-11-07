@@ -2,6 +2,7 @@ package Paneles;
 
 //import javax.swing.JFrame;
 import com.mycompany.proyecto.Conexion;
+import com.mycompany.proyecto.Contactos;
 import com.mycompany.proyecto.Salud;
 
 import java.sql.Connection;
@@ -10,9 +11,11 @@ public class Principal extends javax.swing.JFrame {
         
     private final int dniUsuario; // Variable para almacenar el DNI del usuario
     
+    
     public Principal(int dniUsuario) {
         initComponents();
         this.dniUsuario = dniUsuario; // Almacenar el DNI
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -238,8 +241,11 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRecordatorioActionPerformed
 
     private void btnSaludActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaludActionPerformed
-        //instancioamos salud
-        Salud salud = new Salud();
+        
+        
+        Connection conexion = Conexion.getConnection();
+        
+        Salud salud = new Salud(0,0);
         
         SaludPanel saludPanel = new SaludPanel(salud, dniUsuario);
 
@@ -277,7 +283,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFinanzasActionPerformed
 
     private void btnContactosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContactosActionPerformed
-        ContactosPanel panelContacto = new ContactosPanel(dniUsuario);
+        Contactos contactos = new Contactos(0,"","","","");
+        ContactosPanel panelContacto = new ContactosPanel(dniUsuario, contactos);
         panelContacto.setLocationRelativeTo(null);
         panelContacto.setVisible(true);
         this.dispose();

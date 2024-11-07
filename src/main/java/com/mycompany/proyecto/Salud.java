@@ -1,22 +1,26 @@
 package com.mycompany.proyecto;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class Salud {
+    private static int id;
     private float peso;
     private float altura;
     private float caloriasconsumidas;
     private float caloriasquemadas;
 
-    public Salud() {
+    
+    public Salud (float peso, float altura){
+        this.peso = peso;
+        this.altura = altura;
+    }
+
+    public Salud(int id) {
+        this.id = id;
     }
     
     
-public Salud (float peso, float altura){
-    this.peso = peso;
-    this.altura = altura;
-    this.caloriasconsumidas = 0;
-    this.caloriasquemadas = 0;
-}
 
     public float getPeso() {
         return peso;
@@ -64,15 +68,56 @@ public Salud (float peso, float altura){
         float imc = calcularIMC();
         
         if (imc<=18.5){
-            return ("Peso bajo");
+            return ("Bajo");
         }else if (imc>18.5 & imc<=24.9){
-            return ("Peso normal");
+            return ("Normal");
         }else if (imc>24.9 & imc<=29.9){
             return ("Sobrepeso");
         }else {
             return ("Obesidad");
         }
     }
+      
+    public void guardarDatosPesoyAltura() {
+        String sql = "INSERT INTO salud (peso, altura, calConsumidas, calQuemadas) VALUES (?, ?, ?, ?)";
+        try (   Connection conn = Conexion.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            
+            pstmt.setFloat(1, this.peso);
+            pstmt.setFloat(2, this.altura);
+            pstmt.setFloat(3, 0);
+            pstmt.setFloat(4, 0);
+            pstmt.executeUpdate();
+            
+            System.out.println("Peso y altura guardados correctamente");
+            
+            var key = pstmt.getGeneratedKeys();
+            
+            if (key.next()){
+                this.id = key.getInt(1);
+                System.out.println(this.id);
+            }
+        }catch (SQLException e) {
+            System.out.println("Error al guardar peso y altura: " + e.getMessage());
+        }
+    }
     
-    
+    public void guardarCalorias(float calCon, float calQue){
+        String sql = "UPDATE salud SET calConsumidas = ?, calQuemadas = ? WHERE id = ?";
+        
+        try(Connection conn = Conexion.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)){
+            
+            pstmt.setFloat(1, calCon);
+            pstmt.setFloat(2, calQue);
+            pstmt.setFloat(3, this.id);
+            
+            pstmt.executeUpdate();
+            System.out.println("Calorias Actualizadas");
+            System.out.println(this.id);
+            
+        }catch (SQLException e) {
+            System.out.println("Error al guardar calorias: " + e.getMessage());
+        }
+    }
 }

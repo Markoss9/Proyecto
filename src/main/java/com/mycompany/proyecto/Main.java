@@ -11,12 +11,11 @@ public static void main(String[] args) {
     Conexion conexion = new Conexion();
     
     
+    
     // Crear la interfaz Login
     Login login = new Login();
     login.setVisible(true);
     login.setLocationRelativeTo(null);
-    
-    
     
     
   }
