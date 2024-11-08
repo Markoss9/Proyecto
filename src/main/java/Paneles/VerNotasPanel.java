@@ -14,11 +14,12 @@ public class VerNotasPanel extends javax.swing.JFrame {
     private final int dniUsuario;
     public JFrame parent;
 
+    // Constructor que recibe la conexión y el DNI del usuario actual
     public VerNotasPanel(Connection conexion, int dniUsuario) {
         initComponents();
         this.conexion = conexion;
         this.dniUsuario = dniUsuario;
-        cargarTablaNotas();
+        cargarTablaNotas(); // Cargar las notas del usuario en la tabla al abrir el panel
     }
 
     @SuppressWarnings("unchecked")
@@ -112,7 +113,7 @@ public class VerNotasPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerContenidoNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerContenidoNotaActionPerformed
-        // Solicitar ID al usuario
+         // Solicitar ID al usuario
         String idString = JOptionPane.showInputDialog(this, "Ingrese el ID de la nota que desea ver:", "Ver Nota", JOptionPane.PLAIN_MESSAGE);
 
         // Verificar que el ID ingresado sea válido
@@ -201,7 +202,7 @@ public class VerNotasPanel extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al cargar las notas: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al cargar las notas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

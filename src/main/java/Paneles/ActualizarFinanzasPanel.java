@@ -110,30 +110,29 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVovlerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVovlerActionPerformed
-        // Instanciamos el panel Finanzas
+        // Crea e instancia el panel Finanzas
         FinanzasPanel volverFinanzas = new FinanzasPanel(conexion, dniUsuario);
-        // Mostramos el panel de Finanzas
-        volverFinanzas.setVisible(true);
-        // Centrar la ventana en la pantalla
-        volverFinanzas.setLocationRelativeTo(null);
-        // Cerramos el panel ActualizarFinanzas 
-        this.dispose();
+        volverFinanzas.setVisible(true); // Muestra el panel Finanzas
+        volverFinanzas.setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        this.dispose(); // Cierra el panel ActualizarFinanzas
     }//GEN-LAST:event_btnVovlerActionPerformed
 
+    // Método para el botón "Editar Finanzas"
     private void btnEditarFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarFinanzasActionPerformed
         try {
-            // Solicitar al usuario que ingrese el ID de la finanza
+            // Solicita al usuario el ID de la finanza que desea editar
             String inputId = JOptionPane.showInputDialog(this, "Ingrese el ID de la finanza a editar:");
             int id = Integer.parseInt(inputId);
-            int dniUsuario = this.dniUsuario; // Obtén el DNI del usuario autenticado
-            // Buscar la finanza con el ID proporcionado
+
+            // Busca la finanza en la base de datos usando el DNI del usuario y el ID ingresado
             Finanzas finanza = Finanzas.buscarFinanzaPorId(conexion, id, dniUsuario);
 
             if (finanza != null) {
-                // Abrir el diálogo de edición con los datos de la finanza
+                // Abre el cuadro de diálogo de edición con los datos de la finanza
                 EditarFinanzasDialog editarDialog = new EditarFinanzasDialog(this, id, dniUsuario, conexion, finanza.getIngreso(), finanza.getGastos());
-                editarDialog.setVisible(true);
+                editarDialog.setVisible(true); // Muestra el diálogo de edición
             } else {
+                // Si no se encuentra la finanza, muestra un mensaje de error
                 JOptionPane.showMessageDialog(this, "No se encontró ninguna finanza con el ID proporcionado.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException ex) {
@@ -143,28 +142,29 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditarFinanzasActionPerformed
 
+    // Método para el botón "Eliminar Finanzas"
     private void btnEliminarFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarFinanzasActionPerformed
         try {
-            // Pedir al usuario que ingrese el ID de la finanza que desea eliminar
+            // Solicita al usuario el ID de la finanza que desea eliminar
             String inputId = JOptionPane.showInputDialog(this, "Ingrese el ID de la finanza a eliminar:");
 
             if (inputId != null && !inputId.trim().isEmpty()) {
                 int id = Integer.parseInt(inputId);
 
-                // Verificar si la finanza pertenece al usuario actual
+                // Verifica que la finanza pertenezca al usuario actual
                 Finanzas finanza = Finanzas.buscarFinanzaPorId(conexion, id, dniUsuario);
 
                 if (finanza != null) {
-                    // Confirmar la eliminación
+                    // Confirma la eliminación
                     int confirmacion = JOptionPane.showConfirmDialog(this,
                             "¿Está seguro que desea eliminar la finanza con ID " + id + "?",
                             "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
 
                     if (confirmacion == JOptionPane.YES_OPTION) {
-                        // Eliminar la finanza de la base de datos
-                        Finanzas.eliminarFinanza(conexion, id, dniUsuario); // Usamos el método estático en la clase Finanzas
+                        // Elimina la finanza de la base de datos
+                        Finanzas.eliminarFinanza(conexion, id, dniUsuario);
                         JOptionPane.showMessageDialog(this, "Finanza eliminada exitosamente.");
-                        cargarTablaFinanzas();
+                        cargarTablaFinanzas(); // Recarga la tabla para actualizar la vista
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "La finanza no pertenece a su usuario o no existe.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -179,21 +179,21 @@ public class ActualizarFinanzasPanel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarFinanzasActionPerformed
 
-    // Método para cargar datos en la tabla jTable1
+    // Método para cargar los datos de finanzas en la tabla jTable1
     public void cargarTablaFinanzas() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0); // Limpia la tabla antes de cargar nuevos datos
 
         try {
-            // Llama al método listarFinanzas y carga los datos en la tabla
+            // Llama al método listarFinanzas y agrega cada finanza a la tabla
             ArrayList<Finanzas> listaFinanzas = Finanzas.listarFinanzas(conexion, dniUsuario);
             for (Finanzas finanza : listaFinanzas) {
                 model.addRow(new Object[]{
-                    finanza.getIdentificador().getId(), // id de la finanza desde Identificador
-                    finanza.getDni(), // dni del usuario
-                    finanza.getIngreso(), // ingresos
-                    finanza.getGastos(), // gastos
-                    finanza.getSaldo() // saldo calculado
+                    finanza.getIdentificador().getId(), // ID de la finanza
+                    finanza.getDni(), // DNI del usuario
+                    finanza.getIngreso(), // Ingreso
+                    finanza.getGastos(), // Gasto
+                    finanza.getSaldo() // Saldo calculado
                 });
             }
         } catch (SQLException e) {

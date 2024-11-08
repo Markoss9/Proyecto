@@ -7,9 +7,10 @@ import javax.swing.JOptionPane;
 
 public class CrearNota extends javax.swing.JFrame {
 
-    private Connection conexion;
-    private final int dniUsuario;
+    private Connection conexion; // Conexión a la base de datos
+    private final int dniUsuario; // DNI del usuario actual
 
+    // Constructor de CrearNota que recibe la conexión y el DNI del usuario
     public CrearNota(Connection conexion, int dniUsuario) {
         initComponents();
         this.conexion = conexion;
@@ -142,20 +143,19 @@ public class CrearNota extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarNotaActionPerformed
-
+    // Acción del campo de texto para el título, para cambiar el enfoque al área de contenido al presionar Enter
     private void txtTituloNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloNotaActionPerformed
         // Cambiar el enfoque al siguiente campo al darle enter
         txtContenidoNota.requestFocus();
     }//GEN-LAST:event_txtTituloNotaActionPerformed
 
     private void btnVolverPanelNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverPanelNotasActionPerformed
-        // Instanciamos el panel Notas
+        // Crear una instancia del panel de notas y mostrarla
         NotasPanel volverNotas = new NotasPanel(conexion, dniUsuario);
-        // Mostramos el panel Notas
-        volverNotas.setVisible(true);
-        // Centrar la ventana en la pantalla
-        volverNotas.setLocationRelativeTo(null);
-        // Cerramos el panel Crear Notas 
+        volverNotas.setVisible(true); // Mostrar el panel de notas
+        volverNotas.setLocationRelativeTo(null); // Centrar la ventana en la pantalla
+
+        // Cerrar el panel de creación de nota actual
         this.dispose();
     }//GEN-LAST:event_btnVolverPanelNotasActionPerformed
 
