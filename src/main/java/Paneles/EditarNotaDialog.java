@@ -28,6 +28,8 @@ public class EditarNotaDialog extends JDialog {
 
         // Agregar el ActionListener al botón "Guardar"
         btnGuardar.addActionListener(evt -> guardarNota());
+        // Centrar el diálogo en la pantalla
+        setLocationRelativeTo(null);
     }
 
     private void initComponents() {
@@ -52,9 +54,9 @@ public class EditarNotaDialog extends JDialog {
         txtContenido.setBounds(120, 60, 250, 150);
         add(txtContenido);
 
-        // Botón de Guardar
+        // Botón de Guardar a la izquierda
         btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(150, 220, 100, 30);
+        btnGuardar.setBounds(50, 220, 100, 30); // Coloca el botón "Guardar" a la izquierda
         add(btnGuardar);
 
         // Acción del botón Guardar
@@ -62,6 +64,20 @@ public class EditarNotaDialog extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 guardarNota(); // Guardamos los cambios cuando el usuario haga clic en Guardar
+            }
+        });
+
+        // Botón de Cancelar a la derecha
+        JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.setBounds(250, 220, 100, 30); // Coloca el botón "Cancelar" a la derecha
+        add(btnCancelar);
+
+        // Acción del botón Cancelar
+        btnCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Cierra el EditarNotaDialog y vuelve al VerNotaDialog
+                dispose(); // Cierra la ventana de edición
             }
         });
 

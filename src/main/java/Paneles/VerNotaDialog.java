@@ -40,9 +40,9 @@ public class VerNotaDialog extends JDialog {
         txtContenido.setEditable(false); // Hace el contenido no editable aquí
         add(txtContenido);
 
-        // Botón Editar
+        // Botón Editar a la izquierda
         btnEditar = new JButton("Editar");
-        btnEditar.setBounds(150, 220, 100, 30);
+        btnEditar.setBounds(50, 220, 100, 30); // Cambia la posición para estar en la izquierda
         add(btnEditar);
 
         // Acción del botón Editar
@@ -52,11 +52,28 @@ public class VerNotaDialog extends JDialog {
                 abrirDialogoEditar(); // Abre el cuadro de diálogo de edición
             }
         });
+
+        // Botón Volver a la derecha
+        JButton btnVolver = new JButton("Volver");
+        btnVolver.setBounds(250, 220, 100, 30); // Cambia la posición para estar en la derecha
+        add(btnVolver);
+
+        // Acción del botón Volver
+        btnVolver.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Lógica para volver al VerNotasPanel
+                dispose(); // O cierra este diálogo si está en un diálogo
+            }
+        });
+
     }
-    
+
     // Se abre el dialogo de edicion de la nota 
     private void abrirDialogoEditar() {
         EditarNotaDialog editarDialogo = new EditarNotaDialog(parent, conexion, dniUsuario, id);
+        // Centrar el diálogo en la pantalla
+        editarDialogo.setLocationRelativeTo(null);
         editarDialogo.setVisible(true);
 
         // Actualizar el contenido después de la edición
