@@ -53,6 +53,8 @@ public class EditarNotaDialog extends JDialog {
         txtContenido = new JTextArea();
         txtContenido.setBounds(120, 60, 250, 150);
         add(txtContenido);
+        txtContenido.setLineWrap(true); // Activar el salto de línea automático
+        txtContenido.setWrapStyleWord(true); // Ajustar por palabras completas (para que no corte palabras a la mitad)
 
         // Botón de Guardar a la izquierda
         btnGuardar = new JButton("Guardar");

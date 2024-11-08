@@ -39,6 +39,8 @@ public class VerNotaDialog extends JDialog {
         txtContenido.setBounds(20, 60, 350, 150);
         txtContenido.setEditable(false); // Hace el contenido no editable aquí
         add(txtContenido);
+        txtContenido.setLineWrap(true); // Activar el salto de línea automático
+        txtContenido.setWrapStyleWord(true); // Ajustar por palabras completas (para que no corte palabras a la mitad)
 
         // Botón Editar a la izquierda
         btnEditar = new JButton("Editar");
