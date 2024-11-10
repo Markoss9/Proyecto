@@ -8,17 +8,31 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Contactos {
     private int id;
+    private int dni;
     private String nombre;
     private String apellido;
     private String telefono;
     private String email;
 
-    public Contactos(int id,String nombre, String apellido, String telefono, String email) {
+    public Contactos(int id, String nombre, String apellido, String telefono, String email) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.telefono = telefono;
+        this.email = email;
+    }
+    
+    
+    
+    
+    public Contactos(int id, int dni,String nombre, String apellido, String telefono, String email) {
         this.id=id;
+        this.dni=dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
@@ -29,11 +43,21 @@ public class Contactos {
         this.id = id;
     }
     
-    
     public String getNombre() {
         return nombre;
     }
 
+    public int getDni() {
+        return dni;
+    }
+
+    public void setDni(int dni) {
+        this.dni = dni;
+    }
+    
+    
+    
+    
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -76,15 +100,65 @@ public class Contactos {
         return "Contactos{" + "nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono + ", email=" + email + '}';
     }
     
-    public void guardarContacto(String nombre, String apellido, String email, String telefono){
-        String sql = "INSERT INTO contactos (nombre, apellido, correo, telefono) VALUES (?, ?, ?, ?)";
+    
+    public void crearTablaContactos(){
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            
+            conn = Conexion.getConnection();
+
+            
+            String checkTableSQL = "SELECT name FROM sqlite_master WHERE type='table' AND name='contactos';";
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(checkTableSQL);
+
+            if (rs.next()) {
+                
+                System.out.println("La tabla 'contactos' ya existe.");
+            } else {
+                
+                String createTableSQL = "CREATE TABLE contactos ("
+                        + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                        + "dni TEXT, "
+                        + "nombre TEXT NOT NULL, "
+                        + "apellido TEXT NOT NULL, "
+                        + "correo TEXT NOT NULL, "
+                        + "telefono TEXT NOT NULL"
+                        + ");";
+                
+                
+                stmt.executeUpdate(createTableSQL);
+                System.out.println("La tabla 'contactos' ha sido creada correctamente.");
+            }
+
+        } catch (SQLException e) {
+            
+            System.out.println("Error al verificar o crear la tabla: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                
+            } catch (SQLException se) {
+                System.out.println("Error al cerrar recursos: " + se.getMessage());
+            }
+        }
+    }
+    
+    
+    public void guardarContacto(int dni, String nombre, String apellido, String email, String telefono){
+        String sql = "INSERT INTO contactos (dni, nombre, apellido, correo, telefono) VALUES (?, ?, ?, ?, ?)";
         try(Connection conn = Conexion.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)){
             
-            pstmt.setString(1, nombre);
-            pstmt.setString(2, apellido);
-            pstmt.setString(3, email);
-            pstmt.setString(4, telefono);
+            pstmt.setInt(1, dni);
+            pstmt.setString(2, nombre);
+            pstmt.setString(3, apellido);
+            pstmt.setString(4, email);
+            pstmt.setString(5, telefono);
             pstmt.executeUpdate();
             System.out.println("Datos de contacto subidos con exito");
             
@@ -117,13 +191,13 @@ public class Contactos {
     }
     
     
-    public static ArrayList<Contactos> listarContactos()throws SQLException{
+    public static ArrayList<Contactos> listarContactos(int dni)throws SQLException{
         ArrayList<Contactos> listaContactos = new ArrayList<>();
-        String sql = "SELECT * FROM contactos";
+        String sql = "SELECT * FROM contactos WHERE dni = ?";
         
         try(Connection conn = Conexion.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)){
-            
+            pstmt.setInt(1, dni);
             ResultSet rs = pstmt.executeQuery();
             
             while(rs.next()){

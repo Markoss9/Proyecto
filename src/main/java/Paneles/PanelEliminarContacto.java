@@ -71,6 +71,16 @@ public class PanelEliminarContacto extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(tablaContactos);
+        if (tablaContactos.getColumnModel().getColumnCount() > 0) {
+            tablaContactos.getColumnModel().getColumn(0).setMinWidth(30);
+            tablaContactos.getColumnModel().getColumn(0).setMaxWidth(30);
+            tablaContactos.getColumnModel().getColumn(1).setMinWidth(100);
+            tablaContactos.getColumnModel().getColumn(1).setMaxWidth(100);
+            tablaContactos.getColumnModel().getColumn(2).setMinWidth(100);
+            tablaContactos.getColumnModel().getColumn(2).setMaxWidth(100);
+            tablaContactos.getColumnModel().getColumn(3).setMinWidth(140);
+            tablaContactos.getColumnModel().getColumn(3).setMaxWidth(140);
+        }
 
         jButton1.setFont(new java.awt.Font("Arial Black", 1, 10)); // NOI18N
         jButton1.setText("Actualizar");
@@ -103,7 +113,7 @@ public class PanelEliminarContacto extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -173,7 +183,7 @@ public class PanelEliminarContacto extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) tablaContactos.getModel();
         model.setRowCount(0);
         
-        ArrayList<Contactos> lista = Contactos.listarContactos();
+        ArrayList<Contactos> lista = Contactos.listarContactos(this.dniUsuario);
         for (Contactos contacto : lista){
             model.addRow(new Object[]{
                 contacto.getId(),
