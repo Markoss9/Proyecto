@@ -2,13 +2,24 @@
 
 package Paneles;
 
+import com.mycompany.proyecto.Conexion;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 public class Telefono extends javax.swing.JFrame {
 
-    public Telefono() {
+    public Telefono(int dniUsuario) {
         initComponents();
+        cargarDatosUsuario(dniUsuario);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
+    // Método para obtener el DNI del usuario logueado
+private int obtenerDniUsuario() {
+    return Login.dniUsuario; // Ajusta esto según cómo estás pasando el DNI entre paneles
+}
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -114,7 +125,23 @@ public class Telefono extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel4AncestorResized
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+String telefono = txtTelefono.getText().trim();
+    String telefonoSecundario = txtTelefonoSecundario.getText().trim();
+    int dniUsuario = obtenerDniUsuario(); // Método que trae el DNI del usuario logueado.
 
+    try (Connection conn = Conexion.getConnection()) {
+        String sql = "INSERT INTO telefonos (dni, telefono, telefono_secundario) VALUES (?, ?, ?) " +
+                     "ON CONFLICT(dni) DO UPDATE SET telefono = excluded.telefono, telefono_secundario = excluded.telefono_secundario";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, dniUsuario);
+            pstmt.setString(2, telefono);
+            pstmt.setString(3, telefonoSecundario);
+            pstmt.executeUpdate();
+            javax.swing.JOptionPane.showMessageDialog(this, "Datos guardados exitosamente.");
+        }
+    } catch (SQLException ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar datos: " + ex.getMessage());
+    }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void jLabel5AncestorResized(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jLabel5AncestorResized
@@ -134,5 +161,23 @@ public class Telefono extends javax.swing.JFrame {
     private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtTelefonoSecundario;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarDatosUsuario(int dniUsuario) {
+    try (Connection conn = Conexion.getConnection()) {
+        String sql = "SELECT telefono, telefono_secundario FROM telefonos WHERE dni = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, dniUsuario);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    txtTelefono.setText(rs.getString("telefono"));
+                    txtTelefonoSecundario.setText(rs.getString("telefono_secundario"));
+                }
+            }
+        }
+    } catch (SQLException ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar datos: " + ex.getMessage());
+    }
+}
+    
 
 }

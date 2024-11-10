@@ -9,7 +9,7 @@ import java.sql.Connection;
 
 public class Principal extends javax.swing.JFrame {
         
-    private final int dniUsuario; // Variable para almacenar el DNI del usuario
+    private int dniUsuario; // Variable para almacenar el DNI del usuario
     
     
     public Principal(int dniUsuario) {
