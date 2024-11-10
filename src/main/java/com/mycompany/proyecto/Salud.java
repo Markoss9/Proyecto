@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 public class Salud {
     private static int id;
+    private int dni;
     private float peso;
     private float altura;
     private float caloriasconsumidas;
@@ -78,15 +79,16 @@ public class Salud {
         }
     }
       
-    public void guardarDatosPesoyAltura() {
-        String sql = "INSERT INTO salud (peso, altura, calConsumidas, calQuemadas) VALUES (?, ?, ?, ?)";
+    public void guardarDatosPesoyAltura(int dni) {
+        String sql = "INSERT INTO salud (dni, peso, altura, calConsumidas, calQuemadas) VALUES (?, ?, ?, ?, ?)";
         try (   Connection conn = Conexion.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             
-            pstmt.setFloat(1, this.peso);
-            pstmt.setFloat(2, this.altura);
-            pstmt.setFloat(3, 0);
+            pstmt.setInt(1, dni);
+            pstmt.setFloat(2, this.peso);
+            pstmt.setFloat(3, this.altura);
             pstmt.setFloat(4, 0);
+            pstmt.setFloat(5, 0);
             pstmt.executeUpdate();
             
             System.out.println("Peso y altura guardados correctamente");

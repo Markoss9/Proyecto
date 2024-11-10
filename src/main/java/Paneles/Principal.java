@@ -3,6 +3,7 @@ package Paneles;
 //import javax.swing.JFrame;
 import com.mycompany.proyecto.Conexion;
 import com.mycompany.proyecto.Contactos;
+import com.mycompany.proyecto.Metas;
 import com.mycompany.proyecto.Salud;
 
 import java.sql.Connection;
@@ -207,7 +208,11 @@ public class Principal extends javax.swing.JFrame {
 
 
     private void btnMetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMetasActionPerformed
-        // TODO add your handling code here:
+        Metas metas = new Metas();
+        PanelMetas igumetas = new PanelMetas(dniUsuario,metas);
+        igumetas.setLocationRelativeTo(null);
+        igumetas.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnMetasActionPerformed
 
     private void btnNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotasActionPerformed
