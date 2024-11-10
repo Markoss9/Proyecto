@@ -6,6 +6,8 @@ import com.mycompany.proyecto.Usuario;
 import Paneles.CrearUsuario;
 
 public class Login extends javax.swing.JFrame {
+
+    static int dniUsuario;
     
 
     
@@ -159,36 +161,29 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrearUsuarioActionPerformed
 
     private void btnIngresarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarSesionActionPerformed
-        // Obtener el DNI y la contraseña ingresados
-        String dni = txtDni.getText().trim();
-        String contrasena = new String(txtContrasenia.getPassword()).trim();
+           String dni = txtDni.getText().trim();
+    String contrasena = new String(txtContrasenia.getPassword()).trim();
 
-       // Validar que los campos no estén vacíos
-        if (dni.isEmpty() || contrasena.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                "Por favor, ingrese su DNI y contraseña.", 
-                "Campos Vacíos", javax.swing.JOptionPane.WARNING_MESSAGE);
+    if (dni.isEmpty() || contrasena.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Por favor, ingrese su DNI y contraseña.", 
+            "Campos Vacíos", javax.swing.JOptionPane.WARNING_MESSAGE);
         return;
-        }
-        
-        // Validar usuario usando el DNI
-        boolean esValido = Usuario.validarUsuario(dni, contrasena);
-        
-        if (esValido) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Bienvenido al sistema.", "Login Exitoso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            // Almacenar el DNI del usuario que ha iniciado sesión
-            int dniUsuario = Integer.parseInt(dni); 
-            System.out.println("Dni obtenido: " + dniUsuario);
-        // Usuario válido, abrir el panel Principal
+    }
+
+    boolean esValido = Usuario.validarUsuario(dni, contrasena);
+
+    if (esValido) {
+        int dniUsuario = Integer.parseInt(dni); 
+        javax.swing.JOptionPane.showMessageDialog(this, "Bienvenido al sistema.", "Login Exitoso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
         Principal principal = new Principal(dniUsuario);
         principal.setVisible(true);
         principal.setLocationRelativeTo(null);
         this.dispose(); // Cerrar la ventana de Login
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "DNI o contraseña incorrectos.", "Error de Autenticación", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
-        
-        
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, "DNI o contraseña incorrectos.", "Error de Autenticación", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
 
     }//GEN-LAST:event_btnIngresarSesionActionPerformed
 
@@ -200,9 +195,9 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDniActionPerformed
 
-   
-
-    
+    public static int getDniUsuario() {
+    return dniUsuario;
+}
     
     
     

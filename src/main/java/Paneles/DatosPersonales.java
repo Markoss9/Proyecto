@@ -4,6 +4,8 @@ package Paneles;
 
 public class DatosPersonales extends javax.swing.JFrame {
 
+    private int dniUsuario;
+
     
     public DatosPersonales() {
         initComponents();
@@ -142,15 +144,19 @@ public class DatosPersonales extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnDocumentoActionPerformed
 
+    
     private void btnTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTelefonoActionPerformed
-        // Crear una instancia del panel Telefono
-        Telefono telefono = new Telefono();
+       // Suponiendo que tienes una variable 'dniUsuario' en esta clase que contiene el DNI del usuario que inició sesión.
+    int dniUsuario = this.dniUsuario; // Cambia 'dniUsuario' por la variable o método que uses para obtener el DNI
+
+    // Crear una instancia del panel Telefono y pasarle el DNI del usuario
+    Telefono telefono = new Telefono(dniUsuario);
     
-        // Centrar la ventana en la pantalla
-        telefono.setLocationRelativeTo(null);
+    // Centrar la ventana en la pantalla
+    telefono.setLocationRelativeTo(null);
     
-        // Mostrar el panel
-        telefono.setVisible(true);
+    // Mostrar el panel
+    telefono.setVisible(true);
     }//GEN-LAST:event_btnTelefonoActionPerformed
 
     private void btnLicenciaDeConducirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLicenciaDeConducirActionPerformed
@@ -165,14 +171,17 @@ public class DatosPersonales extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLicenciaDeConducirActionPerformed
 
     private void btnContactosDeEmergenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContactosDeEmergenciaActionPerformed
-        // Crear una instancia del panel Documento
-        ContactosDeEmergencia contactos = new ContactosDeEmergencia();
+        // Obtener el DNI del usuario como int
+    int dniUsuario = Login.getDniUsuario();
     
-        // Centrar la ventana en la pantalla
-        contactos.setLocationRelativeTo(null);
+    // Crear una instancia del panel ContactosDeEmergencia pasando el DNI
+    ContactosDeEmergencia contactos = new ContactosDeEmergencia(dniUsuario);
     
-        // Mostrar el panel
-        contactos.setVisible(true);
+    // Centrar la ventana en la pantalla
+    contactos.setLocationRelativeTo(null);
+    
+    // Mostrar el panel
+    contactos.setVisible(true);
     }//GEN-LAST:event_btnContactosDeEmergenciaActionPerformed
 
     private void btnCorreoElectronicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCorreoElectronicoActionPerformed
