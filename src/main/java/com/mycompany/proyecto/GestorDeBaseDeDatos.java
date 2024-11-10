@@ -22,9 +22,11 @@ public class GestorDeBaseDeDatos {
     }
       private void crearTablaSiNoExiste() {
         String sql = "CREATE TABLE IF NOT EXISTS eventos ("
-                   + "fecha TEXT PRIMARY KEY,"
-                   + "nota TEXT"
-                   + ");";
+               + "usuario TEXT NOT NULL,"
+               + "fecha TEXT,"
+               + "nota TEXT,"
+               + "PRIMARY KEY (usuario, fecha)"
+               + ");";
 
         try (Connection conn = this.conectar();
              Statement stmt = conn.createStatement()) {
@@ -100,4 +102,15 @@ public class GestorDeBaseDeDatos {
 
         return notas;
     }
+     public void eliminarTodasLasNotas() {
+    String sql = "DELETE FROM eventos WHERE usuario = ?";
+
+    try (Connection conn = this.conectar();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        pstmt.setString(1, usuarioActual);
+        pstmt.executeUpdate();
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+    }
+}
 }

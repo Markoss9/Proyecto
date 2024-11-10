@@ -4,6 +4,7 @@ package com.mycompany.proyecto;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 
 public class CalendarioConNotas extends JFrame {
     private String usuario;
@@ -32,6 +33,11 @@ public class CalendarioConNotas extends JFrame {
         panelSuperior.add(comboMes);
         panelSuperior.add(comboAño);
 
+        // Botón "Volver al menú"
+    JButton btnVolverAlMenu = new JButton("Volver al menú");
+    btnVolverAlMenu.addActionListener(e -> ventanaPrincipal.dispose());
+    panelSuperior.add(btnVolverAlMenu);  // Agregar al panel superior
+    
         panelCalendario = new JPanel(new GridLayout(0, 7));
         for (String dia : diasDeLaSemana) {
             JLabel etiquetaDia = new JLabel(dia, SwingConstants.CENTER);
@@ -68,15 +74,22 @@ public class CalendarioConNotas extends JFrame {
         calendario.set(anioSeleccionado, mesSeleccionado, 1);
         int diasEnMes = calendario.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
         int diaInicio = calendario.get(java.util.Calendar.DAY_OF_WEEK) - 1;
-
+// Agregar días en blanco hasta el primer día del mes
         for (int i = 0; i < diaInicio; i++) {
             panelCalendario.add(new JLabel(""));
         }
-
+// Consultar eventos del usuario actual
+    List<String> eventosUsuario = gestorBD.obtenerNotasDelUsuario();
+    // Añadir botones de día con notas 
         for (int dia = 1; dia <= diasEnMes; dia++) {
             JButton botonDia = new JButton(String.valueOf(dia));
             int diaSeleccionado = dia;
-
+String fecha = anioSeleccionado + "-" + (mesSeleccionado + 1) + "-" + diaSeleccionado;
+String notaDelDia = gestorBD.obtenerNotaParaFecha(fecha);
+        if (!notaDelDia.isEmpty()) {
+            botonDia.setBackground(Color.YELLOW); // Cambiar color si hay una nota
+        }
+        // Verificar si existe una nota para este día
             botonDia.addActionListener(e -> abrirDialogoDeNota(diaSeleccionado, mesSeleccionado, anioSeleccionado));
             panelCalendario.add(botonDia);
         }

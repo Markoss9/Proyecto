@@ -250,7 +250,21 @@ public class Principal extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "No hay notas para mostrar.", "Recordatorios", JOptionPane.INFORMATION_MESSAGE);
     } else {
         String mensaje = String.join("\n", notas);
-        JOptionPane.showMessageDialog(this, mensaje, "Recordatorios", JOptionPane.INFORMATION_MESSAGE);
+        int opcion = JOptionPane.showOptionDialog(
+            this, 
+            mensaje, 
+            "Recordatorios", 
+            JOptionPane.YES_NO_CANCEL_OPTION, 
+            JOptionPane.INFORMATION_MESSAGE, 
+            null, 
+            new String[]{"Cerrar", "Eliminar todas las notas"}, 
+            "Cerrar"
+        );
+
+        if (opcion == 1) {  // El usuario seleccionó "Eliminar todas las notas"
+            gestorBD.eliminarTodasLasNotas();
+            JOptionPane.showMessageDialog(this, "Todas las notas han sido eliminadas.", "Recordatorios", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
     }//GEN-LAST:event_btnRecordatorioActionPerformed
 
@@ -274,6 +288,7 @@ public class Principal extends javax.swing.JFrame {
        String usuario = "usuarioActual"; // Aquí asigna el usuario actual
     CalendarioConNotas calendarioConNotas = new CalendarioConNotas(usuario);
     calendarioConNotas.setVisible(true);
+
     }//GEN-LAST:event_btnCalendarioActionPerformed
 
     private void btnFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanzasActionPerformed
