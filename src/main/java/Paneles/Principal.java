@@ -6,8 +6,6 @@ import com.mycompany.proyecto.Conexion;
 import com.mycompany.proyecto.Contactos;
 import com.mycompany.proyecto.Salud;
 import java.util.List;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import com.mycompany.proyecto.CalendarioConNotas;
 
 
@@ -15,16 +13,10 @@ import java.sql.Connection;
 import javax.swing.JOptionPane;
 
 public class Principal extends javax.swing.JFrame {
-<<<<<<< HEAD
+
 
     private final int dniUsuario; // Variable para almacenar el DNI del usuario
-
-=======
-        
-    private int dniUsuario; // Variable para almacenar el DNI del usuario
     
-    
->>>>>>> ee247e099b8979d9283143eb613a343c37cde6aa
     public Principal(int dniUsuario) {
         initComponents();
         this.dniUsuario = dniUsuario; // Almacenar el DNI
