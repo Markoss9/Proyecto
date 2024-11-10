@@ -1,9 +1,15 @@
 package Paneles;
 
-//import javax.swing.JFrame;
+//import javax.swing.JFrame
+import com.mycompany.proyecto.GestorDeBaseDeDatos;
 import com.mycompany.proyecto.Conexion;
 import com.mycompany.proyecto.Contactos;
 import com.mycompany.proyecto.Salud;
+import java.util.List;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import com.mycompany.proyecto.CalendarioConNotas;
+
 
 import java.sql.Connection;
 
@@ -237,7 +243,29 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTareasActionPerformed
 
     private void btnRecordatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecordatorioActionPerformed
-        // TODO add your handling code here:
+        GestorDeBaseDeDatos gestorBD = new GestorDeBaseDeDatos("usuarioActual"); // Reemplaza con el usuario actual
+    List<String> notas = gestorBD.obtenerNotasDelUsuario();
+
+    if (notas.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No hay notas para mostrar.", "Recordatorios", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        String mensaje = String.join("\n", notas);
+        int opcion = JOptionPane.showOptionDialog(
+            this, 
+            mensaje, 
+            "Recordatorios", 
+            JOptionPane.YES_NO_CANCEL_OPTION, 
+            JOptionPane.INFORMATION_MESSAGE, 
+            null, 
+            new String[]{"Cerrar", "Eliminar todas las notas"}, 
+            "Cerrar"
+        );
+
+        if (opcion == 1) {  // El usuario seleccionó "Eliminar todas las notas"
+            gestorBD.eliminarTodasLasNotas();
+            JOptionPane.showMessageDialog(this, "Todas las notas han sido eliminadas.", "Recordatorios", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
     }//GEN-LAST:event_btnRecordatorioActionPerformed
 
     private void btnSaludActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaludActionPerformed
@@ -257,7 +285,10 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaludActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
-        // TODO add your handling code here:
+       String usuario = "usuarioActual"; // Aquí asigna el usuario actual
+    CalendarioConNotas calendarioConNotas = new CalendarioConNotas(usuario);
+    calendarioConNotas.setVisible(true);
+
     }//GEN-LAST:event_btnCalendarioActionPerformed
 
     private void btnFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanzasActionPerformed
