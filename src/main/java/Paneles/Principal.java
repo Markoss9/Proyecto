@@ -241,8 +241,17 @@ public class Principal extends javax.swing.JFrame {
         );
 
         if (opcion == 1) {  // El usuario seleccionó "Eliminar todas las notas"
-            gestorBD.eliminarTodasLasNotas();
-            JOptionPane.showMessageDialog(this, "Todas las notas han sido eliminadas.", "Recordatorios", JOptionPane.INFORMATION_MESSAGE);
+            int confirmacion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Estás seguro de que deseas eliminar todas las notas?",
+                "Confirmación de eliminación",
+                JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirmacion == JOptionPane.YES_OPTION) {
+                gestorBD.eliminarTodasLasNotas();
+                JOptionPane.showMessageDialog(this, "Todas las notas han sido eliminadas.", "Recordatorios", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }
     }//GEN-LAST:event_btnRecordatorioActionPerformed
