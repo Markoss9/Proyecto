@@ -1,6 +1,6 @@
 
 package com.mycompany.proyecto;
-
+import javax.swing.SwingUtilities;
 import Paneles.Login;
 import java.sql.*;
 
