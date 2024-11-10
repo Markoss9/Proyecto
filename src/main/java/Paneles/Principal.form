@@ -43,45 +43,37 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jSeparator4" max="32767" attributes="0"/>
-                      <Component id="jSeparator1" max="32767" attributes="0"/>
-                      <Component id="btnDatosPersonales" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="btnMetas" max="32767" attributes="0"/>
-                              <Component id="btnTareas" alignment="0" pref="194" max="32767" attributes="0"/>
-                              <Component id="btnNotas" alignment="0" max="32767" attributes="0"/>
+                  <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jSeparator4" alignment="1" max="32767" attributes="0"/>
+                      <Component id="jSeparator1" alignment="1" max="32767" attributes="0"/>
+                      <Component id="jSeparator3" alignment="1" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="btnDatosPersonales" max="32767" attributes="0"/>
+                              <Component id="btnNotas" alignment="1" max="32767" attributes="0"/>
+                              <Component id="btnMetas" alignment="1" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="btnSalud" max="32767" attributes="0"/>
-                                      <Component id="btnFinanzas" pref="194" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="btnRecordatorio" min="-2" pref="194" max="-2" attributes="0"/>
-                                      <Component id="btnHistorial" alignment="0" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="btnContactos" pref="194" max="32767" attributes="0"/>
-                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                  <Component id="btnCalendario" min="-2" pref="194" max="-2" attributes="0"/>
-                              </Group>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="btnContactos" max="32767" attributes="0"/>
+                              <Component id="btnSalud" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnFinanzas" alignment="0" pref="220" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="btnRecordatorio" max="32767" attributes="0"/>
+                              <Component id="btnSalirPrograma" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnCalendario" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="jSeparator3" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="276" max="-2" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="322" max="32767" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="322" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -94,25 +86,23 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="btnDatosPersonales" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnNotas" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnRecordatorio" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnFinanzas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnDatosPersonales" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="btnTareas" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnCalendario" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnContactos" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnNotas" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="27" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnMetas" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnSalud" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnHistorial" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnSalirPrograma" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
@@ -161,17 +151,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNotasActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnTareas">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial Black" size="14" style="2"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="TAREAS"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTareasActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnRecordatorio">
@@ -229,15 +208,15 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnContactosActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnHistorial">
+        <Component class="javax.swing.JButton" name="btnSalirPrograma">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial Black" size="14" style="2"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="HISTORIAL"/>
+            <Property name="text" type="java.lang.String" value="SALIR"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHistorialActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalirProgramaActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator1">
