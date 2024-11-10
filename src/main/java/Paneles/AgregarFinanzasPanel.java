@@ -135,38 +135,44 @@ public class AgregarFinanzasPanel extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    // Método que se ejecuta cuando el usuario hace clic en el botón "Agregar"
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         try {
+            // Obtiene el ingreso y el gasto desde los campos de texto y los convierte a tipo float
             float ingreso = Float.parseFloat(txtIngreso.getText());
             float gastos = Float.parseFloat(txtGasto.getText());
 
+            // Verifica si hay una conexión válida a la base de datos
             if (conexion == null || conexion.isClosed()) {
                 JOptionPane.showMessageDialog(this, "Error: No hay conexión a la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+                return; // Termina el método si no hay conexión
             }
 
-            // Crea una instancia de Finanzas con los datos ingresados
-            Finanzas finanza = new Finanzas(dniUsuario, ingreso, gastos); // Usa solo los datos
+            // Crea una instancia de Finanzas usando el DNI del usuario, ingreso y gastos
+            Finanzas finanza = new Finanzas(dniUsuario, ingreso, gastos);
 
-            // Guarda en la base de datos
+            // Llama al método de Finanzas para guardar los datos en la base de datos
             finanza.guardarFinanzas(conexion);
             JOptionPane.showMessageDialog(this, "Finanza guardada exitosamente");
 
         } catch (NumberFormatException e) {
+            // Maneja el caso en que los valores de ingreso o gasto no sean numéricos
             JOptionPane.showMessageDialog(this, "Por favor ingresa valores numéricos válidos", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (SQLException e) {
+            // Maneja errores relacionados con la base de datos
             JOptionPane.showMessageDialog(this, "Error al guardar en la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    // Método que se ejecuta al hacer Enter en el campo de ingreso
     private void txtIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIngresoActionPerformed
-        // Cambiar el enfoque al siguiente campo
+        // Cambia el enfoque al campo de gastos, para que el usuario pueda ingresar el siguiente valor sin usar el mouse
         txtGasto.requestFocus();
     }//GEN-LAST:event_txtIngresoActionPerformed
 
     private void txtGastoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGastoActionPerformed
-        
+
     }//GEN-LAST:event_txtGastoActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed

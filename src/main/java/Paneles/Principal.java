@@ -1,22 +1,27 @@
 package Paneles;
 
-//import javax.swing.JFrame;
+//import javax.swing.JFrame
+import com.mycompany.proyecto.GestorDeBaseDeDatos;
 import com.mycompany.proyecto.Conexion;
 import com.mycompany.proyecto.Contactos;
 import com.mycompany.proyecto.Metas;
 import com.mycompany.proyecto.Salud;
+import java.util.List;
+import com.mycompany.proyecto.CalendarioConNotas;
+
 
 import java.sql.Connection;
+import javax.swing.JOptionPane;
 
 public class Principal extends javax.swing.JFrame {
-        
+
+
     private final int dniUsuario; // Variable para almacenar el DNI del usuario
-    
     
     public Principal(int dniUsuario) {
         initComponents();
         this.dniUsuario = dniUsuario; // Almacenar el DNI
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -29,13 +34,12 @@ public class Principal extends javax.swing.JFrame {
         btnDatosPersonales = new javax.swing.JButton();
         btnMetas = new javax.swing.JButton();
         btnNotas = new javax.swing.JButton();
-        btnTareas = new javax.swing.JButton();
         btnRecordatorio = new javax.swing.JButton();
         btnSalud = new javax.swing.JButton();
         btnCalendario = new javax.swing.JButton();
         btnFinanzas = new javax.swing.JButton();
         btnContactos = new javax.swing.JButton();
-        btnHistorial = new javax.swing.JButton();
+        btnSalirPrograma = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
@@ -66,14 +70,6 @@ public class Principal extends javax.swing.JFrame {
         btnNotas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNotasActionPerformed(evt);
-            }
-        });
-
-        btnTareas.setFont(new java.awt.Font("Arial Black", 2, 14)); // NOI18N
-        btnTareas.setText("TAREAS");
-        btnTareas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTareasActionPerformed(evt);
             }
         });
 
@@ -117,11 +113,11 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btnHistorial.setFont(new java.awt.Font("Arial Black", 2, 14)); // NOI18N
-        btnHistorial.setText("HISTORIAL");
-        btnHistorial.addActionListener(new java.awt.event.ActionListener() {
+        btnSalirPrograma.setFont(new java.awt.Font("Arial Black", 2, 14)); // NOI18N
+        btnSalirPrograma.setText("SALIR");
+        btnSalirPrograma.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHistorialActionPerformed(evt);
+                btnSalirProgramaActionPerformed(evt);
             }
         });
 
@@ -131,35 +127,30 @@ public class Principal extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator4)
-                    .addComponent(jSeparator1)
-                    .addComponent(btnDatosPersonales, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnMetas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnTareas, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                            .addComponent(btnNotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnSalud, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnFinanzas, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnRecordatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnContactos, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jSeparator3))
+                            .addComponent(btnDatosPersonales, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnNotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnMetas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnContactos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSalud, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnFinanzas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnRecordatorio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSalirPrograma, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCalendario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(19, 19, 19))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(276, 276, 276)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(322, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(322, 322, 322))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,23 +161,21 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnDatosPersonales)
-                .addGap(27, 27, 27)
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNotas)
                     .addComponent(btnRecordatorio)
-                    .addComponent(btnFinanzas))
+                    .addComponent(btnFinanzas)
+                    .addComponent(btnDatosPersonales))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnTareas)
                     .addComponent(btnCalendario)
-                    .addComponent(btnContactos))
+                    .addComponent(btnContactos)
+                    .addComponent(btnNotas))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnMetas)
                     .addComponent(btnSalud)
-                    .addComponent(btnHistorial))
+                    .addComponent(btnSalirPrograma))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
@@ -237,32 +226,52 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnNotasActionPerformed
 
-    private void btnTareasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTareasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnTareasActionPerformed
-
     private void btnRecordatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecordatorioActionPerformed
-        // TODO add your handling code here:
+        GestorDeBaseDeDatos gestorBD = new GestorDeBaseDeDatos("usuarioActual"); // Reemplaza con el usuario actual
+    List<String> notas = gestorBD.obtenerNotasDelUsuario();
+
+    if (notas.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No hay notas para mostrar.", "Recordatorios", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        String mensaje = String.join("\n", notas);
+        int opcion = JOptionPane.showOptionDialog(
+            this, 
+            mensaje, 
+            "Recordatorios", 
+            JOptionPane.YES_NO_CANCEL_OPTION, 
+            JOptionPane.INFORMATION_MESSAGE, 
+            null, 
+            new String[]{"Cerrar", "Eliminar todas las notas"}, 
+            "Cerrar"
+        );
+
+        if (opcion == 1) {  // El usuario seleccionó "Eliminar todas las notas"
+            gestorBD.eliminarTodasLasNotas();
+            JOptionPane.showMessageDialog(this, "Todas las notas han sido eliminadas.", "Recordatorios", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
     }//GEN-LAST:event_btnRecordatorioActionPerformed
 
     private void btnSaludActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaludActionPerformed
-        
-        
+
         Connection conexion = Conexion.getConnection();
-        
-        Salud salud = new Salud(0,0);
-        
+
+        Salud salud = new Salud(0, 0);
+
         SaludPanel saludPanel = new SaludPanel(salud, dniUsuario);
 
         saludPanel.setLocationRelativeTo(null);
 
         saludPanel.setVisible(true);
-        
+
         this.dispose();
     }//GEN-LAST:event_btnSaludActionPerformed
 
     private void btnCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarioActionPerformed
-        // TODO add your handling code here:
+       String usuario = "usuarioActual"; // Aquí asigna el usuario actual
+    CalendarioConNotas calendarioConNotas = new CalendarioConNotas(usuario);
+    calendarioConNotas.setVisible(true);
+
     }//GEN-LAST:event_btnCalendarioActionPerformed
 
     private void btnFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanzasActionPerformed
@@ -288,16 +297,26 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFinanzasActionPerformed
 
     private void btnContactosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContactosActionPerformed
-        Contactos contactos = new Contactos(0,"","","","");
+        Contactos contactos = new Contactos(0, "", "", "", "");
         ContactosPanel panelContacto = new ContactosPanel(dniUsuario, contactos);
         panelContacto.setLocationRelativeTo(null);
         panelContacto.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnContactosActionPerformed
 
-    private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnHistorialActionPerformed
+    private void btnSalirProgramaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirProgramaActionPerformed
+        // Mostrar un cuadro de confirmación
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro de que desea salir?",
+                "Confirmar salida",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+
+        // Verificar si el usuario seleccionó "Sí"
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            System.exit(0); // Termina la ejecución del programa
+        }
+    }//GEN-LAST:event_btnSalirProgramaActionPerformed
 
     private void btnDatosPersonalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDatosPersonalesActionPerformed
         // Crear una instancia del panel DatosPersonales
@@ -316,12 +335,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnContactos;
     private javax.swing.JButton btnDatosPersonales;
     private javax.swing.JButton btnFinanzas;
-    private javax.swing.JButton btnHistorial;
     private javax.swing.JButton btnMetas;
     private javax.swing.JButton btnNotas;
     private javax.swing.JButton btnRecordatorio;
+    private javax.swing.JButton btnSalirPrograma;
     private javax.swing.JButton btnSalud;
-    private javax.swing.JButton btnTareas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;

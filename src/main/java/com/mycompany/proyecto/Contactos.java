@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Contactos {
@@ -98,6 +99,55 @@ public class Contactos {
     public String toString() {
         return "Contactos{" + "nombre=" + nombre + ", apellido=" + apellido + ", telefono=" + telefono + ", email=" + email + '}';
     }
+    
+    
+    public void crearTablaContactos(){
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            
+            conn = Conexion.getConnection();
+
+            
+            String checkTableSQL = "SELECT name FROM sqlite_master WHERE type='table' AND name='contactos';";
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(checkTableSQL);
+
+            if (rs.next()) {
+                
+                System.out.println("La tabla 'contactos' ya existe.");
+            } else {
+                
+                String createTableSQL = "CREATE TABLE contactos ("
+                        + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                        + "dni TEXT, "
+                        + "nombre TEXT NOT NULL, "
+                        + "apellido TEXT NOT NULL, "
+                        + "correo TEXT NOT NULL, "
+                        + "telefono TEXT NOT NULL"
+                        + ");";
+                
+                
+                stmt.executeUpdate(createTableSQL);
+                System.out.println("La tabla 'contactos' ha sido creada correctamente.");
+            }
+
+        } catch (SQLException e) {
+            
+            System.out.println("Error al verificar o crear la tabla: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                
+            } catch (SQLException se) {
+                System.out.println("Error al cerrar recursos: " + se.getMessage());
+            }
+        }
+    }
+    
     
     public void guardarContacto(int dni, String nombre, String apellido, String email, String telefono){
         String sql = "INSERT INTO contactos (dni, nombre, apellido, correo, telefono) VALUES (?, ?, ?, ?, ?)";

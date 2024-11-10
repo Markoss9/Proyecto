@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 
@@ -182,6 +183,53 @@ public class Metas {
         }
 
         return actualizado;
+    }
+    
+    public void crearTablaMetas(){
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            
+            conn = Conexion.getConnection();
+
+            
+            String checkTableSQL = "SELECT name FROM sqlite_master WHERE type='table' AND name='metas';";
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(checkTableSQL);
+
+            if (rs.next()) {
+                
+                System.out.println("La tabla 'metas' ya existe.");
+            } else {
+                
+                String createTableSQL = "CREATE TABLE metas ("
+                        + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                        + "dni INTEGER, "
+                        + "descripcion TEXT NOT NULL, "
+                        + "fechaInicio TEXT NOT NULL, "
+                        + "fechaLimite TEXT NOT NULL, "
+                        + "completada INTEGER NOT NULL"
+                        + ");";
+                
+                
+                stmt.executeUpdate(createTableSQL);
+                System.out.println("La tabla 'metas' ha sido creada correctamente.");
+            }
+
+        } catch (SQLException e) {
+            
+            System.out.println("Error al verificar o crear la tabla: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                
+            } catch (SQLException se) {
+                System.out.println("Error al cerrar recursos: " + se.getMessage());
+            }
+        }
     }
     
 }

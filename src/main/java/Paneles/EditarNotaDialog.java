@@ -11,30 +11,32 @@ public class EditarNotaDialog extends JDialog {
 
     private final Connection conexion;
     private final int dniUsuario;
-    private final int id; // El ID de la nota a editar
+    private final int id; // ID de la nota a editar
     private JTextField txtTitulo;
     private JTextArea txtContenido;
     private JButton btnGuardar;
 
+    // Constructor para inicializar el diálogo de edición con la conexión y el ID de la nota
     public EditarNotaDialog(JFrame parent, Connection conexion, int dniUsuario, int id) {
-        super(parent, "Editar Nota", true);
+        super(parent, "Editar Nota", true); // Configura el diálogo como modal
         this.conexion = conexion;
         this.dniUsuario = dniUsuario;
         this.id = id;
 
-        initComponents();
-        // Cargar la nota existente para editar
-        cargarNota();
+        initComponents(); // Inicializa los componentes de la interfaz
+        cargarNota(); // Carga la nota actual en los campos de edición
 
-        // Agregar el ActionListener al botón "Guardar"
+        // Agrega el ActionListener al botón "Guardar"
         btnGuardar.addActionListener(evt -> guardarNota());
+        setLocationRelativeTo(null); // Centra el diálogo en la pantalla
     }
 
+    // Método para configurar los componentes visuales del diálogo
     private void initComponents() {
         setSize(400, 300);
         setLayout(null);
 
-        // Título de la nota
+        // Campo de texto para el título
         JLabel lblTitulo = new JLabel("Título:");
         lblTitulo.setBounds(20, 20, 100, 25);
         add(lblTitulo);
@@ -43,7 +45,7 @@ public class EditarNotaDialog extends JDialog {
         txtTitulo.setBounds(120, 20, 250, 25);
         add(txtTitulo);
 
-        // Contenido de la nota
+        // Campo de área de texto para el contenido
         JLabel lblContenido = new JLabel("Contenido:");
         lblContenido.setBounds(20, 60, 100, 25);
         add(lblContenido);
@@ -51,31 +53,43 @@ public class EditarNotaDialog extends JDialog {
         txtContenido = new JTextArea();
         txtContenido.setBounds(120, 60, 250, 150);
         add(txtContenido);
+        txtContenido.setLineWrap(true); // Activa el ajuste de línea automático
+        txtContenido.setWrapStyleWord(true); // Ajusta por palabras completas
 
-        // Botón de Guardar
+        // Botón "Guardar" para aplicar los cambios
         btnGuardar = new JButton("Guardar");
-        btnGuardar.setBounds(150, 220, 100, 30);
+        btnGuardar.setBounds(50, 220, 100, 30); // Posiciona el botón a la izquierda
         add(btnGuardar);
 
         // Acción del botón Guardar
         btnGuardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                guardarNota(); // Guardamos los cambios cuando el usuario haga clic en Guardar
+                guardarNota(); // Método para guardar los cambios
             }
         });
 
-        // Cargar la información actual de la nota
-        cargarNota();
+        // Botón "Cancelar" para cerrar sin guardar
+        JButton btnCancelar = new JButton("Cancelar");
+        btnCancelar.setBounds(250, 220, 100, 30); // Posiciona el botón a la derecha
+        add(btnCancelar);
+
+        // Acción del botón Cancelar
+        btnCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Cierra el diálogo de edición
+            }
+        });
     }
 
-    // Metodo pra cargar el contenido de una nota 
+    // Método para cargar el contenido de la nota seleccionada
     private void cargarNota() {
         try {
-            // Buscar la nota por su ID y dniUsuario
+            // Busca la nota en la base de datos por ID y dniUsuario
             Notas nota = Notas.buscarNotaPorId(conexion, dniUsuario, id);
             if (nota != null) {
-                // Si la nota se encuentra, mostramos su título y contenido en los campos de texto
+                // Si la nota existe, carga su título y contenido en los campos
                 txtTitulo.setText(nota.getTitulo());
                 txtContenido.setText(nota.getContenido());
             }
@@ -84,19 +98,18 @@ public class EditarNotaDialog extends JDialog {
         }
     }
 
-    // Método para guardar los cambios hechos cuando editamos una nota 
+    // Método para guardar los cambios realizados en la nota
     private void guardarNota() {
         try {
             String nuevoTitulo = txtTitulo.getText();
             String nuevoContenido = txtContenido.getText();
 
-            // Actualizar la nota en la base de datos
+            // Llama al método para actualizar la nota en la base de datos
             Notas.actualizarNota(conexion, dniUsuario, id, nuevoTitulo, nuevoContenido);
 
             JOptionPane.showMessageDialog(this, "Los cambios se han guardado correctamente.", "Actualización exitosa", JOptionPane.INFORMATION_MESSAGE);
 
-            // Cerrar el diálogo de edición
-            dispose();
+            dispose(); // Cierra el diálogo de edición después de guardar los cambios
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error al guardar los cambios: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

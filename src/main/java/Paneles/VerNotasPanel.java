@@ -14,11 +14,12 @@ public class VerNotasPanel extends javax.swing.JFrame {
     private final int dniUsuario;
     public JFrame parent;
 
+    // Constructor que recibe la conexión y el DNI del usuario actual
     public VerNotasPanel(Connection conexion, int dniUsuario) {
         initComponents();
         this.conexion = conexion;
         this.dniUsuario = dniUsuario;
-        cargarTablaNotas();
+        cargarTablaNotas(); // Cargar las notas del usuario en la tabla al abrir el panel
     }
 
     @SuppressWarnings("unchecked")
@@ -112,7 +113,7 @@ public class VerNotasPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerContenidoNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerContenidoNotaActionPerformed
-        // Solicitar ID al usuario
+         // Solicitar ID al usuario
         String idString = JOptionPane.showInputDialog(this, "Ingrese el ID de la nota que desea ver:", "Ver Nota", JOptionPane.PLAIN_MESSAGE);
 
         // Verificar que el ID ingresado sea válido
@@ -126,7 +127,10 @@ public class VerNotasPanel extends javax.swing.JFrame {
                 if (nota != null) {
                     // Si se encuentra la nota, abrir el diálogo VerNotaDialog con la información de la nota
                     VerNotaDialog verNotaDialog = new VerNotaDialog(this, conexion, dniUsuario, idNota, nota.getTitulo(), nota.getContenido());
+                    // Centrar el diálogo en la pantalla
+                    verNotaDialog.setLocationRelativeTo(null);
                     verNotaDialog.setVisible(true); // Mostrar el diálogo VerNotaDialog
+
                 } else {
                     // Si no se encuentra, mostrar mensaje de error
                     JOptionPane.showMessageDialog(this, "No se encontró una nota con el ID especificado.", "Nota no encontrada", JOptionPane.ERROR_MESSAGE);
@@ -140,7 +144,34 @@ public class VerNotasPanel extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVerContenidoNotaActionPerformed
 
     private void btnEliminrNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminrNotaActionPerformed
-        // TODO add your handling code here:
+        // Solicitar al usuario el ID de la nota que desea eliminar
+        String idStr = JOptionPane.showInputDialog(this, "Ingrese el ID de la nota a eliminar:");
+
+        if (idStr != null && !idStr.isEmpty()) {
+            try {
+                int id = Integer.parseInt(idStr); // Convertir el ID a un número entero
+
+                // Verificar si la nota existe y pertenece al usuario actual
+                Notas nota = Notas.buscarNotaPorId(conexion, dniUsuario, id);
+                if (nota != null) {
+                    // Preguntar al usuario si está seguro de eliminar la nota
+                    int confirm = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea eliminar esta nota?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        // Eliminar la nota
+                        Notas.eliminarNota(conexion, dniUsuario, id);
+                        JOptionPane.showMessageDialog(this, "Nota eliminada correctamente.");
+                        // Opcionalmente, actualizar la lista de notas en el panel
+                        cargarTablaNotas();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se encontró una nota con ese ID o no le pertenece.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Por favor, ingrese un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, "Error al acceder a la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_btnEliminrNotaActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
@@ -166,12 +197,12 @@ public class VerNotasPanel extends javax.swing.JFrame {
                 model.addRow(new Object[]{
                     nota.getId(), // id de la nota
                     nota.getTitulo(), // título de la nota
-                    nota.getFechaCreacionModificacion() // fecha de creación/modificación
+                    nota.getFechaCreacion() // fecha de creación/modificación
                 });
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al cargar las notas: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al cargar las notas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

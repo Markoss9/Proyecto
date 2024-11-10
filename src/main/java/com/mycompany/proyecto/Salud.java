@@ -2,6 +2,8 @@ package com.mycompany.proyecto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
 
 public class Salud {
     private static int id;
@@ -79,6 +81,55 @@ public class Salud {
         }
     }
       
+    
+    public void crearTablaSalud(){
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            
+            conn = Conexion.getConnection();
+
+            
+            String checkTableSQL = "SELECT name FROM sqlite_master WHERE type='table' AND name='salud';";
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(checkTableSQL);
+
+            if (rs.next()) {
+                
+                System.out.println("La tabla 'salud' ya existe.");
+            } else {
+                
+                String createTableSQL = "CREATE TABLE salud ("
+                        + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                        + "dni INTEGER, "
+                        + "peso REAL NOT NULL, "
+                        + "altura REAL NOT NULL, "
+                        + "calConsumidas REAL NOT NULL, "
+                        + "calQuemadas REAL NOT NULL"
+                        + ");";
+                
+                
+                stmt.executeUpdate(createTableSQL);
+                System.out.println("La tabla 'salud' ha sido creada correctamente.");
+            }
+
+        } catch (SQLException e) {
+            
+            System.out.println("Error al verificar o crear la tabla: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                
+            } catch (SQLException se) {
+                System.out.println("Error al cerrar recursos: " + se.getMessage());
+            }
+        }
+    }
+    
+    
     public void guardarDatosPesoyAltura(int dni) {
         String sql = "INSERT INTO salud (dni, peso, altura, calConsumidas, calQuemadas) VALUES (?, ?, ?, ?, ?)";
         try (   Connection conn = Conexion.getConnection();

@@ -8,12 +8,13 @@ import javax.swing.JOptionPane;
 public class FinanzasPanel extends javax.swing.JFrame {
 
     private Connection conexion; // La conexión a la base de datos 
-    private final int dniUsuario;
+    private final int dniUsuario; // DNI del usuario para asociar las finanzas
 
+    // Constructor de la clase FinanzasPanel
     public FinanzasPanel(Connection conexion, int dniUsuario) {
-        initComponents();
-        this.conexion = conexion; // Asignamos la conexión existente
-        this.dniUsuario = dniUsuario;
+        initComponents();  // Inicializa los componentes visuales del panel
+        this.conexion = conexion; // Asigna la conexión de base de datos pasada al constructor
+        this.dniUsuario = dniUsuario; // Asocia el DNI del usuario al panel
     }
 
     @SuppressWarnings("unchecked")
@@ -109,6 +110,7 @@ public class FinanzasPanel extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // Acción del botón "Agregar Finanzas"
     private void btnAgregarFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFinanzasActionPerformed
         // Pasar la conexión existente a la nueva ventana
         AgregarFinanzasPanel agregarFinanza = new AgregarFinanzasPanel(conexion, dniUsuario);
@@ -118,42 +120,47 @@ public class FinanzasPanel extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnAgregarFinanzasActionPerformed
 
+    // Acción del botón "Actualizar Finanzas"
     private void btnActualizarFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarFinanzasActionPerformed
-        // Pasar la conexión existente a la nueva ventana
+        // Instancia el panel ActualizarFinanzasPanel pasando la conexión y el DNI del usuario
         ActualizarFinanzasPanel irActualizarFinanzas = new ActualizarFinanzasPanel(conexion, dniUsuario);
-        irActualizarFinanzas.setLocationRelativeTo(this); // Centra la ventana respecto a FinanzasPanel
-        irActualizarFinanzas.setVisible(true);
-        this.dispose(); // Cierra FinanzasPanel
+        irActualizarFinanzas.setLocationRelativeTo(this); // Centra la nueva ventana respecto a FinanzasPanel
+        irActualizarFinanzas.setVisible(true); // Muestra la ventana ActualizarFinanzasPanel
+        this.dispose(); // Cierra la ventana actual (FinanzasPanel)
     }//GEN-LAST:event_btnActualizarFinanzasActionPerformed
 
+    // Acción del botón "Resetear Finanzas"
     private void btnResetearFinanzasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetearFinanzasActionPerformed
+        // Solicita confirmación del usuario para resetear todas las finanzas
         int confirmacion = JOptionPane.showConfirmDialog(this,
                 "¿Está seguro de que desea resetear todas sus finanzas?",
-                "Confirmar reseteo",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE);
+                "Confirmar reseteo", // Título de la ventana de confirmación
+                JOptionPane.YES_NO_OPTION, // Opciones de "Sí" o "No"
+                JOptionPane.WARNING_MESSAGE);  // Icono de advertencia
 
         if (confirmacion == JOptionPane.YES_OPTION) {
             try {
+                // Llama al método de la clase Finanzas para resetear las finanzas del usuario
                 Finanzas.resetearFinanzas(conexion, dniUsuario);
+                // Muestra mensaje de éxito al resetear las finanzas
                 JOptionPane.showMessageDialog(this, "Finanzas reseteadas exitosamente.");
             } catch (SQLException e) {
+                // Muestra mensaje de error en caso de que ocurra un problema al resetear
                 JOptionPane.showMessageDialog(this, "Error al resetear finanzas: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
+            // Muestra mensaje de operación cancelada si el usuario selecciona "No"
             JOptionPane.showMessageDialog(this, "Operación cancelada.");
         }
     }//GEN-LAST:event_btnResetearFinanzasActionPerformed
 
+    // Acción del botón "Volver" para regresar al panel principal
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        // Instanciamos el panel Principal
+        // Instancia el panel Principal y pasa el DNI del usuario
         Principal volverPrincipal = new Principal(dniUsuario);
-        // Mostramos el panel principal
-        volverPrincipal.setVisible(true);
-        // Centrar la ventana en la pantalla
-        volverPrincipal.setLocationRelativeTo(null);
-        // Cerramos el panel Finanzas 
-        this.dispose();
+        volverPrincipal.setVisible(true);  // Muestra la ventana del panel principal
+        volverPrincipal.setLocationRelativeTo(null);  // Centra la ventana en la pantalla
+        this.dispose();  // Cierra el panel Finanzas actual
     }//GEN-LAST:event_btnVolverActionPerformed
 
 
