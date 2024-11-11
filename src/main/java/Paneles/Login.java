@@ -174,7 +174,7 @@ public class Login extends javax.swing.JFrame {
     boolean esValido = Usuario.validarUsuario(dni, contrasena);
 
     if (esValido) {
-        int dniUsuario = Integer.parseInt(dni); 
+        Login.dniUsuario = Integer.parseInt(dni);  // Asignación a la variable estática
         javax.swing.JOptionPane.showMessageDialog(this, "Bienvenido al sistema.", "Login Exitoso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
 
         Principal principal = new Principal(dniUsuario);

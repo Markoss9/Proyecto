@@ -21,47 +21,41 @@ public class Documento extends javax.swing.JFrame {
 
     private void cargarDatos() {
         Connection con = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
 
-        try {
-            con = Conexion.getConnection();
-            String sql = "SELECT nombre_completo, dni, foto FROM documentos"; // Ajusta la consulta según tus necesidades
-            pst = con.prepareStatement(sql);
-            rs = pst.executeQuery();
+    try {
+        int dniUsuario = Login.getDniUsuario(); // Obtener el DNI del usuario actual
+        con = Conexion.getConnection();
+        String sql = "SELECT nombre_completo, dni, foto FROM documentos WHERE dni = ?";
+        pst = con.prepareStatement(sql);
+        pst.setInt(1, dniUsuario);
+        rs = pst.executeQuery();
 
-            // Si hay datos, los mostramos en el panel
-            if (rs.next()) {
-                String nombreCompleto = rs.getString("nombre_completo");
-                String dni = rs.getString("dni");
-                byte[] fotoBytes = rs.getBytes("foto");
+        if (rs.next()) {
+            String nombreCompleto = rs.getString("nombre_completo");
+            byte[] fotoBytes = rs.getBytes("foto");
 
-                txtDni1.setText(nombreCompleto);
-                txtDni.setText(dni);
+            txtDni1.setText(nombreCompleto);
+            txtDni.setText(String.valueOf(dniUsuario));
 
-                if (fotoBytes != null) {
-                    ImageIcon imagen = new ImageIcon(fotoBytes);
-                    Image img = imagen.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_SMOOTH);
-                    lblFoto.setIcon(new ImageIcon(img));
-                }
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar los datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (pst != null) {
-                    pst.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (fotoBytes != null) {
+                ImageIcon imagen = new ImageIcon(fotoBytes);
+                Image img = imagen.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_SMOOTH);
+                lblFoto.setIcon(new ImageIcon(img));
             }
         }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar los datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (pst != null) pst.close();
+            if (con != null) con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     }
 
     private byte[] imagenBytes;  // Almacenar imagen en formato BLOB
@@ -280,46 +274,36 @@ public class Documento extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel3AncestorResized
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        String nombreCompleto = txtDni1.getText(); // Campo correcto para el nombre completo
-        String dni = txtDni.getText(); // Campo correcto para el DNI
+        String nombreCompleto = txtDni1.getText();
+    int dniUsuario = Login.getDniUsuario(); // Obtener el DNI del usuario actual
 
-       
+    Connection con = null;
+    PreparedStatement pst = null;
 
-        Connection con = null;
-        PreparedStatement pst = null;
+    try {
+        con = Conexion.getConnection();
+        String sql = "INSERT INTO documentos (nombre_completo, dni, foto) VALUES (?, ?, ?) ON CONFLICT(dni) DO UPDATE SET nombre_completo = ?, foto = ?";
+        pst = con.prepareStatement(sql);
+        pst.setString(1, nombreCompleto);
+        pst.setInt(2, dniUsuario);
+        pst.setBytes(3, imagenBytes);
+        pst.setString(4, nombreCompleto);
+        pst.setBytes(5, imagenBytes);
 
-        try {
-            con = Conexion.getConnection(); // Asegúrate de que tu método getConnection esté implementado correctamente
-            String sql = "INSERT INTO documentos (nombre_completo, dni, foto) VALUES (?, ?, ?)";
-            pst = con.prepareStatement(sql);
-            pst.setString(1, nombreCompleto);
-            pst.setString(2, dni);
-            pst.setBytes(3, imagenBytes); // Guardar la imagen como BLOB
-            int filasAfectadas = pst.executeUpdate();
-
-            if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(this, "Documento guardado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                // Limpiar campos después de guardar
-                txtDni.setText("");
-                txtDni1.setText("");
-                lblFoto.setIcon(null);
-                imagenBytes = null; // Resetear la imagen   
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar el documento: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        } finally {
-            // Cerrar conexiones
-            try {
-                if (pst != null) {
-                    pst.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        int filasAfectadas = pst.executeUpdate();
+        if (filasAfectadas > 0) {
+            JOptionPane.showMessageDialog(this, "Documento guardado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al guardar el documento: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        try {
+            if (pst != null) pst.close();
+            if (con != null) con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
 

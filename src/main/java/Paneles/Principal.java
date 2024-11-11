@@ -280,6 +280,7 @@ public class Principal extends javax.swing.JFrame {
        String usuario = "usuarioActual"; // Aquí asigna el usuario actual
     CalendarioConNotas calendarioConNotas = new CalendarioConNotas(usuario);
     calendarioConNotas.setVisible(true);
+    
 
     }//GEN-LAST:event_btnCalendarioActionPerformed
 
