@@ -15,10 +15,11 @@ public class CalendarioConNotas extends JFrame {
     private GestorDeBaseDeDatos gestorBD;
 
     public CalendarioConNotas(String usuario) {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.usuario = usuario;
         gestorBD = new GestorDeBaseDeDatos(usuario);
         ventanaPrincipal = new JFrame("Calendario");
-        ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventanaPrincipal.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ventanaPrincipal.setSize(600, 600);
 
         comboMes = new JComboBox<>(new String[]{"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
