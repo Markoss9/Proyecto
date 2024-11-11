@@ -1,4 +1,3 @@
-
 package com.mycompany.proyecto;
 
 import javax.swing.*;
@@ -20,12 +19,12 @@ public class CalendarioConNotas extends JFrame {
         gestorBD = new GestorDeBaseDeDatos(usuario);
         ventanaPrincipal = new JFrame("Calendario");
         ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventanaPrincipal.setSize(400, 300);
+        ventanaPrincipal.setSize(600, 600);
 
         comboMes = new JComboBox<>(new String[]{"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
                 "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"});
         comboAño = new JComboBox<>();
-        for (int i = 2024; i <= 2030; i++) {
+        for (int i = 2000; i <= 2078; i++) {
             comboAño.addItem(i);
         }
 
@@ -102,28 +101,19 @@ String notaDelDia = gestorBD.obtenerNotaParaFecha(fecha);
         String fecha = anio + "-" + (mes + 1) + "-" + dia;
         String notaExistente = gestorBD.obtenerNotaParaFecha(fecha);
 
-    JTextField campoNota = new JTextField(notaExistente);
-    int opcion = JOptionPane.showOptionDialog(
-        ventanaPrincipal, new Object[]{"Ingrese o edite su nota:", campoNota},
-        "Nota para " + fecha, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
-        null, new String[]{"Guardar", "Eliminar", "Cancelar"}, "Guardar");
+        JTextField campoNota = new JTextField(notaExistente);
+        int opcion = JOptionPane.showOptionDialog(
+            ventanaPrincipal, new Object[]{"Ingrese o edite su nota:", campoNota},
+            "Nota para " + fecha, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+            null, new String[]{"Guardar", "Eliminar", "Cancelar"}, "Guardar");
 
-    if (opcion == JOptionPane.OK_OPTION) {
-        String nuevaNota = campoNota.getText();
-        if (!nuevaNota.isEmpty()) {
-            gestorBD.guardarNotaParaFecha(fecha, nuevaNota);
-        }
-    } else if (opcion == JOptionPane.NO_OPTION) {
-        int confirmacion = JOptionPane.showConfirmDialog(
-            ventanaPrincipal,
-            "¿Estás seguro de que deseas eliminar esta nota?",
-            "Confirmación de eliminación",
-            JOptionPane.YES_NO_OPTION
-        );
-        
-        if (confirmacion == JOptionPane.YES_OPTION) {
+        if (opcion == JOptionPane.OK_OPTION) {
+            String nuevaNota = campoNota.getText();
+            if (!nuevaNota.isEmpty()) {
+                gestorBD.guardarNotaParaFecha(fecha, nuevaNota);
+            }
+        } else if (opcion == JOptionPane.NO_OPTION) {
             gestorBD.eliminarNotaParaFecha(fecha);
         }
     }
-}
 }
