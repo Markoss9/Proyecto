@@ -158,13 +158,15 @@ public class PanelAgregarContacto extends javax.swing.JFrame {
                 return;
             }else {
                 
-                
+                int numdni = this.dniUsuario;
                 String nombre = camponombre.getText();
                 String apellido = campoapellido.getText();
                 String correo = campocorreo.getText();
                 String telefono = campotelefono.getText();
                 
-                contactos.guardarContacto(nombre, apellido, correo, telefono);
+                contactos.guardarContacto(numdni,nombre, apellido, correo, telefono);
+                
+                JOptionPane.showMessageDialog(this, "Datos guardados exitosamente");
             }
         }catch(SQLException e){
             

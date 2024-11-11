@@ -239,7 +239,7 @@ public class PanelEditarContacto extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         
-        ArrayList<Contactos> lista = Contactos.listarContactos();
+        ArrayList<Contactos> lista = Contactos.listarContactos(this.dniUsuario);
         for (Contactos contacto : lista){
             model.addRow(new Object[]{
                 contacto.getId(),

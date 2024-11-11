@@ -1,4 +1,3 @@
-
 package com.mycompany.proyecto;
 
 import javax.swing.*;
@@ -20,12 +19,12 @@ public class CalendarioConNotas extends JFrame {
         gestorBD = new GestorDeBaseDeDatos(usuario);
         ventanaPrincipal = new JFrame("Calendario");
         ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventanaPrincipal.setSize(400, 300);
+        ventanaPrincipal.setSize(600, 600);
 
         comboMes = new JComboBox<>(new String[]{"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
                 "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"});
         comboAño = new JComboBox<>();
-        for (int i = 2024; i <= 2030; i++) {
+        for (int i = 2000; i <= 2078; i++) {
             comboAño.addItem(i);
         }
 

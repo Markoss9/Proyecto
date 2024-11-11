@@ -195,7 +195,7 @@ public class PanelAgregarDatosSalud extends javax.swing.JFrame {
             }else{
                 float Peso = Float.parseFloat(campopeso.getText());
                 float Altura = Float.parseFloat(campoaltura.getText());
-                salud.guardarDatosPesoyAltura();
+                salud.guardarDatosPesoyAltura(this.dniUsuario);
                 JOptionPane.showMessageDialog(this, "Datos guardados exitosamente");
             }
             
