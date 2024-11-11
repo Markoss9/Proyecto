@@ -23,8 +23,6 @@ public class CalendarioConNotas extends JFrame {
         ventanaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ventanaPrincipal.setSize(400, 300);
 
-        ventanaPrincipal.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        ventanaPrincipal.setSize(600, 600);
 
 
         comboMes = new JComboBox<>(new String[]{"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
