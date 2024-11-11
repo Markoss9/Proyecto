@@ -214,9 +214,13 @@ public class LicenciaDeConducir extends javax.swing.JFrame {
             ImageIcon imgIcon = (ImageIcon) icon;
             Image img = imgIcon.getImage();
 
+            // Convertir la imagen a BufferedImage
+            BufferedImage bufferedImage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_RGB);
+            bufferedImage.getGraphics().drawImage(img, 0, 0, null);
+
             // Convierte la imagen a bytes
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write((BufferedImage) img, "jpg", baos);
+            ImageIO.write(bufferedImage, "jpg", baos);
             pst.setBytes(3, baos.toByteArray());
         } else {
             pst.setNull(3, Types.BLOB); // No hay imagen
