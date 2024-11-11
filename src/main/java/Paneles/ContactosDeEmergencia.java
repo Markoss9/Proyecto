@@ -14,6 +14,7 @@ public class ContactosDeEmergencia extends javax.swing.JFrame {
 
     // Constructor
     public ContactosDeEmergencia(int dniUsuario) {
+        dniUsuario = Login.getDniUsuario();
         this.dniUsuario = dniUsuario;
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);

@@ -19,7 +19,7 @@ public class DatosPersonales extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
+        txtDatosPersonales = new javax.swing.JLabel();
         btnDocumento = new javax.swing.JToggleButton();
         btnTelefono = new javax.swing.JToggleButton();
         btnLicenciaDeConducir = new javax.swing.JToggleButton();
@@ -29,8 +29,8 @@ public class DatosPersonales extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel2.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
-        jLabel2.setText("DATOS PERSONALES");
+        txtDatosPersonales.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
+        txtDatosPersonales.setText("DATOS PERSONALES");
 
         btnDocumento.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         btnDocumento.setText("DOCUMENTO");
@@ -91,7 +91,7 @@ public class DatosPersonales extends javax.swing.JFrame {
                             .addComponent(btnCorreoElectronico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(32, 32, 32))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(txtDatosPersonales)
                         .addGap(73, 73, 73))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -100,7 +100,7 @@ public class DatosPersonales extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(txtDatosPersonales)
                 .addGap(12, 12, 12)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -146,7 +146,8 @@ public class DatosPersonales extends javax.swing.JFrame {
 
     
     private void btnTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTelefonoActionPerformed
-       // Suponiendo que tienes una variable 'dniUsuario' en esta clase que contiene el DNI del usuario que inició sesión.
+
+    dniUsuario = Login.getDniUsuario();
     int dniUsuario = this.dniUsuario; // Cambia 'dniUsuario' por la variable o método que uses para obtener el DNI
 
     // Crear una instancia del panel Telefono y pasarle el DNI del usuario
@@ -206,11 +207,11 @@ public class DatosPersonales extends javax.swing.JFrame {
     private javax.swing.JToggleButton btnDocumento;
     private javax.swing.JToggleButton btnLicenciaDeConducir;
     private javax.swing.JToggleButton btnTelefono;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JLabel txtDatosPersonales;
     // End of variables declaration//GEN-END:variables
 
 }
