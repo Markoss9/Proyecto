@@ -185,7 +185,18 @@ public class DatosPersonales extends javax.swing.JFrame {
     }//GEN-LAST:event_btnContactosDeEmergenciaActionPerformed
 
     private void btnCorreoElectronicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCorreoElectronicoActionPerformed
-        // TODO add your handling code here:
+    // Asegúrate de que el dniUsuario esté correctamente asignado antes de pasar
+    int dniUsuario = Login.getDniUsuario();
+    dniUsuario = this.dniUsuario;  // Obtener el DNI de la clase DatosPersonales o de Login
+
+    // Crear una instancia del panel CorreoElectronico y pasarle el dniUsuario
+    CorreoElectronico correoElectronico = new CorreoElectronico(Login.dniUsuario);
+ 
+    // Centrar la ventana en la pantalla
+    correoElectronico.setLocationRelativeTo(null);
+ 
+    // Mostrar el panel
+    correoElectronico.setVisible(true);
     }//GEN-LAST:event_btnCorreoElectronicoActionPerformed
 
 
