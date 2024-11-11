@@ -36,7 +36,8 @@ public class Documento extends javax.swing.JFrame {
             String nombreCompleto = rs.getString("nombre_completo");
             byte[] fotoBytes = rs.getBytes("foto");
 
-            txtDni1.setText(nombreCompleto);
+            // Asignar correctamente el valor a cada campo
+            txtNombreCompleto.setText(nombreCompleto);
             txtDni.setText(String.valueOf(dniUsuario));
 
             if (fotoBytes != null) {
@@ -82,11 +83,11 @@ public class Documento extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtDni = new javax.swing.JEditorPane();
+        txtNombreCompleto = new javax.swing.JEditorPane();
         jSeparator4 = new javax.swing.JSeparator();
         lblFoto = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        txtDni1 = new javax.swing.JEditorPane();
+        txtDni = new javax.swing.JEditorPane();
         btnGuardar = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -137,9 +138,9 @@ public class Documento extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         jLabel5.setText("DNI:");
 
-        jScrollPane1.setViewportView(txtDni);
+        jScrollPane1.setViewportView(txtNombreCompleto);
 
-        jScrollPane3.setViewportView(txtDni1);
+        jScrollPane3.setViewportView(txtDni);
 
         btnGuardar.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
         btnGuardar.setText("GUARDAR");
@@ -265,8 +266,35 @@ public class Documento extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarFotoActionPerformed
 
     private void btnEliminarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarFotoActionPerformed
-        // Quitar la imagen del JLabel
-        lblFoto.setIcon(null);
+    lblFoto.setIcon(null);  // Elimina la imagen del JLabel
+    imagenBytes = null;  // Limpia la referencia de los bytes de la imagen
+
+    // Actualiza la base de datos para remover la imagen
+    Connection con = null;
+    PreparedStatement pst = null;
+
+    try {
+        int dniUsuario = Integer.parseInt(txtDni.getText());
+
+        con = Conexion.getConnection();
+        String sql = "UPDATE documentos SET foto = NULL WHERE dni = ?";
+        pst = con.prepareStatement(sql);
+        pst.setInt(1, dniUsuario);
+
+        int filasActualizadas = pst.executeUpdate();
+        if (filasActualizadas > 0) {
+            JOptionPane.showMessageDialog(this, "Foto eliminada correctamente.");
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al eliminar la foto: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        try {
+            if (pst != null) pst.close();
+            if (con != null) con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     }//GEN-LAST:event_btnEliminarFotoActionPerformed
 
     private void jLabel3AncestorResized(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jLabel3AncestorResized
@@ -274,28 +302,28 @@ public class Documento extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel3AncestorResized
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        String nombreCompleto = txtDni1.getText();
-    int dniUsuario = Login.getDniUsuario(); // Obtener el DNI del usuario actual
-
-    Connection con = null;
+        Connection con = null;
     PreparedStatement pst = null;
-
+    
     try {
+        int dniUsuario = Integer.parseInt(txtDni.getText());  // Asegúrate de que txtDni1 tenga el DNI correcto
+        String nombreCompleto = txtNombreCompleto.getText();
+        
         con = Conexion.getConnection();
-        String sql = "INSERT INTO documentos (nombre_completo, dni, foto) VALUES (?, ?, ?) ON CONFLICT(dni) DO UPDATE SET nombre_completo = ?, foto = ?";
+        String sql = "UPDATE documentos SET nombre_completo = ?, foto = ? WHERE dni = ?";
         pst = con.prepareStatement(sql);
         pst.setString(1, nombreCompleto);
-        pst.setInt(2, dniUsuario);
-        pst.setBytes(3, imagenBytes);
-        pst.setString(4, nombreCompleto);
-        pst.setBytes(5, imagenBytes);
+        pst.setBytes(2, imagenBytes);  // Guarda los bytes de la imagen en la columna `foto`
+        pst.setInt(3, dniUsuario);
 
-        int filasAfectadas = pst.executeUpdate();
-        if (filasAfectadas > 0) {
-            JOptionPane.showMessageDialog(this, "Documento guardado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        int filasActualizadas = pst.executeUpdate();
+        if (filasActualizadas > 0) {
+            JOptionPane.showMessageDialog(this, "Datos actualizados correctamente.");
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró el usuario con el DNI especificado.");
         }
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al guardar el documento: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Error al guardar los datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     } finally {
         try {
             if (pst != null) pst.close();
@@ -324,8 +352,8 @@ public class Documento extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JLabel lblFoto;
     private javax.swing.JEditorPane txtDni;
-    private javax.swing.JEditorPane txtDni1;
     private javax.swing.JLabel txtDocumento;
+    private javax.swing.JEditorPane txtNombreCompleto;
     // End of variables declaration//GEN-END:variables
 
 }

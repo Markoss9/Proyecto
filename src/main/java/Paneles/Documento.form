@@ -212,7 +212,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JEditorPane" name="txtDni">
+            <Component class="javax.swing.JEditorPane" name="txtNombreCompleto">
             </Component>
           </SubComponents>
         </Container>
@@ -227,7 +227,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JEditorPane" name="txtDni1">
+            <Component class="javax.swing.JEditorPane" name="txtDni">
             </Component>
           </SubComponents>
         </Container>
